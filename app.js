@@ -44,23 +44,35 @@ function loadQuestion() {
 }
 
 function checkAnswer(selectedIndex) {
-    const correctIndex = shuffledDb[currentQuestionIndex].correct;
+    const q = shuffledDb[currentQuestionIndex];
+    const buttons = optionsContainer.querySelectorAll('button');
+    const feedbackMsg = document.getElementById('feedback-message');
     
-    if (selectedIndex === correctIndex) {
+    // Desactivar todos los botones para que no sigan pulsando
+    buttons.forEach(btn => btn.classList.add('disabled'));
+
+    if (selectedIndex === q.correct) {
         score++;
-        alert("¡Correcto! 🌟");
+        buttons[selectedIndex].classList.add('correct');
+        feedbackMsg.innerHTML = "<span style='color: #2ecc71'>¡Correcto! ✨</span>";
     } else {
-        alert(`Incorrecto. La respuesta era: ${shuffledDb[currentQuestionIndex].options[correctIndex]}`);
+        buttons[selectedIndex].classList.add('incorrect');
+        buttons[q.correct].classList.add('correct'); // Mostrar la correcta
+        feedbackMsg.innerHTML = "<span style='color: #e74c3c'>¡Incorrecto!</span>";
     }
-    
-    currentQuestionIndex++;
-    
-    if (currentQuestionIndex < shuffledDb.length) {
-        loadQuestion();
-    } else {
-        alert(`¡Fin del juego! Puntuación final: ${score}/${shuffledDb.length}`);
-        location.reload(); // Reiniciar
-    }
+
+    // Esperar 1.5 segundos antes de cargar la siguiente pregunta
+    setTimeout(() => {
+        feedbackMsg.innerHTML = ""; // Limpiar mensaje
+        currentQuestionIndex++;
+        
+        if (currentQuestionIndex < shuffledDb.length) {
+            loadQuestion();
+        } else {
+            alert(`¡Fin del juego! Puntuación final: ${score}/${shuffledDb.length}`);
+            location.reload();
+        }
+    }, 1500);
 }
 
 // Iniciar juego
