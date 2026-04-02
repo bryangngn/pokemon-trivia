@@ -1,0 +1,1463 @@
+const db = [
+    // --- KANTO (Gen 1) ---
+    { cat: "KANTO", q: "¿Cuál es el único Pokémon de tipo Veneno/Planta que evoluciona con Piedra Hoja?", options: ["Weepinbell", "Gloom", "Ivysaur", "Victreebel"], correct: 1 },
+    { cat: "KANTO", q: "¿Qué Pokémon entrega el Dr. Fuji en Pueblo Lavanda tras rescatarlo?", options: ["Poké Flauta", "Pueblo Lavanda no da Pokémon", "Snorlax", "Gastly"], correct: 1 },
+    { cat: "CIUDADES", q: "¿En qué ciudad se encuentra el Laboratorio Pokémon del Profesor Oak?", options: ["Ciudad Verde", "Pueblo Paleta", "Ciudad Plateada", "Ciudad Celeste"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Cuál es el Pokémon principal del líder de gimnasio Giovanni?", options: ["Nidoking", "Rhydon", "Persian", "Dugtrio"], correct: 1 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png", options: ["Dragonair", "Charizard", "Dragonite", "Gyados"], correct: 2 },
+
+    // --- JOHTO (Gen 2) ---
+    { cat: "JOHTO", q: "¿Qué objeto necesitas para que Scyther evolucione a Scizor?", options: ["Piedra Dura", "Revestimiento Metálico", "Roca del Rey", "Diente Marino"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Eevee a Espeon?", options: ["Piedra Solar", "Amistad de día", "Amistad de noche", "Nivel 30"], correct: 1 },
+    { cat: "LORE", q: "¿Cuál de estos Pokémon es conocido como el Guardián de los Mares?", options: ["Suicune", "Lugia", "Kyogre", "Manaphy"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Cuál es el tipo de Pokémon favorito de Débora (Clair), la octava líder de Johto?", options: ["Hielo", "Agua", "Dragón", "Acero"], correct: 2 },
+    { cat: "JOHTO", q: "¿Qué ciudad de Johto tiene una torre quemada y una torre campana?", options: ["Ciudad Trigal", "Ciudad Iris", "Ciudad Olivo", "Ciudad Endrino"], correct: 1 },
+
+    // --- HOENN (Gen 3) ---
+    { cat: "HOENN", q: "¿Cómo se llaman los dos equipos villanos que se enfrentan en Hoenn?", options: ["Team Rocket y Team Galactic", "Team Aqua y Team Magma", "Team Flare y Team Skull", "Team Yell y Team Star"], correct: 1 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/257.png", options: ["Combusken", "Blaziken", "Infernape", "Emboar"], correct: 1 },
+    { cat: "HOENN", q: "¿Qué Pokémon es el 'As' del campeón Máximo (Steven Stone)?", options: ["Aggron", "Metagross", "Cradily", "Armaldo"], correct: 1 },
+    { cat: "MECÁNICA", q: "¿Qué clima invoca la habilidad 'Sequía' de Groudon?", options: ["Lluvia", "Tormenta Arena", "Sol abrasador", "Nieve"], correct: 2 },
+    { cat: "CIUDADES", q: "¿Cuál es la ciudad inicial donde vive el protagonista en Hoenn?", options: ["Villa Raíz", "Pueblo Escaso", "Ciudad Petalia", "Ciudad Férrica"], correct: 0 },
+
+    // --- SINNOH (Gen 4) ---
+    { cat: "SINNOH", q: "¿A qué nivel evoluciona Gible en Gabite?", options: ["24", "18", "32", "36"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Cómo se llama el líder del Team Galactic?", options: ["Helio", "Guillermo", "Saturno", "Venus"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué trío de Pokémon representa la emoción, la sabiduría y la voluntad?", options: ["Aves Legendarias", "Perros Legendarios", "Guardianes de los Lagos", "Regis"], correct: 2 },
+    { cat: "SINNOH", q: "¿En qué ciudad se encuentra el gimnasio de tipo Fantasma de Fantina?", options: ["Ciudad Corazón", "Ciudad Canal", "Ciudad Puntaneva", "Ciudad Rocavelo"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png", options: ["Riolu", "Lucario", "Zoroark", "Blaziken"], correct: 1 },
+
+    // --- TESELIA / UNOVA (Gen 5) ---
+    { cat: "TESELIA", q: "¿Cuál de estos Pokémon es el inicial de tipo fuego?", options: ["Oshawott", "Snivy", "Tepig", "Chimchar"], correct: 2 },
+    { cat: "LORE", q: "¿Cómo se llama la región donde transcurren Pokémon Blanco y Negro?", options: ["Sinnoh", "Teselia", "Kalos", "Alola"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Karrablast?", options: ["Nivel 30", "Intercambio por Shelmet", "Piedra Trueno", "Subiendo de nivel con lluvia"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Quién es el campeón de la liga en Pokémon Blanco y Negro (originales)?", options: ["Mirto", "Iris", "N", "Ghetsis"], correct: 0 },
+    { cat: "CIUDADES", q: "¿Cómo se llama la gran metrópolis de Teselia?", options: ["Ciudad Porcelana", "Ciudad Mayólica", "Ciudad Fayenza", "Ciudad Teja"], correct: 0 },
+
+    // --- KALOS (Gen 6) ---
+    { cat: "KALOS", q: "¿Qué nuevo tipo de Pokémon se introdujo en la sexta generación?", options: ["Acero", "Siniestro", "Hada", "Dragón"], correct: 2 },
+    { cat: "MECÁNICA", q: "¿Qué objeto debe llevar un Pokémon para Megaevolucionar (en general)?", options: ["Mega-Aro", "Mega-Piedra", "Cristal Z", "Piedra Activadora"], correct: 1 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png", options: ["Froakie", "Frogadier", "Greninja", "Inteleon"], correct: 2 },
+    { cat: "KALOS", q: "¿Cuál es el Pokémon legendario que representa la destrucción?", options: ["Xerneas", "Yveltal", "Zygarde", "Rayquaza"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Quién es el profesor que te entrega el inicial en Kalos?", options: ["Profesor Ciprés", "Profesor Abedul", "Profesor Serbal", "Profesor Elm"], correct: 0 },
+
+    // --- ALOLA (Gen 7) ---
+    { cat: "ALOLA", q: "¿Cómo se llaman los desafíos que sustituyen a los gimnasios en Alola?", options: ["Torneo Mundial", "Recorrido Insular", "Liga Naranja", "Batalla de la Frontera"], correct: 1 },
+    { cat: "FORMAS ALOLA", q: "¿De qué tipo es el Meowth de Alola?", options: ["Normal", "Siniestro", "Acero", "Hada"], correct: 1 },
+    { cat: "VISUAL", q: "¿Quién es este Ultraente?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/793.png", options: ["Buzzwole", "Pheromosa", "Nihilego", "Xurkitree"], correct: 2 },
+    { cat: "ALOLA", q: "¿Cuál es el nombre del equipo villano local en Alola?", options: ["Team Yell", "Team Skull", "Team Flare", "Team Galactic"], correct: 1 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon evoluciona en Solgaleo o Lunala?", options: ["Rockruff", "Cosmog", "Poipole", "Type: Null"], correct: 1 },
+
+    // --- GALAR (Gen 8) ---
+    { cat: "GALAR", q: "¿Cuál es la mecánica especial de combate en la región de Galar?", options: ["Megaevolución", "Movimientos Z", "Dinamax", "Teracristalización"], correct: 2 },
+    { cat: "GALAR", q: "¿Quién es el eterno rival y hermano del campeón Lionel?", options: ["Paul", "Berto", "Roxy", "Nilo"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/815.png", options: ["Scorbunny", "Raboot", "Cinderace", "Blaziken"], correct: 2 },
+    { cat: "FORMAS GALAR", q: "¿De qué tipo es el Ponyta de Galar?", options: ["Fuego", "Psíquico", "Hada", "Hielo"], correct: 1 },
+    { cat: "CIUDADES", q: "¿En qué ciudad se encuentra el estadio final de la Copa de Campeones?", options: ["Ciudad Puntera", "Ciudad Artejo", "Ciudad Pistón", "Pueblo Hoyuelo"], correct: 0 },
+
+    // --- PALDEA (Gen 9) ---
+    { cat: "PALDEA", q: "¿Cómo se llama la escuela a la que asiste el protagonista en Pokémon Púrpura?", options: ["Academia Naranja", "Academia Uva", "Academia Arándano", "Academia Pokémon"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Quién es la Supercampeona de la Liga de Paldea?", options: ["Mencia", "Ságita", "Hela", "Cintia"], correct: 1 },
+    { cat: "VISUAL", q: "¿Qué Pokémon inicial es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/906.png", options: ["Fuecoco", "Sprigatito", "Quaxly", "Pawmi"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Pawmo en Pawmot?", options: ["Piedra Trueno", "Caminar 1000 pasos en modo Enviar Pokémon", "Nivel 32", "Intercambio"], correct: 1 },
+    { cat: "PALDEA", q: "¿Qué objeto recolectas de los cofres para evolucionar a Gimmighoul?", options: ["Caramelos Raros", "Monedas de Gimmighoul", "Pepitas", "Fragmentos Teracristal"], correct: 1 },
+
+    // --- TRIVIA MIXTA (50 más) ---
+    { cat: "TIPOS", q: "¿Cuál es la debilidad del tipo Eléctrico?", options: ["Agua", "Planta", "Tierra", "Vuelo"], correct: 2 },
+    { cat: "TIPOS", q: "¿A qué tipo de ataques es inmune el tipo Siniestro?", options: ["Psíquico", "Fantasma", "Lucha", "Hada"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite al usuario huir de un combate contra un Pokémon salvaje?", options: ["Rugido", "Teletransporte", "Protección", "Destello"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona al nivel 100?", options: ["Ninguno por nivel", "Magikarp", "Legendarios", "Eternatus"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuántos tipos de Pokémon existen actualmente (Gen 9)?", options: ["15", "17", "18", "19"], correct: 2 },
+    { cat: "KANTO", q: "¿Qué Pokémon se encuentra al final de la Cueva Celeste?", options: ["Articuno", "Mewtwo", "Zapdos", "Moltres"], correct: 1 },
+    { cat: "JOHTO", q: "¿Quién es el padre del rival Plata (Silver)?", options: ["Oak", "Giovanni", "Lance", "Red"], correct: 1 },
+    { cat: "HOENN", q: "¿Qué Pokémon representa la tierra en la mitología de Hoenn?", options: ["Kyogre", "Groudon", "Rayquaza", "Regirock"], correct: 1 },
+    { cat: "SINNOH", q: "¿Cómo se llama la campeona de Sinnoh?", options: ["Cintia", "Blanca", "Erika", "Valeria"], correct: 0 },
+    { cat: "TESELIA", q: "¿Qué Pokémon legendario representa los ideales?", options: ["Reshiram", "Zekrom", "Kyurem", "Victini"], correct: 1 },
+    { cat: "KALOS", q: "¿Cuál es el inicial de tipo planta en Kalos?", options: ["Chespin", "Quilladin", "Chesnaught", "Snivy"], correct: 0 },
+    { cat: "ALOLA", q: "¿Cuál es el nombre de la organización que protege a los Pokémon en Alola?", options: ["Team Skull", "Fundación Æther", "Macrocosmos", "Team Star"], correct: 1 },
+    { cat: "GALAR", q: "¿Qué Pokémon es conocido como el Caballero de Galar?", options: ["Sirfetch'd", "Corviknight", "Falinks", "Zacian"], correct: 0 },
+    { cat: "PALDEA", q: "¿Cuál es el tipo del Pokémon legendario Miraidon?", options: ["Eléctrico/Dragón", "Fuego/Dragón", "Lucha/Dragón", "Acero/Dragón"], correct: 0 },
+    { cat: "ANIME", q: "¿Cuál fue el primer Pokémon que capturó Ash Ketchum?", options: ["Pikachu", "Caterpie", "Pidgeotto", "Bulbasaur"], correct: 1 },
+    { cat: "ANIME", q: "¿Cómo se llama el compañero de Ash que cocina y es líder de gimnasio?", options: ["Tracey", "Brock", "Cilan", "Lem"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Qué objeto evoluciona a Slowpoke en Slowking?", options: ["Roca del Rey + Intercambio", "Piedra Agua", "Nivel 36", "Escama Bella"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png", options: ["Dewgong", "Lapras", "Walrein", "Vaporeon"], correct: 1 },
+    { cat: "TIPOS", q: "¿Qué tipo es supereficaz contra el tipo Dragón?", options: ["Fuego", "Agua", "Hielo", "Eléctrico"], correct: 2 },
+    { cat: "TIPOS", q: "¿A qué tipo es débil el tipo Hada?", options: ["Acero", "Dragón", "Siniestro", "Lucha"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png", options: ["Rayquaza", "Gyarados", "Dragonite", "Zygarde"], correct: 0 },
+    { cat: "KANTO", q: "¿En qué isla se encuentra el gimnasio de Blaine?", options: ["Isla Canela", "Isla Intis", "Isla Cuarta", "Isla Prima"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon aparece en la portada de Pokémon Cristal?", options: ["Ho-Oh", "Lugia", "Suicune", "Celebi"], correct: 2 },
+    { cat: "MECÁNICA", q: "¿Qué estadística baja el estado Quemado?", options: ["Velocidad", "Ataque Especial", "Ataque", "Defensa"], correct: 2 },
+    { cat: "MECÁNICA", q: "¿Qué estadística baja el estado Paralizado?", options: ["Ataque", "Velocidad", "Defensa", "Precisión"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Pikachu en Raichu?", options: ["Piedra Trueno", "Nivel 22", "Amistad", "Piedra Solar"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png", options: ["Mew", "Mewtwo", "Lucario", "Deoxys"], correct: 1 },
+    { cat: "TESELIA", q: "¿Qué trío de legendarios está basado en 'Los Tres Mosqueteros'?", options: ["Genios", "Espadachines Místicos", "Aves", "Regis"], correct: 1 },
+    { cat: "ALOLA", q: "¿De qué tipo es el Raichu de Alola?", options: ["Eléctrico", "Eléctrico/Psíquico", "Eléctrico/Hada", "Eléctrico/Siniestro"], correct: 1 },
+    { cat: "OBJETOS", q: "¿Qué objeto cura cualquier estado alterado?", options: ["Poción", "Cura Total", "Antídoto", "Revivir"], correct: 1 },
+    { cat: "GALAR", q: "¿Cómo se llama el Pokémon que acompaña a Roxy?", options: ["Morpeko", "Grimmsnarl", "Obstagoon", "Toxel"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué Pokémon tiene 999 formas antes de evolucionar?", options: ["Gimmighoul", "Tandemaus", "Dudunsparce", "Finizen"], correct: 0 },
+    { cat: "ANIME", q: "¿En qué región Ash ganó su primera Liga Pokémon oficial?", options: ["Kanto", "Alola", "Kalos", "Sinnoh"], correct: 1 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/395.png", options: ["Piplup", "Prinplup", "Empoleon", "Palkia"], correct: 2 },
+    { cat: "LEGENDARIOS", q: "¿Quién es el trío de la creación de Sinnoh?", options: ["Articuno/Zapdos/Moltres", "Dialga/Palkia/Giratina", "Kyogre/Groudon/Rayquaza", "Reshiram/Zekrom/Kyurem"], correct: 1 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Normal siempre asesta un golpe crítico?", options: ["Corte", "Falso Tortazo", "Sentencia", "No existe"], correct: 3 },
+    { cat: "PERSONAJES", q: "¿Cómo se llama el campeón de Hoenn en Rubí y Zafiro?", options: ["Plubio", "Máximo", "Dracón", "Sixto"], correct: 1 },
+    { cat: "SINNOH", q: "¿Qué objeto necesitas para evolucionar a Sneasel en Weavile?", options: ["Garra Afilada (Noche)", "Colmillo Agudo", "Piedra Siniestra", "Piedra Noche"], correct: 0 },
+    { cat: "KALOS", q: "¿Cómo se llama el líder del Team Flare?", options: ["Lysson", "Xana", "Benigno", "Trovato"], correct: 0 },
+    { cat: "ALOLA", q: "¿Cómo se llama el espíritu guardián de la isla Melemele?", options: ["Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini"], correct: 0 },
+    { cat: "GALAR", q: "¿Cuál es el tipo de la líder de gimnasio Judith (Bea)?", options: ["Lucha", "Fantasma", "Psíquico", "Hada"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué Pokémon es conocido como el 'Tesoro del Área Cero'?", options: ["Terapagos", "Ogerpon", "Pecharunt", "Okidogi"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png", options: ["Vulpix", "Eevee", "Zorua", "Fennekin"], correct: 1 },
+    { cat: "TIPOS", q: "¿Qué tipo es inmune al tipo Tierra?", options: ["Vuelo", "Acero", "Veneno", "Fuego"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es resistente al tipo Hada?", options: ["Dragón", "Lucha", "Fuego", "Siniestro"], correct: 2 },
+    { cat: "KANTO", q: "¿Cuántas medallas necesitas para entrar en la Liga Pokémon?", options: ["6", "7", "8", "10"], correct: 2 },
+    { cat: "JOHTO", q: "¿A qué nivel evoluciona Totodile?", options: ["14", "16", "18", "20"], correct: 2 },
+    { cat: "HOENN", q: "¿Qué Pokémon se oculta bajo un trapo para parecerse a Pikachu?", options: ["Mimikyu (Es de Alola)", "Shuppet", "Castform", "Banette"], correct: 0 },
+    { cat: "ANIME", q: "¿Cómo se llama el equipo de villanos que siempre persigue a Ash?", options: ["Team Rocket", "Team Galaxia", "Team Aqua", "Team Magma"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png", options: ["Lugia", "Ho-Oh", "Moltres", "Fearow"], correct: 1 },
+    { cat: "OBJETOS", q: "¿Qué piedra evoluciona a Vulpix en Ninetales?", options: ["Piedra Fuego", "Piedra Solar", "Piedra Lunar", "Piedra Alba"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Cuál es la probabilidad base de encontrar un Pokémon Shiny?", options: ["1/1000", "1/4096", "1/8192", "1/500"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Cuál es el primer líder de gimnasio que Ash enfrenta en Kanto?", options: ["Brock", "Misty", "Lt. Surge", "Erika"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/382.png", options: ["Kyogre", "Wailord", "Gyarados", "Sharpedo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite a un Pokémon recuperar PS durmiendo?", options: ["Descanso", "Recuperación", "Absorber", "Batido"], correct: 0 },
+
+    // KANTO (Gen 1)
+    { cat: "KANTO", q: "¿Cuál es el número de Pokédex de Bulbasaur?", options: ["001", "004", "007", "025"], correct: 0 },
+    { cat: "KANTO", q: "¿Qué Pokémon usa el Teniente Surge como su as?", options: ["Pikachu", "Electabuzz", "Raichu", "Jolteon"], correct: 2 },
+    { cat: "CIUDADES", q: "¿Cómo se llama la ciudad que no tiene gimnasio pero tiene el Centro Comercial más grande de Kanto?", options: ["Ciudad Azulona", "Ciudad Azafrán", "Ciudad Fucsia", "Ciudad Plateada"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto necesitas para despertar al Snorlax que bloquea el camino?", options: ["Poké Flauta", "Poké Bici", "Caramelo Raro", "Buscaobjetos"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png", options: ["Arcanine", "Ninetales", "Flareon", "Entei"], correct: 0 },
+
+    // JOHTO (Gen 2)
+    { cat: "JOHTO", q: "¿Quién es el primer líder de gimnasio de Johto?", options: ["Antón", "Pegaso", "Blanca", "Erico"], correct: 1 },
+    { cat: "JOHTO", q: "¿Qué Pokémon es conocido como el viajero del tiempo?", options: ["Mew", "Celebi", "Jirachi", "Victini"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Tyrogue en Hitmontop?", options: ["Atk > Def", "Atk < Def", "Atk = Def", "Piedra Alba"], correct: 2 },
+    { cat: "PERSONAJES", q: "¿Cuál es el Pokémon as del Campeón Lance?", options: ["Dragonite", "Salamence", "Garchomp", "Hydreigon"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png", options: ["Pupitar", "Tyranitar", "Aggron", "Golem"], correct: 1 },
+
+    // HOENN (Gen 3)
+    { cat: "HOENN", q: "¿Cuál es el tipo de la líder de gimnasio Alana (Winona)?", options: ["Vuelo", "Agua", "Planta", "Eléctrico"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon nace del Huevo que te dan en Pueblo Lavacalda?", options: ["Wynaut", "Togepi", "Pichu", "Azurill"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon se despierta usando Braille en las cuevas de Hoenn?", options: ["Regirock", "Latias", "Rayquaza", "Deoxys"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué habilidad tiene Slaking que le impide atacar cada dos turnos?", options: ["Ausente", "Zoquete", "Flaqueza", "Ignorante"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/380.png", options: ["Latias", "Latios", "Cresselia", "Lugia"], correct: 0 },
+
+    // SINNOH (Gen 4)
+    { cat: "SINNOH", q: "¿Cómo se llama el pantano donde vive Croagunk?", options: ["Gran Pantano", "Zona Descanso", "Ruta 212", "Bosque Vetusto"], correct: 0 },
+    { cat: "SINNOH", q: "¿Qué objeto evoluciona a Murkrow en Honchkrow?", options: ["Piedra Noche", "Piedra Oscura", "Piedra Alba", "Piedra Lunar"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es el líder de gimnasio de tipo Lucha en Sinnoh?", options: ["Brezo", "Maylene", "Roco", "Acerón"], correct: 1 },
+    { cat: "MECÁNICA", q: "¿Qué Pokémon tiene la habilidad 'Multitipo'?", options: ["Ditto", "Arceus", "Silvally", "Mew"], correct: 1 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/483.png", options: ["Palkia", "Dialga", "Giratina", "Arceus"], correct: 1 },
+
+    // TESELIA (Gen 5)
+    { cat: "TESELIA", q: "¿Cuántos líderes de gimnasio hay en el primer gimnasio de Blanco y Negro?", options: ["1", "2", "3", "4"], correct: 2 },
+    { cat: "TESELIA", q: "¿Qué Pokémon legendario está basado en la justicia de D'Artagnan?", options: ["Cobalion", "Terrakion", "Virizion", "Keldeo"], correct: 3 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Bisharp en Kingambit?", options: ["Nivel 52", "Derrotar 3 Bisharp que lideren Pawniard con Distintivo de Líder", "Piedra Noche", "Intercambio"], correct: 1 },
+    { cat: "CIUDADES", q: "¿En qué ciudad se encuentra el Gimnasio de tipo Eléctrico de Camila?", options: ["Ciudad Mayólica", "Ciudad Porcelana", "Ciudad Fayenza", "Ciudad Teja"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué inicial es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/495.png", options: ["Snivy", "Servine", "Serperior", "Treecko"], correct: 0 },
+
+    // KALOS (Gen 6)
+    { cat: "KALOS", q: "¿Cuál es el tipo del gimnasio de Valérie?", options: ["Hada", "Psíquico", "Hielo", "Acero"], correct: 0 },
+    { cat: "ANIME", q: "¿Cómo se llama el Greninja especial de Ash?", options: ["Greninja Ash", "Greninja Mega", "Greninja Sincronía", "Greninja Vínculo"], correct: 2 },
+    { cat: "KALOS", q: "¿Cuál es el Pokémon inicial de tipo fuego de Kalos?", options: ["Fennekin", "Braixen", "Delphox", "Litten"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite a Floette-Flor Eterna ser único?", options: ["Luz Albor", "Flor Eterna", "No se puede obtener", "Piedra Brillo"], correct: 2 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/718.png", options: ["Zygarde", "Xerneas", "Yveltal", "Rayquaza"], correct: 0 },
+
+    // ALOLA (Gen 7)
+    { cat: "ALOLA", q: "¿Quién es el líder del Team Skull?", options: ["Guzmán", "Francine", "Gladio", "Samina"], correct: 0 },
+    { cat: "ALOLA", q: "¿De qué tipo es el Marowak de Alola?", options: ["Tierra", "Fuego/Fantasma", "Fuego/Siniestro", "Fantasma/Tierra"], correct: 1 },
+    { cat: "MECÁNICA", q: "¿Cómo se llama la pulsera necesaria para usar los movimientos Z?", options: ["Pulsera Z", "Mega-Aro", "Pulsera Dinamax", "Tera-Orbe"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué Pokémon de Ash en Alola nunca quiso evolucionar?", options: ["Rowlet", "Litten", "Rockruff", "Poipole"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/773.png", options: ["Silvally", "Type: Null", "Arceus", "Zoroark"], correct: 0 },
+
+    // GALAR (Gen 8)
+    { cat: "GALAR", q: "¿Cuál es el tipo de la líder de gimnasio Sally (Opal)?", options: ["Hada", "Psíquico", "Veneno", "Normal"], correct: 0 },
+    { cat: "GALAR", q: "¿Qué Pokémon es el eterno rival de Durant?", options: ["Heatmor", "Shelmet", "Accelgor", "Centiskorch"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Milcery en Alcremie?", options: ["Nivel 25", "Hacer girar al personaje con un confite equipado", "Piedra Dulce", "Amistad"], correct: 1 },
+    { cat: "LEGENDARIOS", q: "¿Cómo se llama el Pokémon que monta a Glastrier o Spectrier?", options: ["Calyrex", "Zacian", "Zamazenta", "Eternatus"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/812.png", options: ["Rillaboom", "Thwackey", "Grookey", "Chesnaught"], correct: 0 },
+
+    // PALDEA (Gen 9)
+    { cat: "PALDEA", q: "¿Cuál es el tipo de la líder de gimnasio e influencer e-Nigma (Iono)?", options: ["Eléctrico", "Agua", "Hada", "Vuelo"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué Pokémon paradoja es la versión futura de Delibird?", options: ["Ferrosaco", "Ferropalmas", "Ferromitón", "Ferrocuello"], correct: 0 },
+    { cat: "PALDEA", q: "¿Cómo se llama la zona central de Paldea donde está el cráter?", options: ["Área Cero", "Senda de la Victoria", "Pueblo Veta", "Sierra Napada"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Finizen en Palafin?", options: ["Nivel 38 en modo multijugador (Círculo Unión)", "Nivel 38 con lluvia", "Piedra Agua", "Intercambio"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1000.png", options: ["Gimmighoul", "Gholdengo", "Pawmot", "Revavroom"], correct: 1 },
+
+    // TIPOS Y COMBATE
+    { cat: "TIPOS", q: "¿Cuál es el único tipo que resiste al tipo Lucha?", options: ["Psíquico", "Hada", "Veneno", "Bicho"], correct: 3 },
+    { cat: "MECÁNICA", q: "¿Qué objeto duplica la velocidad pero solo permite usar un movimiento?", options: ["Pañuelo Elección", "Cinta Elección", "Gafas Elección", "Vidasfera"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento siempre golpea primero independientemente de la velocidad?", options: ["Velocidad Extrema", "Ataque Rápido", "Sorpresa", "Todos los anteriores"], correct: 3 },
+    { cat: "TIPOS", q: "¿Qué tipo de Pokémon es inmune al granizo?", options: ["Hielo", "Fuego", "Acero", "Roca"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto previene que un Pokémon sea debilitado de un solo golpe si tiene los PS al máximo?", options: ["Banda Aguante", "Cinta Focus", "Mineral Evolutivo", "Seguro Debilidad"], correct: 0 },
+    
+    // ANIME
+    { cat: "ANIME", q: "¿Cómo se llama el archienemigo de Ash en la región de Sinnoh?", options: ["Paul (Polo)", "Gary", "Drew", "Ritchie"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué Pokémon cuidó Ash pero tuvo que liberar en el archipiélago naranja?", options: ["Lapras", "Butterfree", "Pidgeot", "Charizard"], correct: 0 },
+    { cat: "ANIME", q: "¿Cómo se llama la oficial encargada de la ley en el mundo Pokémon?", options: ["Agente Mara (Jenny)", "Enfermera Joy", "Oficial Sara", "Agente Looker"], correct: 0 },
+    { cat: "ANIME", q: "¿Cuál es el primer Pokémon que Ash captura en la región de Hoenn?", options: ["Taillow", "Treecko", "Mudkip", "Lotad"], correct: 0 },
+    { cat: "ANIME", q: "¿Quién ganó la Liga de Kalos?", options: ["Alain", "Ash", "Sawyer", "Tierno"], correct: 0 },
+
+    // CURIOSIDADES
+    { cat: "CURIOSIDADES", q: "¿Cuál es el Pokémon más pesado?", options: ["Cosmoem", "Celesteela", "Groudon Primigenio", "Ambos Cosmoem y Celesteela"], correct: 3 },
+    { cat: "CURIOSIDADES", q: "¿Cuál es el Pokémon con más formas base (no transformaciones)?", options: ["Alcremie", "Spinda", "Vivillon", "Unown"], correct: 1 },
+    { cat: "CURIOSIDADES", q: "¿Qué Pokémon fue el primero en ser diseñado?", options: ["Rhydon", "Arceus", "Mew", "Pikachu"], correct: 0 },
+    { cat: "CURIOSIDADES", q: "¿Cuál es el único Pokémon que puede aprender el movimiento 'Esquema'?", options: ["Ditto", "Smeargle", "Mew", "Mewtwo"], correct: 1 },
+    { cat: "CURIOSIDADES", q: "¿Qué Pokémon tiene el ratio de captura más bajo?", options: ["Mewtwo", "Beldum", "Arceus", "Todos los anteriores"], correct: 3 },
+
+    // REPASO RÁPIDO
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Gyarados?", options: ["Agua/Dragón", "Agua/Volador", "Agua/Siniestro", "Agua"], correct: 1 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Lugia?", options: ["Agua/Volador", "Psíquico/Volador", "Dragón/Volador", "Psíquico/Agua"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿A qué evoluciona Poliwhirl con una Piedra Agua?", options: ["Poliwrath", "Politoed", "Poliwhirl no evoluciona así", "Ludicolo"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿A qué evoluciona Poliwhirl con una Roca del Rey?", options: ["Poliwrath", "Politoed", "Slowking", "Kingdra"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Quién es el padre del protagonista en los juegos de Hoenn?", options: ["Norman", "Oak", "Birch", "Giovanni"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png", options: ["Lugia", "Ho-Oh", "Articuno", "Kyogre"], correct: 0 },
+    { cat: "CIUDADES", q: "¿En qué ciudad se encuentra el Casino en Kanto?", options: ["Ciudad Azulona", "Ciudad Fucsia", "Ciudad Azafrán", "Ciudad Celeste"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite ver a los Kecleon invisibles en Hoenn?", options: ["Detector Devon", "Buscaobjetos", "Lupa", "Gafas de Sol"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué habilidad permite a un Pokémon recuperar PS al ser golpeado por agua?", options: ["Absorbe Agua", "Piel Tosca", "Cuerpo Llama", "Pararrayos"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es débil al tipo Bicho?", options: ["Siniestro", "Hada", "Acero", "Veneno"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon es el líder del trío de las nubes (Tornadus, Thundurus, Landorus)?", options: ["Enamorus", "Landorus", "Rayquaza", "Regigigas"], correct: 1 },
+    { cat: "ANIME", q: "¿Qué Pokémon de Ash fue abandonado por un entrenador llamado Damian?", options: ["Charmander", "Squirtle", "Bulbasaur", "Chimchar"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png", options: ["Garchomp", "Gabite", "Gible", "Flygon"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué Pokémon paradoja es el pasado de Magneton?", options: ["Reptalada", "Pelarena", "Colagrito", "Melenaleteo"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Sliggoo de Hisui en Goodra de Hisui?", options: ["Nivel 50 bajo la lluvia", "Piedra Agua", "Amistad", "Piedra Musgo"], correct: 0 },
+    { cat: "TESELIA", q: "¿Cómo se llama el trío de Pokémon que representan el frío (Kyurem + otros)?", options: ["Trío Tao", "Trío de la creación", "Espadachines", "Genios"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto evoluciona a Gloom en Bellossom?", options: ["Piedra Solar", "Piedra Hoja", "Piedra Alba", "Piedra Lunar"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo de Pokémon es inmune a la arena?", options: ["Roca, Tierra y Acero", "Solo Roca", "Solo Tierra", "Solo Acero"], correct: 0 },
+    { cat: "KANTO", q: "¿Quién es el último miembro del Alto Mando en Kanto?", options: ["Lorelei", "Bruno", "Agatha", "Lance"], correct: 3 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/381.png", options: ["Latios", "Latias", "Lugia", "Cresselia"], correct: 0 },
+    { cat: "ANIME", q: "¿Cuál es el Pokémon as de Gladio?", options: ["Silvally", "Lycanroc Nocturno", "Lucario", "Umbreon"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento duplica el ataque del usuario a cambio de la mitad de sus PS?", options: ["Tambor", "Danza Espada", "Maldición", "Maquinación"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es el rival de Pokémon Esmeralda si eliges al chico?", options: ["Aura (May)", "Bruno", "Wally", "Blasco"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/635.png", options: ["Hydreigon", "Zweilous", "Deino", "Dragonite"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué objeto aumenta el daño de movimientos del mismo tipo que el Pokémon?", options: ["Vidasfera", "Cinta Experto", "Ninguno de estos", "Imán"], correct: 2 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon es el guardián de los cielos en Hoenn?", options: ["Rayquaza", "Tornadus", "Lugia", "Dragonite"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Inkay?", options: ["Subir nivel girando la consola", "Piedra Noche", "Intercambio", "Nivel 30"], correct: 0 },
+    { cat: "SINNOH", q: "¿Qué Pokémon as entrega el líder Roco (Roark)?", options: ["Cranidos", "Shieldon", "Onix", "Geodude"], correct: 0 },
+    { cat: "ALOLA", q: "¿Cuál es el tipo del Golem de Alola?", options: ["Roca/Eléctrico", "Roca/Fuego", "Tierra/Eléctrico", "Acero/Eléctrico"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png", options: ["Zacian", "Zamazenta", "Eternatus", "Arceus"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto te permite capturar Pokémon con 100% de éxito?", options: ["Master Ball", "Ultra Ball", "Park Ball", "Safari Ball"], correct: 0 },
+    { cat: "KANTO", q: "¿Cómo se llama el barco que atraca en Ciudad Carmín?", options: ["S.S. Anne", "S.S. Aqua", "S.S. Cactus", "S.S. Tidal"], correct: 0 },
+    { cat: "JOHTO", q: "¿Cuál es el tipo del gimnasio de Yasmina?", options: ["Acero", "Eléctrico", "Roca", "Tierra"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es supereficaz contra el tipo Planta?", options: ["Fuego, Hielo, Veneno, Volador, Bicho", "Solo Fuego", "Solo Fuego y Volador", "Fuego, Hielo y Roca"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png", options: ["Umbreon", "Espeon", "Vaporeon", "Jolteon"], correct: 0 },
+    // --- BLOQUE 3: PREGUNTAS 201 - 300 ---
+    // KANTO
+    { cat: "KANTO", q: "¿Cuál es el Pokémon de tipo Psíquico que solo aparece en la Zona Safari?", options: ["Exeggcute", "Slowpoke", "Venonat", "Starmie"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Qué Pokémon entrega la medalla Cascada en Ciudad Celeste?", options: ["Misty", "Erika", "Sabrina", "Blanca"], correct: 0 },
+    { cat: "KANTO", q: "¿Qué Pokémon evoluciona al intercambiarlo con un Revestimiento Metálico?", options: ["Onix", "Scyther", "Ambos", "Magneton"], correct: 2 },
+    { cat: "ANIME", q: "¿Qué Pokémon liberó Ash en el Bosque Verde para que protegiera a su manada?", options: ["Pidgeot", "Butterfree", "Beedrill", "Bulbasaur"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png", options: ["Gyarados", "Magikarp", "Milotic", "Dragonite"], correct: 0 },
+
+    // JOHTO
+    { cat: "JOHTO", q: "¿Cómo se llama el líder de gimnasio de Ciudad Malva que usa Pokémon tipo Volador?", options: ["Pegaso", "Antón", "Morti", "Aníbal"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué objeto necesita Slowpoke para evolucionar a Slowbro?", options: ["Ninguno, solo nivel", "Roca del Rey", "Piedra Agua", "Incienso Lento"], correct: 0 },
+    { cat: "JOHTO", q: "¿En qué ruta se encuentra la Guardería Pokémon en los juegos de Johto?", options: ["Ruta 34", "Ruta 30", "Ruta 32", "Ruta 38"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon es el líder del trío de las Bestias Legendarias?", options: ["Ho-Oh", "Lugia", "Suicune", "Raikou"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este inicial?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/157.png", options: ["Typhlosion", "Quilava", "Charizard", "Entei"], correct: 0 },
+
+    // HOENN
+    { cat: "HOENN", q: "¿Cuál es la habilidad característica de Castform que le hace cambiar de forma?", options: ["Predicción", "Clima", "Cambio Color", "Mudar"], correct: 0 },
+    { cat: "LORE", q: "¿Qué Pokémon es capaz de megaevolucionar sin necesidad de una Mega-Piedra?", options: ["Rayquaza", "Mewtwo", "Lucario", "Kyogre"], correct: 0 },
+    { cat: "CIUDADES", q: "¿Qué ciudad de Hoenn está construida sobre troncos de árboles?", options: ["Ciudad Arborada", "Ciudad Calagua", "Ciudad Malvalona", "Pueblo Pardal"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es la líder de gimnasio de tipo Fuego en Hoenn?", options: ["Candela", "Alana", "Fátima", "Erika"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/303.png", options: ["Mawile", "Sableye", "Absol", "Klefki"], correct: 0 },
+
+    // SINNOH
+    { cat: "SINNOH", q: "¿Qué Pokémon as tiene el líder de gimnasio Lectro?", options: ["Electivire", "Luxray", "Jolteon", "Raichu"], correct: 1 },
+    { cat: "SINNOH", q: "¿Cómo se llama el área donde puedes capturar Pokémon de otras regiones en Diamante/Perla?", options: ["Parque Compi", "Zona Safari", "Subsuelo", "Jardín Trofeo"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿A qué evoluciona Roselia cuando se expone a una Piedra Alba?", options: ["Roserade", "Budew", "Sunflora", "Bellossom"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué Pokémon tiene la habilidad 'Indefenso' que hace que nunca fallen sus ataques?", options: ["Machamp", "Noivern", "Haxorus", "Pikachu"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/468.png", options: ["Togekiss", "Togetic", "Altaria", "Staraptor"], correct: 0 },
+
+    // TESELIA
+    { cat: "TESELIA", q: "¿Qué Pokémon legendario representa la verdad?", options: ["Reshiram", "Zekrom", "Kyurem", "Victini"], correct: 0 },
+    { cat: "CIUDADES", q: "¿En qué ciudad se encuentra el gimnasio de tipo Bicho de Camus?", options: ["Ciudad Porcelana", "Ciudad Mayólica", "Ciudad Fayenza", "Ciudad Gres"], correct: 0 },
+    { cat: "TESELIA", q: "¿Qué objeto necesitas para cambiar a Rotom de forma en esta generación?", options: ["Catálogo Rotom", "Electrodomésticos", "Motor", "Piedra Trueno"], correct: 1 },
+    { cat: "PERSONAJES", q: "¿Quién es el científico que trabaja para el Equipo Plasma?", options: ["Acromo", "Cerezo", "Oak", "Elm"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué inicial es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/503.png", options: ["Oshawott", "Dewott", "Samurott", "Greninja"], correct: 2 },
+
+    // KALOS
+    { cat: "KALOS", q: "¿Cómo se llama la ciudad donde se encuentra la Torre Maestra?", options: ["Ciudad Yantra", "Ciudad Luminalia", "Ciudad Fractal", "Ciudad Relieve"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo de Pokémon es Xerneas?", options: ["Hada", "Psíquico", "Planta", "Hada/Planta"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué Pokémon de tipo Dragón/Veneno tiene el rival Alain?", options: ["Naganadel", "Dragalge", "Noivern", "Hydreigon"], correct: 1 },
+    { cat: "EVOLUCIÓN", q: "¿A qué nivel evoluciona Fennekin?", options: ["16", "18", "14", "20"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png", options: ["Sylveon", "Flareon", "Vaporeon", "Espeon"], correct: 0 },
+
+    // ALOLA
+    { cat: "ALOLA", q: "¿Cuál es el tipo del Gulping de Alola?", options: ["No existe Forma Alola", "Veneno/Siniestro", "Veneno", "Veneno/Fuego"], correct: 0 },
+    { cat: "ALOLA", q: "¿Cómo se llama el inicial de tipo planta?", options: ["Rowlet", "Litten", "Popplio", "Dartrix"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es el profesor de la región de Alola?", options: ["Profesor Kukui", "Profesor Oak", "Profesor Elm", "Profesor Birch"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué cristal Z permite usar 'Pika-Voltio Letal'?", options: ["Pikastastal Z", "Electrostastal Z", "Alolastal Z", "Voltio-Z"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/745.png", options: ["Lycanroc Diurno", "Lycanroc Nocturno", "Lycanroc Crepuscular", "Rockruff"], correct: 0 },
+
+    // GALAR
+    { cat: "GALAR", q: "¿Cuál es el tipo de la líder de gimnasio Alistair?", options: ["Fantasma", "Siniestro", "Veneno", "Psíquico"], correct: 0 },
+    { cat: "GALAR", q: "¿Cómo evoluciona Yamask de Galar en Runerigus?", options: ["Perder 49 PS o más y pasar bajo un arco de piedra", "Nivel 30", "Piedra Noche", "Intercambio"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué Pokémon de tipo Lucha tiene Ash en Galar que puede Gigamaxizar?", options: ["Machamp", "Sirfetch'd", "Gengar", "Lucario (No Gigamaxiza)"], correct: 2 },
+    { cat: "MECÁNICA", q: "¿Qué objeto permite a un Pokémon Gigamaxizar si ya tiene el factor?", options: ["Maxisopa", "Maxiball", "Pulsera Dinamax", "Estrella Deseo"], correct: 2 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/823.png", options: ["Corviknight", "Rookidee", "Corvisquire", "Skarmory"], correct: 0 },
+
+    // PALDEA
+    { cat: "PALDEA", q: "¿Cómo se llama la moneda que necesitas para evolucionar a Gimmighoul?", options: ["Moneda de Gimmighoul", "Moneda de Paldea", "Moneda de Oro", "Pokédollar"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué tipo es el Pokémon paradoja Colagrito?", options: ["Hada/Psíquico", "Hada/Lucha", "Hada/Siniestro", "Psíquico/Dragón"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es el director de la Academia?", options: ["Clavel", "Cinabrio", "Ságita", "Jacinto"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿A qué evoluciona Charcadet usando la Armadura Auspiciosa?", options: ["Armarouge", "Ceruledge", "Flareon", "Gallade"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/979.png", options: ["Annihilape", "Primeape", "Mankey", "Passimian"], correct: 0 },
+
+    // COMBATE Y OBJETOS
+    { cat: "OBJETOS", q: "¿Qué objeto aumenta la defensa especial de un Pokémon que no ha evolucionado?", options: ["Mineral Evolutivo", "Piedra Eterna", "Cinta Focus", "Gafas de Sol"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué ocurre si un Pokémon usa 'Mismo Destino' y es debilitado por el rival?", options: ["El rival también se debilita", "El Pokémon recupera PS", "El rival se duerme", "No pasa nada"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es la debilidad del tipo Hielo?", options: ["Fuego, Lucha, Roca, Acero", "Fuego, Agua, Roca", "Fuego, Lucha, Dragón", "Solo Fuego"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite al usuario copiar el último ataque del rival?", options: ["Esquema", "Mimético", "Copión", "Metrónomo"], correct: 2 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad tiene Quagsire que ignora los cambios de estadísticas del rival?", options: ["Ignorante", "Humedad", "Absorbe Agua", "Ritmo Propio"], correct: 0 },
+
+    // LORE Y CURIOSIDADES
+    { cat: "CURIOSIDADES", q: "¿Cuál es el Pokémon más alto registrado?", options: ["Eternatus", "Wailord", "Steelix", "Exeggutor Alola"], correct: 0 },
+    { cat: "LORE", q: "¿Qué Pokémon se dice que nació de una Poké Ball tras un experimento fallido?", options: ["Voltorb", "Ditto", "Mewtwo", "Porygon"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite a un Pokémon Siniestro potenciar sus ataques?", options: ["Gafas de Sol", "Cinta Negra", "Imán", "Semilla Milagro"], correct: 0 },
+    { cat: "ANIME", q: "¿Cuál fue el rival que derrotó a Ash en la Liga de Sinnoh usando un Darkrai?", options: ["Tobias", "Paul", "Barry", "Conway"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/491.png", options: ["Darkrai", "Cresselia", "Gengar", "Spiritomb"], correct: 0 },
+
+    // EVOLUCIONES ESPECIALES
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona al nivel 20 pero cambia según su género?", options: ["Burmy", "Combee", "Snorunt", "Todos estos"], correct: 3 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Magneton en Magnezone?", options: ["Piedra Trueno (Desde Gen 8)", "Subir nivel en zona magnética", "Ambas son correctas", "Intercambio con objeto"], correct: 2 },
+    { cat: "EVOLUCIÓN", q: "¿Qué objeto evoluciona a Rhydon en Rhyperior?", options: ["Protector", "Revestimiento Metálico", "Roca del Rey", "Piedra Dura"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Mantyke?", options: ["Subir nivel con un Remoraid en el equipo", "Nivel 25", "Piedra Agua", "Amistad"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/226.png", options: ["Mantine", "Mantyke", "Skarmory", "Wingull"], correct: 0 },
+
+    // GIMNASIOS Y LÍDERES
+    { cat: "LÍDERES", q: "¿Cuál es el tipo de gimnasio de Roco en Ciudad Pirita?", options: ["Roca", "Tierra", "Acero", "Lucha"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Cómo se llama la líder de gimnasio de tipo Hielo en Sinnoh?", options: ["Inverna", "Fantina", "Maylene", "Gardenia"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Qué tipo usa el líder de gimnasio de Ciudad Olivo, Yasmina?", options: ["Acero", "Agua", "Eléctrico", "Normal"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Quién es el líder del gimnasio de tipo Normal en Johto conocido por su Miltank?", options: ["Blanca", "Erika", "Whitney", "Ambas (Blanca/Whitney)"], correct: 3 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/241.png", options: ["Miltank", "Tauros", "Bouffalant", "Milotic"], correct: 0 },
+
+    // TIPOS SECUNDARIOS
+    { cat: "TIPOS", q: "¿De qué tipo es Celebi?", options: ["Psíquico/Planta", "Hada/Planta", "Planta", "Psíquico/Hada"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo secundario de Scizor?", options: ["Acero", "Bicho", "Siniestro", "Volador"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es Torterra?", options: ["Planta/Tierra", "Planta/Roca", "Planta/Siniestro", "Planta"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Lucario?", options: ["Lucha/Acero", "Lucha/Psíquico", "Lucha/Siniestro", "Lucha"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/475.png", options: ["Gallade", "Gardevoir", "Lucario", "Bisharp"], correct: 0 },
+
+    // MOVIMIENTOS CARACTERÍSTICOS
+    { cat: "MOVIMIENTOS", q: "¿Cuál es el movimiento característico de Darkrai?", options: ["Brecha Negra", "Pesadilla", "Come Sueños", "Pulso Umbrío"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite a Meowth ganar dinero tras el combate?", options: ["Día de Pago", "Paga Extra", "Ladrón", "Antojo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento característico tiene Mewtwo?", options: ["Onda Mental", "Psicocorte", "Psíquico", "Esfera Aural"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo fuego tiene una potencia de 120 pero reduce el ataque especial?", options: ["Sofoco", "Lanzallamas", "Llamarada", "Envite Ígneo"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/383.png", options: ["Groudon", "Kyogre", "Rayquaza", "Rhydon"], correct: 0 },
+
+    // ENTRENADORES FAMOSOS
+    { cat: "ENTRENADORES", q: "¿Cómo se llama el rival de Ash que tiene un Eevee en Kanto?", options: ["Gary Oak", "Ritchie", "Paul", "Harrison"], correct: 0 },
+    { cat: "ENTRENADORES", q: "¿Qué Pokémon usa Red como su primer Pokémon en el Monte Plateado?", options: ["Pikachu", "Charizard", "Blastoise", "Venusaur"], correct: 0 },
+    { cat: "ENTRENADORES", q: "¿Quién es el campeón de la Liga Pokémon de Alola (el primero)?", options: ["El jugador / Ash", "Kukui", "Kaudan", "Gladio"], correct: 0 },
+    { cat: "ENTRENADORES", q: "¿Qué Pokémon tiene Cintia que es de tipo Agua/Tierra?", options: ["Gastrodon", "Quagsire", "Swampert", "Milotic (Es solo Agua)"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/442.png", options: ["Spiritomb", "Gastly", "Misdreavus", "Sableye"], correct: 0 },
+
+    // OBJETOS EVOLUTIVOS
+    { cat: "OBJETOS", q: "¿Qué objeto evoluciona a Eevee en Glaceon (desde Gen 8)?", options: ["Piedra Hielo", "Roca Hielo", "Nivel 20", "Piedra Alba"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué piedra evoluciona a Murkrow?", options: ["Piedra Noche", "Piedra Alba", "Piedra Lunar", "Piedra Trueno"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto evoluciona a Dusclops en Dusknoir?", options: ["Tela Terrible", "Incienso Oscuro", "Piedra Noche", "Hechizo"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto evoluciona a Gligar en Gliscor?", options: ["Colmillo Agudo (Noche)", "Garra Afilada", "Piedra Noche", "Colmillo Dragón"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/472.png", options: ["Gliscor", "Gligar", "Crobat", "Golbat"], correct: 0 },
+
+    // GENERAL
+    { cat: "GENERAL", q: "¿Qué Pokémon se considera el ancestro de todos los Pokémon?", options: ["Mew", "Arceus", "Ditto", "Rhydon"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Pokémon más común?", options: ["Agua", "Normal", "Planta", "Bicho"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Pokémon menos común?", options: ["Hielo", "Hada", "Fantasma", "Acero"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué generación introdujo el ciclo de día y noche?", options: ["Segunda", "Primera", "Tercera", "Cuarta"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png", options: ["Ditto", "Mew", "Muk", "Grimer"], correct: 0 },
+    // --- BLOQUE 4: PREGUNTAS 301 - 400 (Dificultad Media-Baja) ---
+    // INICIALES Y AVES
+    { cat: "INICIALES", q: "¿Cuál es el inicial de tipo fuego de la región de Johto?", options: ["Cyndaquil", "Charmander", "Torchic", "Chimchar"], correct: 0 },
+    { cat: "INICIALES", q: "¿Cuál es la evolución final de Rowlet?", options: ["Decidueye", "Dartrix", "Serperior", "Sceptile"], correct: 0 },
+    { cat: "INICIALES", q: "¿De qué tipo es el inicial Piplup?", options: ["Agua", "Hielo", "Vuelo", "Agua/Hielo"], correct: 0 },
+    { cat: "AVES", q: "¿Cuál es el ave regional de Kanto?", options: ["Pidgey", "Hoothoot", "Taillow", "Starly"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png", options: ["Piplup", "Prinplup", "Empoleon", "Ducklett"], correct: 0 },
+
+    // TIPOS BÁSICOS
+    { cat: "TIPOS", q: "¿Qué tipo de ataques son supereficaces contra el tipo Agua?", options: ["Eléctrico y Planta", "Fuego y Roca", "Tierra y Eléctrico", "Hielo y Veneno"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es la única debilidad del tipo Eléctrico?", options: ["Tierra", "Agua", "Roca", "Planta"], correct: 0 },
+    { cat: "TIPOS", q: "¿El tipo Normal es eficaz contra qué tipo?", options: ["Ninguno", "Bicho", "Veneno", "Hada"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es inmune al tipo Fantasma?", options: ["Normal", "Psíquico", "Siniestro", "Acero"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png", options: ["Gengar", "Haunter", "Gastly", "Sableye"], correct: 0 },
+
+    // EVOLUCIONES FAMOSAS
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Metapod?", options: ["Butterfree", "Beedrill", "Venomoth", "Dustox"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Gyarados?", options: ["Magikarp", "Goldeen", "Feebas", "Horsea"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿A qué nivel evoluciona el inicial de Kanto a su segunda etapa?", options: ["16", "14", "18", "20"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Machoke en Machamp?", options: ["Por intercambio", "Nivel 40", "Piedra Lucha", "Amistad"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png", options: ["Vaporeon", "Glaceon", "Dewgong", "Suicune"], correct: 0 },
+
+    // OBJETOS DEL DÍA A DÍA
+    { cat: "OBJETOS", q: "¿Qué objeto cura 20 PS de un Pokémon?", options: ["Poción", "Superpoción", "Hiperpoción", "Poción Máxima"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto se usa para capturar Pokémon salvajes?", options: ["Poké Ball", "Poción", "Repelente", "Cuerda Huida"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto te permite escapar instantáneamente de una cueva?", options: ["Cuerda Huida", "Repelente", "Bici", "Mapa"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto sirve para revivir a un Pokémon debilitado?", options: ["Revivir", "Antídoto", "Caramelo Raro", "Éter"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png", options: ["Togepi", "Pichu", "Cleffa", "Igglybuff"], correct: 0 },
+
+    // ANIME CLÁSICO
+    { cat: "ANIME", q: "¿Cuál es el nombre del protagonista principal?", options: ["Ash Ketchum", "Gary Oak", "Rojo", "Bruno"], correct: 0 },
+    { cat: "ANIME", q: "¿Quiénes son los dos miembros humanos del Team Rocket?", options: ["Jessie y James", "Butch y Cassidy", "Ash y Misty", "Brock y Tracey"], correct: 0 },
+    { cat: "ANIME", q: "¿Cuál es el Pokémon que siempre acompaña a Ash fuera de su Poké Ball?", options: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué tipo de Pokémon suele usar Brock?", options: ["Roca", "Agua", "Fuego", "Psíquico"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png", options: ["Meowth", "Persian", "Skitty", "Glameow"], correct: 0 },
+
+    // REGIONES
+    { cat: "REGIONES", q: "¿En qué región vive el Profesor Oak?", options: ["Kanto", "Johto", "Hoenn", "Sinnoh"], correct: 0 },
+    { cat: "REGIONES", q: "¿Cuál es la región de Pokémon Rubí y Zafiro?", options: ["Hoenn", "Sinnoh", "Teselia", "Kalos"], correct: 0 },
+    { cat: "REGIONES", q: "¿Cómo se llama la región basada en Francia?", options: ["Kalos", "Galar", "Alola", "Paldea"], correct: 0 },
+    { cat: "REGIONES", q: "¿Cuál es la región de la novena generación (Escarlata y Púrpura)?", options: ["Paldea", "Galar", "Teselia", "Alola"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png", options: ["Treecko", "Grovyle", "Sceptile", "Snivy"], correct: 0 },
+
+    // MECÁNICAS SENCILLAS
+    { cat: "MECÁNICA", q: "¿Cuántos Pokémon puedes llevar en tu equipo como máximo?", options: ["6", "4", "5", "8"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué pasa si un Pokémon se queda sin PS?", options: ["Se debilita", "Muere", "Evoluciona", "Se escapa"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Cómo se llama la enciclopedia que registra a los Pokémon?", options: ["Pokédex", "Pokémaniac", "Pokégear", "Pokénav"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué hace el objeto 'Repartir Experiencia'?", options: ["Da experiencia a todo el equipo", "Dobla el dinero", "Cura al Pokémon", "Captura Pokémon"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", options: ["Bulbasaur", "Ivysaur", "Venusaur", "Chikorita"], correct: 0 },
+
+    // CURIOSIDADES
+    { cat: "CURIOSIDADES", q: "¿Quién es el Pokémon número 25 de la Pokédex?", options: ["Pikachu", "Raichu", "Eevee", "Meowth"], correct: 0 },
+    { cat: "CURIOSIDADES", q: "¿Cuál de estos Pokémon es un gato?", options: ["Meowth", "Growlithe", "Ponyta", "Pikachu"], correct: 0 },
+    { cat: "CURIOSIDADES", q: "¿De qué color es un Gyarados variocolor (shiny)?", options: ["Rojo", "Azul", "Dorado", "Verde"], correct: 0 },
+    { cat: "CURIOSIDADES", q: "¿Qué Pokémon es conocido por dormir siempre?", options: ["Snorlax", "Slaking", "Hypno", "Machamp"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png", options: ["Snorlax", "Munchlax", "Slaking", "Ursaring"], correct: 0 },
+
+    // LÍDERES Y ENTRENADORES
+    { cat: "PERSONAJES", q: "¿Misty es líder de qué tipo?", options: ["Agua", "Fuego", "Planta", "Hielo"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es el nieto del Profesor Oak?", options: ["Gary (Azul)", "Ash", "Rojo", "Tracey"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Cómo se llama el líder del Team Rocket?", options: ["Giovanni", "Aquiles", "Magno", "Helio"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Qué Pokémon suele usar la Enfermera Joy?", options: ["Chansey / Blissey", "Pikachu", "Audino", "Todos estos"], correct: 3 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/113.png", options: ["Chansey", "Blissey", "Happiny", "Clefairy"], correct: 0 },
+
+    // TIPOS Y EFECTIVIDAD
+    { cat: "TIPOS", q: "¿El tipo Fuego es débil contra qué?", options: ["Agua, Tierra y Roca", "Agua y Planta", "Planta y Bicho", "Solo Agua"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es supereficaz contra el tipo Dragón?", options: ["Hielo, Dragón y Hada", "Fuego y Agua", "Acero y Veneno", "Solo Hielo"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo de ataques no afectan al tipo Volador?", options: ["Tierra", "Eléctrico", "Agua", "Fuego"], correct: 0 },
+    { cat: "TIPOS", q: "¿El tipo Planta es fuerte contra qué tipo?", options: ["Agua, Tierra y Roca", "Fuego y Volador", "Veneno", "Acero"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png", options: ["Charmander", "Charmeleon", "Charizard", "Cyndaquil"], correct: 0 },
+
+    // POKÉ BALLS
+    { cat: "OBJETOS", q: "¿Cuál es la Poké Ball que nunca falla?", options: ["Master Ball", "Ultra Ball", "Super Ball", "Malla Ball"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué color tiene una Super Ball?", options: ["Azul y roja", "Blanca y roja", "Negra y amarilla", "Verde"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Cuál es la mejor Poké Ball que puedes comprar en una tienda normal?", options: ["Ultra Ball", "Super Ball", "Poké Ball", "Honor Ball"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué Poké Ball es mejor para Pokémon de tipo Agua?", options: ["Malla Ball", "Turno Ball", "Nido Ball", "Lujo Ball"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png", options: ["Squirtle", "Wartortle", "Blastoise", "Totodile"], correct: 0 },
+
+    // GENERAL
+    { cat: "GENERAL", q: "¿Cómo se llama el centro donde curan a tus Pokémon?", options: ["Centro Pokémon", "Tienda Pokémon", "Gimnasio", "Guardería"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuántas medallas necesitas para ir a la Liga?", options: ["8", "6", "10", "12"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon evoluciona en muchas formas distintas?", options: ["Eevee", "Ditto", "Pikachu", "Mew"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el objetivo principal de un entrenador?", options: ["Ser el mejor / Completar la Pokédex", "Vender Pokémon", "Ser cocinero", "Viajar en barco"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png", options: ["Eevee", "Vaporeon", "Jolteon", "Flareon"], correct: 0 },
+
+    // PREGUNTAS RÁPIDAS
+    { cat: "RÁPIDO", q: "¿De qué color es un Ditto?", options: ["Morado", "Rosa", "Azul", "Verde"], correct: 0 },
+    { cat: "RÁPIDO", q: "¿Qué Pokémon tiene llamas en su cola?", options: ["Charmander", "Bulbasaur", "Squirtle", "Pikachu"], correct: 0 },
+    { cat: "RÁPIDO", q: "¿Cómo se llama el rival de Ash que usa un Blastoise?", options: ["Gary", "Paul", "Barry", "Ritchie"], correct: 0 },
+    { cat: "RÁPIDO", q: "¿Qué Pokémon es un pájaro de color rojo de Kanto?", options: ["Pidgey", "Spearow", "Moltres", "Ho-Oh"], correct: 2 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png", options: ["Pikachu", "Raichu", "Pachirisu", "Emolga"], correct: 0 },
+
+    // MÁS EVOLUCIONES
+    { cat: "EVOLUCIÓN", q: "¿Qué piedra necesita Pikachu para evolucionar?", options: ["Piedra Trueno", "Piedra Solar", "Piedra Lunar", "Piedra Agua"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Gastly?", options: ["Haunter", "Gengar", "Spiritomb", "Sableye"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona con una Piedra Fuego?", options: ["Vulpix", "Pikachu", "Staryu", "Gloom"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Butterfree?", options: ["Metapod", "Caterpie", "Kakuna", "Weedle"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png", options: ["Butterfree", "Beedrill", "Venomoth", "Vivillon"], correct: 0 },
+
+    // MOVIMIENTOS BÁSICOS
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite a Pikachu lanzar electricidad?", options: ["Impactrueno", "Lanzallamas", "Pistola Agua", "Hoja Afilada"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Normal suele conocer casi todo Pokémon inicial?", options: ["Placaje", "Lanzallamas", "Vuelo", "Surf"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento sirve para cruzar el mar?", options: ["Surf", "Vuelo", "Corte", "Fuerza"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento sirve para cortar arbustos?", options: ["Corte", "Surf", "Vuelo", "Destello"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png", options: ["Dratini", "Dragonair", "Dragonite", "Ekans"], correct: 0 },
+
+    // VARIOS
+    { cat: "VARIOS", q: "¿Qué Pokémon es el símbolo de la franquicia?", options: ["Pikachu", "Charizard", "Mewtwo", "Lucario"], correct: 0 },
+    { cat: "VARIOS", q: "¿De qué tipo es Jigglypuff?", options: ["Normal/Hada", "Normal", "Hada", "Psíquico"], correct: 0 },
+    { cat: "VARIOS", q: "¿Qué Pokémon es una tortuga azul?", options: ["Squirtle", "Bulbasaur", "Charmander", "Pikachu"], correct: 0 },
+    { cat: "VARIOS", q: "¿Qué Pokémon tiene una semilla en su lomo?", options: ["Bulbasaur", "Oddish", "Chikorita", "Bellsprout"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png", options: ["Jigglypuff", "Wigglytuff", "Clefairy", "Igglybuff"], correct: 0 },
+
+    // ÚLTIMAS 15
+    { cat: "GENERAL", q: "¿Qué objeto necesitas para viajar más rápido por tierra?", options: ["Bicicleta", "Patines", "Botas", "Coche"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon inicial es un lagarto de fuego?", options: ["Charmander", "Cyndaquil", "Torchic", "Chimchar"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué tipo es supereficaz contra el tipo Roca?", options: ["Agua, Planta, Lucha, Tierra, Acero", "Fuego y Volador", "Normal", "Psíquico"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama el fósil de Omanyte?", options: ["Hélix", "Domo", "Garra", "Raíz"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué tipo es Mr. Mime?", options: ["Psíquico/Hada", "Psíquico", "Hada", "Normal"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el inicial de planta de Johto?", options: ["Chikorita", "Bulbasaur", "Treecko", "Turtwig"], correct: 0 },
+    { cat: "GENERAL", q: "¿De qué color es la gorra original de Ash?", options: ["Blanca y roja", "Negra", "Azul", "Verde"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon usa 'Autodestrucción' a menudo?", options: ["Geodude / Voltorb", "Pikachu", "Snorlax", "Abra"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama la evolución de Eevee de tipo Agua?", options: ["Vaporeon", "Jolteon", "Flareon", "Espeon"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama la evolución de Eevee de tipo Eléctrico?", options: ["Jolteon", "Vaporeon", "Flareon", "Umbreon"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama la evolución de Eevee de tipo Fuego?", options: ["Flareon", "Vaporeon", "Jolteon", "Leafeon"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es un dinosaurio con una flor en el lomo?", options: ["Venusaur", "Meganium", "Torterra", "Tropius"], correct: 0 },
+    { cat: "GENERAL", q: "¿De qué tipo es el legendario Zapdos?", options: ["Eléctrico/Volador", "Eléctrico", "Volador", "Eléctrico/Fuego"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo del legendario Articuno?", options: ["Hielo/Volador", "Hielo", "Agua/Volador", "Hielo/Agua"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png", options: ["Articuno", "Zapdos", "Moltres", "Lugia"], correct: 0 },
+    // --- BLOQUE 5: PREGUNTAS 401 - 500 ---
+    // GALAR Y PALDEA (Nuevas Generaciones)
+    { cat: "GALAR", q: "¿Cuál es el tipo del Pokémon legendario Zamazenta?", options: ["Lucha", "Lucha/Acero", "Acero", "Lucha/Roca"], correct: 0 },
+    { cat: "GALAR", q: "¿Qué Pokémon evoluciona en Obstagoon?", options: ["Linoone de Galar", "Zigzagoon", "Poochyena", "Mightyena"], correct: 0 },
+    { cat: "PALDEA", q: "¿De qué tipo es el Pokémon inicial Fuecoco?", options: ["Fuego", "Fuego/Tierra", "Fuego/Fantasma", "Fuego/Dragón"], correct: 0 },
+    { cat: "PALDEA", q: "¿Cómo se llama la evolución final de Quaxly?", options: ["Quaquaval", "Quaxwell", "Ducklett", "Swanna"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon de Paldea?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/909.png", options: ["Fuecoco", "Crocalor", "Skeledirge", "Fuegator"], correct: 2 },
+
+    // ESTRATEGIA Y OBJETOS
+    { cat: "OBJETOS", q: "¿Qué objeto permite a un Pokémon atacar siempre en segundo lugar pero con más potencia?", options: ["Cola Férrea", "Incienso Lento", "Bola Hierro", "No existe tal objeto"], correct: 1 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad hace al Pokémon inmune a los movimientos de tipo Tierra?", options: ["Levitación", "Robustez", "Absorbe Tierra", "Vuelo"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué ocurre si usas una 'Baya Aranja'?", options: ["Recupera 10 PS", "Cura el envenenamiento", "Cura el sueño", "Restaura PP"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto equipado aumenta la probabilidad de asestar un golpe crítico?", options: ["Periscopio", "Garra Afilada", "Ambos", "Cinta Fuerte"], correct: 2 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es conocido por llevar un hueso?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/104.png", options: ["Cubone", "Marowak", "Kangaskhan", "Vullaby"], correct: 0 },
+
+    // EVOLUCIONES POR AMISTAD Y TIEMPO
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Eevee con alta amistad durante la noche?", options: ["Umbreon", "Espeon", "Sylveon", "Glaceon"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Eevee con alta amistad durante el día?", options: ["Espeon", "Umbreon", "Leafeon", "Sylveon"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Lucario por amistad durante el día?", options: ["Riolu", "Tyrogue", "Munchlax", "Bunnelby"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Budew en Roselia?", options: ["Amistad (Día)", "Piedra Hoja", "Nivel 15", "Piedra Alba"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/447.png", options: ["Riolu", "Lucario", "Zorua", "Mewtwo"], correct: 0 },
+
+    // LEGENDARIOS Y MITOLOGÍA
+    { cat: "LEGENDARIOS", q: "¿Quién es el trío de aves legendarias de Kanto?", options: ["Articuno, Zapdos y Moltres", "Raikou, Entei y Suicune", "Kyogre, Groudon y Rayquaza", "Azelf, Mesprit y Uxie"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon es el 'Dios' creador del universo Pokémon?", options: ["Arceus", "Mew", "Dialga", "Rayquaza"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon representa la luna en Alola?", options: ["Lunala", "Solgaleo", "Cresselia", "Darkrai"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Cuál es el tipo del legendario Deoxys?", options: ["Psíquico", "Siniestro", "Acero", "Psíquico/Siniestro"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/386.png", options: ["Deoxys", "Mewtwo", "Jirachi", "Celebi"], correct: 0 },
+
+    // ANIME Y PELÍCULAS
+    { cat: "ANIME", q: "¿Cómo se llama el archienemigo de Ash en Kanto?", options: ["Gary Oak", "Paul", "Barry", "Ritchie"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué Pokémon de Ash se quedó protegiendo el Valle Charicífico?", options: ["Charizard", "Bulbasaur", "Squirtle", "Butterfree"], correct: 0 },
+    { cat: "PELÍCULAS", q: "¿Qué Pokémon legendario protagoniza la primera película junto a Mew?", options: ["Mewtwo", "Lugia", "Entei", "Lucario"], correct: 0 },
+    { cat: "PELÍCULAS", q: "¿Qué Pokémon puede hablar telepáticamente en su película?", options: ["Mewtwo", "Lucario", "Zoroark", "Todos estos"], correct: 3 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png", options: ["Lucario", "Riolu", "Zoroark", "Blaziken"], correct: 0 },
+
+    // TIPOS SECUNDARIOS Y COMBINACIONES
+    { cat: "TIPOS", q: "¿De qué tipo es Charizard?", options: ["Fuego/Volador", "Fuego/Dragón", "Fuego", "Fuego/Tierra"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo secundario de Bulbasaur?", options: ["Veneno", "Planta", "Tierra", "Bicho"], correct: 0 },
+    { cat: "TIPOS", q: "¿De qué tipo es Gengar?", options: ["Fantasma/Veneno", "Fantasma", "Fantasma/Psíquico", "Fantasma/Siniestro"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Aggron?", options: ["Acero/Roca", "Acero", "Acero/Tierra", "Roca/Tierra"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/306.png", options: ["Aggron", "Lairon", "Aron", "Rhydon"], correct: 0 },
+
+    // CIUDADES Y GIMNASIOS
+    { cat: "CIUDADES", q: "¿En qué ciudad se encuentra el gimnasio de tipo Psíquico de Sabrina?", options: ["Ciudad Azafrán", "Ciudad Azulona", "Ciudad Carmín", "Ciudad Verde"], correct: 0 },
+    { cat: "GIMNASIOS", q: "¿Cuál es el último gimnasio de la región de Sinnoh?", options: ["Ciudad Marina", "Ciudad Puntaneva", "Ciudad Canal", "Ciudad Rocavelo"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Qué tipo de Pokémon usa el líder de gimnasio de Ciudad Plateada, Brock?", options: ["Roca", "Tierra", "Acero", "Lucha"], correct: 0 },
+    { cat: "GIMNASIOS", q: "¿En qué ciudad de Johto está el gimnasio de tipo Normal de Blanca?", options: ["Ciudad Trigal", "Ciudad Malva", "Ciudad Iris", "Ciudad Olivo"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png", options: ["Clefairy", "Clefable", "Jigglypuff", "Chansey"], correct: 0 },
+
+    // OBJETOS DE MEJORA
+    { cat: "OBJETOS", q: "¿Qué objeto aumenta el ataque especial a cambio de no poder elegir otro movimiento?", options: ["Gafas Elección", "Pañuelo Elección", "Cinta Elección", "Vidasfera"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto aumenta el ataque físico del Pokémon?", options: ["Cinta Fuerte", "Gafas de Sol", "Imán", "Semilla Milagro"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué hace el objeto 'Casco Dentado'?", options: ["Daño al rival si te golpea con contacto", "Aumenta la defensa", "Evita críticos", "Cura PS"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite a un Pokémon evolucionar si se intercambia?", options: ["Revestimiento Metálico", "Piedra Eterna", "Piedra Agua", "Caramelo Raro"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png", options: ["Scyther", "Pinsir", "Scizor", "Kleavor"], correct: 0 },
+
+    // CURIOSIDADES DE DISEÑO
+    { cat: "CURIOSIDADES", q: "¿En qué animal está basado el Pokémon Sandshrew?", options: ["Armadillo", "Ratón", "Pangolín", "Topo"], correct: 2 },
+    { cat: "CURIOSIDADES", q: "¿Qué Pokémon tiene el diseño inspirado en una bolsa de basura?", options: ["Trubbish", "Grimer", "Koffing", "Gulpin"], correct: 0 },
+    { cat: "CURIOSIDADES", q: "¿Qué Pokémon tiene una espiral en su barriga que son sus intestinos?", options: ["Poliwag", "Poliwhirl", "Poliwrath", "Todos estos"], correct: 3 },
+    { cat: "CURIOSIDADES", q: "¿En qué está basado el diseño de Magnemite?", options: ["Imanes", "Tornillos", "Un ovni", "Un robot"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/60.png", options: ["Poliwag", "Poliwhirl", "Poliwrath", "Poliwrath"], correct: 0 },
+
+    // MOVIMIENTOS ESPECIALES
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo volador permite al usuario atacar en el primer turno y volar en el segundo?", options: ["No existe (es al revés)", "Vuelo", "Ataque Ala", "Picotazo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo bicho baja el ataque especial del rival?", options: ["Estoicismo", "Zumbido", "Ida y Vuelta", "Picadura"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento característico tiene Decidueye?", options: ["Puntada Sombría", "Hoja Afilada", "Bola Sombra", "Flecha Fantasma"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento hace más daño cuanto más pesado sea el usuario?", options: ["Cuerpo Pesado", "Patada Baja", "Hierba Lazo", "Pisotón"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/724.png", options: ["Decidueye", "Dartrix", "Rowlet", "Turtwig"], correct: 0 },
+
+    // TIPOS Y DEBILIDADES
+    { cat: "TIPOS", q: "¿Qué tipo es supereficaz contra el tipo Acero?", options: ["Fuego, Lucha y Tierra", "Fuego y Agua", "Eléctrico", "Psíquico"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el único tipo inmune al veneno?", options: ["Acero", "Veneno", "Ambos", "Tierra"], correct: 2 },
+    { cat: "TIPOS", q: "¿Qué tipo es resistente al tipo Eléctrico?", options: ["Planta, Eléctrico y Dragón", "Agua", "Volador", "Acero"], correct: 0 },
+    { cat: "TIPOS", q: "¿A qué tipo es inmune el tipo Hada?", options: ["Dragón", "Siniestro", "Lucha", "Veneno"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png", options: ["Gardevoir", "Kirlia", "Gallade", "Gothorita"], correct: 0 },
+
+    // GENERAL POKÉMON
+    { cat: "GENERAL", q: "¿Qué Pokémon es conocido como el Pokémon 'Ratón'?", options: ["Pikachu", "Raichu", "Rattata", "Todos estos"], correct: 3 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es el número 151 de la Pokédex de Kanto?", options: ["Mew", "Mewtwo", "Dragonite", "Moltres"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el color de las mejillas de un Pikachu?", options: ["Rojo", "Amarillo", "Naranja", "Negro"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon evoluciona en Arcanine?", options: ["Growlithe", "Vulpix", "Ponyta", "Houndour"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png", options: ["Growlithe", "Arcanine", "Vulpix", "Houndour"], correct: 0 },
+
+    // FORMULARIOS Y CAMBIOS
+    { cat: "MECÁNICA", q: "¿Qué objeto necesita Ogerpon para cambiar de máscara?", options: ["Máscaras específicas", "Piedras", "No cambia", "Nivel"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué Pokémon cambia de forma según el tiempo meteorológico?", options: ["Castform", "Cherrim", "Ambos", "Rayquaza"], correct: 2 },
+    { cat: "FORMAS", q: "¿Cuántas formas tiene el Pokémon Unown?", options: ["28", "26", "30", "20"], correct: 0 },
+    { cat: "FORMAS", q: "¿De qué tipo es el Kyurem Blanco?", options: ["Dragón/Hielo", "Dragón/Fuego", "Dragón/Eléctrico", "Hielo/Fuego"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué forma de Unown es esta?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/201.png", options: ["Unown A", "Unown !", "Unown ?", "Unown F"], correct: 0 },
+
+    // ENTRENADORES Y LORE
+    { cat: "LORE", q: "¿Quién es el creador de la Pokédex en Kanto?", options: ["Profesor Oak", "Profesor Elm", "Profesor Abedul", "Profesor Serbal"], correct: 0 },
+    { cat: "LORE", q: "¿Cuál es el nombre del equipo villano en Sinnoh?", options: ["Team Galactic", "Team Rocket", "Team Aqua", "Team Plasma"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Cómo se llama la campeona de Sinnoh?", options: ["Cintia", "Erika", "Misty", "Blanca"], correct: 0 },
+    { cat: "LORE", q: "¿Qué Pokémon vive en lo más profundo de la Cueva Celeste?", options: ["Mewtwo", "Mew", "Articuno", "Zapdos"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png", options: ["Garchomp", "Garchomp-Mega", "Gabite", "Gible"], correct: 0 },
+
+    // REPASO FINAL KANTO
+    { cat: "KANTO", q: "¿Qué Pokémon evoluciona en Cloyster?", options: ["Shellder", "Gastly", "Staryu", "Krabby"], correct: 0 },
+    { cat: "KANTO", q: "¿De qué tipo es Exeggutor de Kanto?", options: ["Planta/Psíquico", "Planta", "Psíquico", "Planta/Dragón"], correct: 0 },
+    { cat: "KANTO", q: "¿Qué Pokémon es el número 143?", options: ["Snorlax", "Lapras", "Ditto", "Dragonite"], correct: 0 },
+    { cat: "KANTO", q: "¿Cuál es el tipo de Mr. Mime?", options: ["Psíquico/Hada", "Psíquico", "Hada", "Normal"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png", options: ["Mr. Mime", "Mime Jr.", "Jynx", "Abra"], correct: 0 },
+
+    // REPASO FINAL JOHTO
+    { cat: "JOHTO", q: "¿Cuál es el tipo de Scizor?", options: ["Bicho/Acero", "Bicho/Volador", "Acero/Volador", "Bicho/Siniestro"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon es el inicial de tipo agua?", options: ["Totodile", "Squirtle", "Mudkip", "Piplup"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon es el 'Guardia del Tiempo'?", options: ["Celebi", "Mew", "Jirachi", "Manaphy"], correct: 0 },
+    { cat: "JOHTO", q: "¿En qué evoluciona Chikorita?", options: ["Bayleef", "Meganium", "Ivysaur", "Grovyle"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png", options: ["Chikorita", "Bayleef", "Meganium", "Bulbasaur"], correct: 0 },
+
+    // REPASO FINAL HOENN
+    { cat: "HOENN", q: "¿Cuál es el tipo de Mudkip?", options: ["Agua", "Agua/Tierra", "Agua/Hielo", "Agua/Roca"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon es el 'Rey de los Cielos' en Hoenn?", options: ["Rayquaza", "Kyogre", "Groudon", "Latias"], correct: 0 },
+    { cat: "HOENN", q: "¿En qué evoluciona Torchic?", options: ["Combusken", "Blaziken", "Monferno", "Charmeleon"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué tipo es Gardevoir?", options: ["Psíquico/Hada", "Psíquico", "Hada", "Psíquico/Planta"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png", options: ["Mudkip", "Marshtomp", "Swampert", "Wooper"], correct: 0 },
+
+    // MISCELÁNEA FINAL
+    { cat: "GENERAL", q: "¿Cómo se llama el proceso por el cual un Pokémon cambia de forma permanentemente?", options: ["Evolución", "Megaevolución", "Dinamax", "Sincronía"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene el cuerpo hecho de gas?", options: ["Gastly", "Koffing", "Muk", "Ditto"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es la última letra de la Pokédex de Kanto (alfabéticamente)?", options: ["Zubat", "Zapdos", "Wigglytuff", "Weezing"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es una nube de algodón?", options: ["Cottonee", "Swablu", "Altaria", "Todos estos"], correct: 3 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/333.png", options: ["Swablu", "Altaria", "Cottonee", "Castform"], correct: 0 },
+    // --- BLOQUE 6: PREGUNTAS 501 - 600 ---
+    // HISUI (Leyendas Pokémon: Arceus)
+    { cat: "HISUI", q: "¿De qué tipo es el Growlithe de Hisui?", options: ["Fuego/Roca", "Fuego", "Fuego/Tierra", "Fuego/Acero"], correct: 0 },
+    { cat: "HISUI", q: "¿Cuál es la evolución final de Rowlet en la región de Hisui?", options: ["Decidueye de Hisui", "Decidueye", "Dartrix", "Samurott de Hisui"], correct: 0 },
+    { cat: "HISUI", q: "¿Qué Pokémon evoluciona en Kleavor?", options: ["Scyther", "Pinsir", "Scizor", "Onix"], correct: 0 },
+    { cat: "HISUI", q: "¿Cómo se llama el Pokémon que sirve de montura aérea en Hisui?", options: ["Braviary de Hisui", "Staraptor", "Corviknight", "Pidgeot"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon de Hisui?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/901.png", options: ["Ursaluna", "Ursaring", "Teddiursa", "Pangoro"], correct: 0 },
+
+    // PALDEA Y TERACRISTALIZACIÓN
+    { cat: "PALDEA", q: "¿Qué objeto necesitas para cambiar el Teratipo de un Pokémon?", options: ["Teralitos", "Fragmentos Tera", "Caramelos Raros", "Piedra Alba"], correct: 1 },
+    { cat: "PALDEA", q: "¿De qué tipo es el Pokémon paradoja Ferropalmas?", options: ["Lucha/Eléctrico", "Lucha/Acero", "Eléctrico/Acero", "Lucha"], correct: 0 },
+    { cat: "PALDEA", q: "¿Cuál es la habilidad característica de Gholdengo?", options: ["Cuerpo Áureo", "Recogida", "Metal Liviano", "Espejo Mágico"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué Pokémon paradoja es el antepasado de Misdreavus?", options: ["Melenaleteo", "Colagrito", "Reptalada", "Pelarena"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/984.png", options: ["Colargurdo", "Colagrito", "Colmillolargo", "Reptalada"], correct: 2 },
+
+    // MÁS EVOLUCIONES CURIOSAS
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Galarian Slowpoke en Slowbro de Galar?", options: ["Usando el Brazal Galanuez", "Usando la Corona Galanuez", "Nivel 37", "Intercambio"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona al girar sobre ti mismo en el juego?", options: ["Milcery", "Applin", "Sinistea", "Toxel"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Primeape en Annihilape?", options: ["Usando Puño Furia 20 veces", "Nivel 50", "Piedra Noche", "Amistad"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué objeto evoluciona a Applin en Flapple?", options: ["Manzana Ácida", "Manzana Dulce", "Manzana Jugosa", "Piedra Hoja"], correct: 0 },
+    { cat: "VISUAL", q: "¿En qué evoluciona este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/840.png", options: ["Flapple o Appletun", "Exeggutor", "Tropius", "Cherrim"], correct: 0 },
+
+    // ANIME: ETAPA MODERNA
+    { cat: "ANIME", q: "¿Cómo se llama el compañero de Ash en la serie Viajes Pokémon?", options: ["Goh", "Clemont", "Kiawe", "Lulú"], correct: 0 },
+    { cat: "ANIME", q: "¿Cuál es el objetivo de Goh en el anime?", options: ["Capturar a Mew", "Ser campeón", "Ser criador", "Estudiar fósiles"], correct: 0 },
+    { cat: "ANIME", q: "¿Qué Pokémon de Ash pudo Gigamaxizar en la final contra Lionel?", options: ["Pikachu", "Gengar", "Lucario", "Dragonite"], correct: 0 },
+    { cat: "ANIME", q: "¿Cómo se llama la nueva protagonista tras la salida de Ash?", options: ["Liko", "Aura", "Serena", "Chloe"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon de Ash es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/865.png", options: ["Sirfetch'd", "Farfetch'd", "Farfetch'd de Galar", "Ducklett"], correct: 0 },
+
+    // COMBATE: ESTADOS Y CLIMA
+    { cat: "COMBATE", q: "¿Qué clima potencia los movimientos de tipo Agua?", options: ["Lluvia", "Sol", "Tormenta Arena", "Nieve"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué estado alterado impide a un Pokémon usar el mismo movimiento dos veces seguidas?", options: ["Tormento", "Mofa", "Atracción", "Confusión"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué hace el movimiento 'Mofa'?", options: ["Impide usar movimientos que no ataquen", "Baja el ataque", "Confunde", "Obliga a cambiar"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué tipo es inmune a la parálisis (desde Gen 6)?", options: ["Eléctrico", "Tierra", "Acero", "Fuego"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué movimiento está usando este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/321.png", options: ["Salpicar", "Surf", "Hidrobomba", "Buceo"], correct: 0 },
+
+    // OBJETOS Y BAYAS
+    { cat: "OBJETOS", q: "¿Qué baya cura la confusión?", options: ["Baya Persim", "Baya Zidra", "Baya Safre", "Baya Meloc"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto equipado permite al poseedor atacar antes si tiene pocos PS?", options: ["Baya Aslac", "Baya Ziuela", "Baya Wiki", "Baya Aranja"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto sirve para heredar los IVs en la crianza?", options: ["Lazo Destino", "Piedra Eterna", "Incienso", "Amuleto Oval"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto aumenta la velocidad de un Pokémon pero le obliga a usar solo un ataque?", options: ["Pañuelo Elección", "Cinta Elección", "Gafas Elección", "Vidasfera"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/213.png", options: ["Shuckle", "Dwebble", "Crustle", "Torkoal"], correct: 0 },
+
+    // LEGENDARIOS MENORES
+    { cat: "LEGENDARIOS", q: "¿Cómo se llaman los 'Cuatro Tesoros de Paldea'?", options: ["Wo-Chien, Chien-Pao, Ting-Lu y Chi-Yu", "Los Regis", "Los Tapus", "Las Aves"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿De qué tipo es Chien-Pao?", options: ["Siniestro/Hielo", "Siniestro/Fuego", "Hielo/Acero", "Siniestro/Agua"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Cuál de estos es un Ultraente?", options: ["Buzzwole", "Zeraora", "Marshadow", "Meltan"], correct: 0 },
+    { cat: "LEGENDARIOS", q: "¿Qué Pokémon es conocido como el Pokémon Alfa?", options: ["Arceus", "Dialga", "Palkia", "Giratina"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Ultraente es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/794.png", options: ["Buzzwole", "Pheromosa", "Xurkitree", "Kartana"], correct: 0 },
+
+    // GENERAL Y CURIOSIDADES
+    { cat: "GENERAL", q: "¿Cuál es el tipo de la medalla de Giovanni?", options: ["Tierra", "Roca", "Veneno", "Normal"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama la moneda de oro en la frente de Meowth?", options: ["Koban", "Yen", "Dólar", "Pepita"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene el récord de ser el más lento?", options: ["Shuckle y Munchlax", "Snorlax", "Slowpoke", "Pyukumuku"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué tipo es supereficaz contra sí mismo?", options: ["Fantasma y Dragón", "Fuego", "Acero", "Normal"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png", options: ["Lickitung", "Lickilicky", "Chansey", "Wigglytuff"], correct: 0 },
+
+    // TIPOS SECUNDARIOS 2
+    { cat: "TIPOS", q: "¿De qué tipo es Spiritomb?", options: ["Fantasma/Siniestro", "Fantasma", "Siniestro", "Fantasma/Psíquico"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Empoleon?", options: ["Agua/Acero", "Agua/Hielo", "Agua/Volador", "Agua"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es Breloom?", options: ["Planta/Lucha", "Planta", "Lucha", "Planta/Veneno"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Tyranitar?", options: ["Roca/Siniestro", "Roca/Tierra", "Siniestro/Tierra", "Roca"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/286.png", options: ["Breloom", "Shroomish", "Parasect", "Virizion"], correct: 0 },
+
+    // GIMNASIOS Y LÍDERES 2
+    { cat: "LÍDERES", q: "¿Qué líder de Johto te da la medalla Mineral?", options: ["Yasmina", "Antón", "Pegaso", "Morti"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Cómo se llama el líder de tipo Planta de Galar?", options: ["Percy", "Judith", "Sally", "Naboru"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Cuál es el tipo de gimnasio de Grusha en Paldea?", options: ["Hielo", "Agua", "Volador", "Siniestro"], correct: 0 },
+    { cat: "LÍDERES", q: "¿Quién es el líder de tipo Bicho de Kalos?", options: ["Violeta", "Lino", "Corelia", "Amaro"], correct: 0 },
+    { cat: "VISUAL", q: "¿De qué tipo es este gimnasio?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/141.png", options: ["Agua / Roca", "Agua", "Roca", "Acero"], correct: 0 },
+
+    // MOVIMIENTOS 2
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Tierra no afecta a Pokémon voladores?", options: ["Terremoto", "Terratemblor", "Magnitud", "Todos los anteriores"], correct: 3 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite al usuario recuperar la mitad de sus PS?", options: ["Recuperación", "Drenaje", "Poder Reserva", "Descanso"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento duplica la potencia si el usuario ha recibido daño ese turno?", options: ["Desquite", "Contrataque", "Manto Espejo", "Esfuerzo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Fuego tiene 100% de probabilidad de quemar (si acierta)?", options: ["Fuego Fatuo", "Lanzallamas", "Llamarada", "Rueda Fuego"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png", options: ["Rotom", "Porygon", "Castform", "Shuppet"], correct: 0 },
+
+    // HABILIDADES 2
+    { cat: "HABILIDADES", q: "¿Qué habilidad permite a un Pokémon golpear a tipos Fantasma con golpes normales?", options: ["Intrépido", "Robustez", "Llovizna", "Fuerza Bruta"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad copia la habilidad del rival al entrar en combate?", options: ["Rastro", "Copia", "Impostor", "Intimidación"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad baja el Ataque del rival al entrar en combate?", options: ["Intimidación", "Presión", "Rastro", "Descarga"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad evita que el rival escape del combate?", options: ["Trampa Arena", "Sombra Trampa", "Ambas son correctas", "Presión"], correct: 2 },
+    { cat: "VISUAL", q: "¿Qué Pokémon tiene 'Sombra Trampa'?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png", options: ["Wobbuffet", "Wynaut", "Ditto", "Sableye"], correct: 0 },
+
+    // MISC FINAL BLOQUE 6
+    { cat: "GENERAL", q: "¿Cómo se llama el trío legendario de Hoenn?", options: ["Regirock, Regice y Registeel", "Articuno, Zapdos y Moltres", "Uxie, Mesprit y Azelf", "Tornadus, Thundurus y Landorus"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon evoluciona en Espeon?", options: ["Eevee", "Ralts", "Abra", "Meowth"], correct: 0 },
+    { cat: "GENERAL", q: "¿De qué color es un Mew Shiny?", options: ["Azul", "Rosa", "Dorado", "Verde"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene la Pokédex número 100?", options: ["Voltorb", "Electrode", "Gastly", "Magneton"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/100.png", options: ["Voltorb", "Electrode", "Poké Ball", "Foongus"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿En qué región aparece el Team Flare?", options: ["Kalos", "Alola", "Galar", "Paldea"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Sylveon?", options: ["Hada", "Psíquico", "Normal", "Hielo"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon lleva una cuchara?", options: ["Kadabra", "Alakazam", "Ambos", "Abra"], correct: 2 },
+    { cat: "GENERAL", q: "¿De qué tipo es el movimiento 'Corte'?", options: ["Normal", "Planta", "Acero", "Bicho"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png", options: ["Alakazam", "Kadabra", "Abra", "Hypno"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Cuál es el inicial de tipo agua de Alola?", options: ["Popplio", "Rowlet", "Litten", "Froakie"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es conocido como el Pokémon imán?", options: ["Magnemite", "Magneton", "Magnezone", "Todos ellos"], correct: 3 },
+    { cat: "GENERAL", q: "¿Cómo se llama la evolución de Scyther en Hisui?", options: ["Kleavor", "Scizor", "Skeledirge", "Sirfetch'd"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon inicial se convierte en un luchador de Pressing Catch?", options: ["Incineroar", "Blaziken", "Emboar", "Cinderace"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/727.png", options: ["Incineroar", "Torracat", "Litten", "Emboar"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Qué Pokémon es un fósil basado en un T-Rex?", options: ["Tyrunt", "Amaura", "Cranidos", "Shieldon"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué tipo es Xerneas?", options: ["Hada", "Planta", "Psíquico", "Hielo"], correct: 0 },
+    { cat: "GENERAL", q: "¿De qué color es un Umbreon Shiny?", options: ["Negro con aros azules", "Negro con aros amarillos", "Dorado", "Gris"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Lugia?", options: ["Psíquico/Volador", "Agua/Volador", "Dragón/Volador", "Psíquico/Agua"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/697.png", options: ["Tyrantrum", "Tyrunt", "Aggron", "Garchomp"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Cuál es la debilidad de los tipo Hada?", options: ["Acero y Veneno", "Dragón", "Lucha", "Fuego"], correct: 0 },
+    { cat: "GENERAL", q: "¿En qué evoluciona Machop?", options: ["Machoke", "Machamp", "Hitmonlee", "Makuhita"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es una vela?", options: ["Litwick", "Lampent", "Chandelure", "Todos ellos"], correct: 3 },
+    { cat: "GENERAL", q: "¿Cuál es la región de la Gen 5?", options: ["Teselia", "Sinnoh", "Kalos", "Alola"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/607.png", options: ["Litwick", "Lampent", "Chandelure", "Gastly"], correct: 0 },
+    // --- BLOQUE 7: PREGUNTAS 601 - 700 (Foco en Pokedex y Mecánicas) ---
+    // EVOLUCIONES Y TIPOS
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Gengar al ser intercambiado?", options: ["Haunter", "Gastly", "Misdreavus", "Banette"], correct: 0 },
+    { cat: "TIPOS", q: "¿De qué tipo es el movimiento 'Mordisco' desde la segunda generación?", options: ["Siniestro", "Normal", "Lucha", "Fantasma"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Magneton en Magnezone?", options: ["Subir nivel en un campo magnético especial", "Piedra Trueno", "Intercambio", "Nivel 40"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál de estos tipos es inmune al tipo Eléctrico?", options: ["Tierra", "Roca", "Planta", "Acero"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/462.png", options: ["Magnezone", "Magneton", "Magnemite", "Probopass"], correct: 0 },
+
+    // HABILIDADES Y COMBATE
+    { cat: "HABILIDADES", q: "¿Qué habilidad hace que el poseedor recupere PS al ser golpeado por agua?", options: ["Absorbe Agua", "Cuerpo Llama", "Piel Tosca", "Robustez"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué movimiento de tipo Veneno tiene alta probabilidad de golpe crítico?", options: ["Puya Nociva", "Toxina", "Bomba Lodo", "Carga Tóxica"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad impide que el rival baje las estadísticas del usuario?", options: ["Cuerpo Puro", "Intimidación", "Presión", "Muro Mágico"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué objeto aumenta la defensa especial de un Pokémon si aún puede evolucionar?", options: ["Mineral Evolutivo", "Piedra Eterna", "Cinta Focus", "Gafas de Sol"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon tiene la habilidad 'Levitación'?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png", options: ["Koffing", "Grimer", "Muk", "Gulpin"], correct: 0 },
+
+    // POKÉDEX KANTO Y JOHTO
+    { cat: "KANTO", q: "¿Qué número de la Pokédex ocupa Mewtwo?", options: ["150", "151", "149", "000"], correct: 0 },
+    { cat: "JOHTO", q: "¿De qué tipo es Steelix?", options: ["Acero/Tierra", "Acero/Roca", "Acero", "Tierra/Roca"], correct: 0 },
+    { cat: "KANTO", q: "¿Cuál es el Pokémon fósil basado en un pterodáctilo?", options: ["Aerodactyl", "Kabutops", "Omastar", "Archeops"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon es la evolución de Scyther?", options: ["Scizor", "Pinsir", "Kleavor", "Heracross"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/212.png", options: ["Scizor", "Scyther", "Gligar", "Skarmory"], correct: 0 },
+
+    // HOENN Y SINNOH
+    { cat: "HOENN", q: "¿Cuál es el tipo de Metagross?", options: ["Acero/Psíquico", "Acero/Roca", "Acero/Siniestro", "Psíquico/Tierra"], correct: 0 },
+    { cat: "SINNOH", q: "¿En qué evoluciona Gligar al subir de nivel de noche con un Colmillo Agudo?", options: ["Gliscor", "Crobat", "Weavile", "Drapion"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon es conocido por ser el rival de Zangoose?", options: ["Seviper", "Ekans", "Arbok", "Silicobra"], correct: 0 },
+    { cat: "SINNOH", q: "¿Qué tipo es Lucario?", options: ["Lucha/Acero", "Lucha/Psíquico", "Lucha", "Acero/Psíquico"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/376.png", options: ["Metagross", "Metang", "Beldum", "Aggron"], correct: 0 },
+
+    // TESELIA Y KALOS
+    { cat: "TESELIA", q: "¿Cuál de estos es un inicial de Teselia?", options: ["Oshawott", "Piplup", "Mudkip", "Totodile"], correct: 0 },
+    { cat: "KALOS", q: "¿Qué tipo se introdujo en la sexta generación para equilibrar al tipo Dragón?", options: ["Hada", "Acero", "Siniestro", "Fantasma"], correct: 0 },
+    { cat: "TESELIA", q: "¿Cuál es el tipo de Zoroark?", options: ["Siniestro", "Fantasma", "Psíquico", "Normal"], correct: 0 },
+    { cat: "KALOS", q: "¿En qué evoluciona Frogadier?", options: ["Greninja", "Frogadier no evoluciona", "Chesnaught", "Delphox"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué inicial es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png", options: ["Greninja", "Ash-Greninja", "Frogadier", "Samurott"], correct: 0 },
+
+    // ALOLA Y GALAR
+    { cat: "ALOLA", q: "¿Qué tipo tiene el Raichu de Alola?", options: ["Eléctrico/Psíquico", "Eléctrico", "Eléctrico/Hada", "Eléctrico/Surfero"], correct: 0 },
+    { cat: "GALAR", q: "¿Cuál es el tipo de Dragapult?", options: ["Dragón/Fantasma", "Dragón/Volador", "Dragón/Psíquico", "Dragón/Agua"], correct: 0 },
+    { cat: "ALOLA", q: "¿Cómo se llama la evolución de Rockruff que ocurre al atardecer?", options: ["Lycanroc Crepuscular", "Lycanroc Diurno", "Lycanroc Nocturno", "Lycanroc Atardecer"], correct: 0 },
+    { cat: "GALAR", q: "¿Qué Pokémon es la evolución de Meowth en Galar?", options: ["Perrserker", "Persian de Galar", "Pangoro", "Meowth no evoluciona en Galar"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/863.png", options: ["Perrserker", "Persian", "Meowth", "Galarian Meowth"], correct: 0 },
+
+    // PALDEA (Novena Gen)
+    { cat: "PALDEA", q: "¿Cuál es el tipo del Pokémon inicial Meowscarada?", options: ["Planta/Siniestro", "Planta/Hada", "Planta/Psíquico", "Planta/Lucha"], correct: 0 },
+    { cat: "PALDEA", q: "¿Qué Pokémon paradoja es la versión futura de Hariyama?", options: ["Ferropalmas", "Ferrosaco", "Ferrocuello", "Ferromitón"], correct: 0 },
+    { cat: "PALDEA", q: "¿Cuál es el tipo de Tinkaton?", options: ["Hada/Acero", "Hada/Lucha", "Psíquico/Acero", "Hada"], correct: 0 },
+    { cat: "PALDEA", q: "¿Cómo se llama la habilidad de Pawmot que le permite revivir a un compañero?", options: ["Plegaria Vital", "Relevo", "Resurrección", "No tiene esa habilidad"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/959.png", options: ["Tinkaton", "Tinkatuff", "Tinkatink", "Hatterene"], correct: 0 },
+
+    // GENERAL Y MECÁNICAS
+    { cat: "GENERAL", q: "¿Qué tipo de ataques son ineficaces contra el tipo Hada?", options: ["Dragón", "Siniestro", "Lucha", "Veneno"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Cuántos EV (Puntos de Esfuerzo) puede tener un Pokémon en una sola estadística como máximo?", options: ["252", "255", "510", "100"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite al Pokémon huir siempre de un combate salvaje?", options: ["Bola Humo", "Cinta Focus", "Piedra Eterna", "Repelente"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Normal hace que el usuario se debilite para causar gran daño?", options: ["Explosión", "Autodestrucción", "Mismo Destino", "Ambas 'Explosión' y 'Autodestrucción'"], correct: 3 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png", options: ["Lapras", "Dewgong", "Walrein", "Vaporeon"], correct: 0 },
+
+    // REPASO DE TIPOS
+    { cat: "TIPOS", q: "¿Cuál es la debilidad del tipo Fantasma?", options: ["Fantasma y Siniestro", "Psíquico", "Normal", "Lucha"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es resistente al tipo Planta?", options: ["Fuego, Veneno, Volador, Bicho, Dragón, Acero y Planta", "Solo Fuego", "Agua y Tierra", "Bicho y Lucha"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es inmune al tipo Veneno?", options: ["Acero", "Tierra", "Roca", "Fantasma"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Tyranitar?", options: ["Roca/Siniestro", "Roca/Tierra", "Tierra/Siniestro", "Roca/Acero"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png", options: ["Tyranitar", "Pupitar", "Aggron", "Rhydon"], correct: 0 },
+
+    // MOVIMIENTOS Y EFECTOS
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento aumenta la velocidad del usuario en dos niveles?", options: ["Pulimentado / Agilidad", "Danza Espada", "Danza Dragón", "Doble Equipo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite al usuario atacar y cambiar por otro Pokémon del equipo?", options: ["Ida y Vuelta / Voltiocambio", "Rugido", "Remolino", "Relevo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Lucha nunca falla?", options: ["Esfera Aural", "A bocajarro", "Puño Dinámico", "Sumisión"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué efecto tiene el movimiento 'Trampa Rocas'?", options: ["Daño al entrar al combate", "Baja la velocidad", "Impide cambiar", "Quema al rival"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/442.png", options: ["Spiritomb", "Sableye", "Gastly", "Misdreavus"], correct: 0 },
+
+    // EVOLUCIONES ESPECIALES
+    { cat: "EVOLUCIÓN", q: "¿A qué evoluciona Kirlia si es macho y se usa una Piedra Alba?", options: ["Gallade", "Gardevoir", "Iron Valiant", "Froslass"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Sneasel en Weavile?", options: ["Subir nivel de noche con Garra Afilada", "Piedra Noche", "Amistad", "Intercambio"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona al nivel 20 a Silcoon o Cascoon?", options: ["Wurmple", "Caterpie", "Weedle", "Scatterbug"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué objeto necesita Feebas para evolucionar al ser intercambiado (desde Gen 4)?", options: ["Escama Bella", "Piedra Agua", "Roca del Rey", "Escama Dragón"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/350.png", options: ["Milotic", "Feebas", "Gyarados", "Dragonair"], correct: 0 },
+
+    // HABILIDADES Y ESTADÍSTICAS
+    { cat: "HABILIDADES", q: "¿Qué habilidad duplica la velocidad del Pokémon bajo la lluvia?", options: ["Nado Rápido", "Absorbe Agua", "Hidratación", "Cura Lluvia"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad permite al Pokémon atacar antes si usa movimientos de prioridad?", options: ["No existe tal habilidad (la prioridad es fija)", "Alas Vendaval (solo tipo Vuelo)", "Adaptable", "Audaz"], correct: 1 },
+    { cat: "COMBATE", q: "¿Cuál es la estadística que determina quién ataca primero?", options: ["Velocidad", "Ataque", "Defensa Especial", "Precisión"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Qué hace la naturaleza 'Firme' (Adamant)?", options: ["Sube Ataque, baja At. Especial", "Sube Velocidad, baja Defensa", "Sube Defensa, baja Ataque", "Es neutra"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/230.png", options: ["Kingdra", "Seadra", "Horsea", "Dragonair"], correct: 0 },
+
+    // CURIOSIDADES POKÉDEX
+    { cat: "GENERAL", q: "¿Qué Pokémon se dice que nació de una Poké Ball?", options: ["Voltorb", "Porygon", "Mewtwo", "Ditto"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es el Pokémon más alto de tipo planta?", options: ["Exeggutor de Alola", "Venusaur", "Torterra", "Trevenant"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene el número 001 en la Pokédex nacional?", options: ["Bulbasaur", "Arceus", "Victini", "Mew"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál de estos Pokémon no tiene evolución ni evoluciona de nadie?", options: ["Lapras", "Scyther", "Onix", "Porygon"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png", options: ["Exeggutor", "Exeggcute", "Tropius", "Sudowoodo"], correct: 0 },
+
+    // TIPOS SECUNDARIOS
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Skarmory?", options: ["Acero/Volador", "Plata/Volador", "Acero", "Volador/Tierra"], correct: 0 },
+    { cat: "TIPOS", q: "¿De qué tipo es Torterra?", options: ["Planta/Tierra", "Planta/Roca", "Planta", "Tierra"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es Lanturn?", options: ["Agua/Eléctrico", "Agua/Luz", "Agua", "Eléctrico"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Garchomp?", options: ["Dragón/Tierra", "Dragón/Volador", "Tierra/Roca", "Dragón/Siniestro"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png", options: ["Garchomp", "Gabite", "Gible", "Flygon"], correct: 0 },
+
+    // OBJETOS Y BAYAS
+    { cat: "OBJETOS", q: "¿Qué objeto permite recuperar PP de un movimiento?", options: ["Éter / Elixir", "Poción", "Antídoto", "Caramelo Raro"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto aumenta la potencia de los movimientos de tipo Fuego?", options: ["Carbón", "Imán", "Semilla Milagro", "Agua Mística"], correct: 0 },
+    { cat: "BAYAS", q: "¿Qué baya cura las quemaduras?", options: ["Baya Safre", "Baya Meloc", "Baya Peras", "Baya Zidra"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite a un Pokémon ganar experiencia sin participar en combate (Gen 2-5)?", options: ["Repartir Exp", "Huevo Suerte", "Incienso", "Amuleto"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué objeto evoluciona a este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png", options: ["Piedra Fuego", "Piedra Solar", "Piedra Lunar", "Nivel 36"], correct: 0 },
+
+    // MISCELÁNEA FINAL
+    { cat: "GENERAL", q: "¿En qué región se descubrieron las Megaevoluciones?", options: ["Kalos", "Hoenn", "Alola", "Kanto"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene el ratio de captura más difícil (3)?", options: ["Beldum", "Mewtwo", "Lugia", "Todos estos"], correct: 3 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de la medalla de la líder Misty?", options: ["Agua", "Hielo", "Cascada (Agua)", "Burbuja"], correct: 2 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es conocido como el Pokémon 'Copia'?", options: ["Ditto", "Mew", "Smeargle", "Sudowoodo"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png", options: ["Ditto", "Muk", "Grimer", "Zoroark"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Cuál es la evolución final de Turtwig?", options: ["Torterra", "Grotle", "Venusaur", "Meganium"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué tipo es Umbreon?", options: ["Siniestro", "Fantasma", "Siniestro/Veneno", "Normal"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon lleva un tronco de madera?", options: ["Timburr", "Gurdurr", "Conkeldurr", "Todos estos"], correct: 3 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Gyarados?", options: ["Agua/Volador", "Agua/Dragón", "Agua", "Agua/Siniestro"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png", options: ["Gyarados", "Magikarp", "Milotic", "Dragonite"], correct: 0 },
+    // --- BLOQUE 8: PREGUNTAS 701 - 800 ---
+    // MECÁNICAS Y COMBATE AVANZADO (Simplificado)
+    { cat: "COMBATE", q: "¿Qué estadística aumenta el movimiento 'Danza Espada'?", options: ["Ataque (2 niveles)", "Ataque y Velocidad", "Defensa", "Ataque Especial"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué objeto permite a un Pokémon recuperar 1/16 de sus PS máximos cada turno?", options: ["Restos", "Lodo Negro (solo Veneno)", "Baya Zidra", "Ambos 'Restos' y 'Lodo Negro'"], correct: 3 },
+    { cat: "MECÁNICA", q: "¿Qué ocurre si un Pokémon usa 'Protección' dos veces seguidas?", options: ["Suele fallar", "Funciona siempre", "Baja la defensa", "Cura al usuario"], correct: 0 },
+    { cat: "MECÁNICA", q: "¿Cuál es el nivel máximo que puede alcanzar un Pokémon?", options: ["100", "50", "99", "150"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué objeto es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/leftovers.png", options: ["Restos", "Manzana", "Baya Zidra", "Imán"], correct: 0 },
+
+    // POKÉDEX: EVOLUCIONES POR LUGAR
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Crabrawler en Crabominable?", options: ["Subir nivel en el Monte Lanakila (Alola) o usar Piedra Hielo", "Piedra Agua", "Nivel 30", "Intercambio"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Nosepass al subir de nivel en una zona magnética?", options: ["Probopass", "Regirock", "Steelix", "Stunfisk"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Leafeon si se usa una Piedra Hoja?", options: ["Eevee", "Oddish", "Bellsprout", "Budew"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Cómo evoluciona Inkay?", options: ["Poniendo la consola boca abajo al subir nivel", "Piedra Alba", "Amistad", "Intercambio"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/686.png", options: ["Inkay", "Malamar", "Tentacool", "Omanyte"], correct: 0 },
+
+    // TIPOS ÚNICOS O RAREZAS
+    { cat: "TIPOS", q: "¿Cuál es el único Pokémon de tipo Normal/Fantasma?", options: ["Zoroark de Hisui", "Bannete", "Giratina", "Shedinja"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es Shedinja?", options: ["Bicho/Fantasma", "Bicho", "Fantasma", "Bicho/Volador"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Lucario?", options: ["Lucha/Acero", "Lucha", "Acero", "Lucha/Psíquico"], correct: 0 },
+    { cat: "TIPOS", q: "¿De qué tipo es el movimiento 'Mil flechas' de Zygarde?", options: ["Tierra", "Dragón", "Volador", "Planta"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué tipo es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/292.png", options: ["Bicho / Fantasma", "Bicho", "Fantasma", "Tierra"], correct: 0 },
+
+    // LÍDERES Y ENTRENADORES
+    { cat: "PERSONAJES", q: "¿Qué líder de gimnasio de Kanto es conocido como 'El Maestro de los Pokémon de tipo Tierra'?", options: ["Giovanni", "Brock", "Koga", "Blaine"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Quién es el Campeón de la Liga en Pokémon Oro/Plata/Cristal?", options: ["Lance", "Azul", "Rojo", "Máximo"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Cómo se llama el líder de gimnasio de tipo Eléctrico de Hoenn?", options: ["Erico", "Lectro", "Lt. Surge", "Lem"], correct: 0 },
+    { cat: "PERSONAJES", q: "¿Qué tipo usa el Alto Mando de Sinnoh, Delos?", options: ["Psíquico", "Siniestro", "Dragón", "Fuego"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es el as de Lance?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png", options: ["Dragonite", "Charizard", "Aerodactyl", "Gyarados"], correct: 0 },
+
+    // OBJETOS Y BAYAS 2
+    { cat: "OBJETOS", q: "¿Qué objeto permite al usuario atacar primero una vez si tiene pocos PS?", options: ["Baya Aslac", "Baya Wiki", "Baya Aranja", "Baya Zidra"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto aumenta la precisión de los movimientos del usuario?", options: ["Lupa", "Gafas de Sol", "Cinta Fuerte", "Amuleto"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto reduce la velocidad del usuario pero duplica los EV ganados?", options: ["Brazal Firme", "Pesa Recia", "Cinto Recio", "Todos estos"], correct: 3 },
+    { cat: "OBJETOS", q: "¿Qué objeto permite que un Pokémon use un movimiento de carga (como Rayo Solar) en un solo turno?", options: ["Hierba Única", "Hierba Blanca", "Baya Ziuela", "Poder Mental"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué objeto es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/power-weight.png", options: ["Pesa Recia", "Brazal Firme", "Cinto Recio", "Piedra Dura"], correct: 0 },
+
+    // REGIÓN DE TESELIA (Gen 5)
+    { cat: "TESELIA", q: "¿Cómo se llama el equipo villano que quiere liberar a los Pokémon?", options: ["Team Plasma", "Team Rocket", "Team Galaxia", "Team Flare"], correct: 0 },
+    { cat: "TESELIA", q: "¿Qué Pokémon legendario representa los ideales?", options: ["Zekrom", "Reshiram", "Kyurem", "Victini"], correct: 0 },
+    { cat: "TESELIA", q: "¿Cuál es la evolución final del inicial Snivy?", options: ["Serperior", "Servine", "Sceptile", "Meganium"], correct: 0 },
+    { cat: "TESELIA", q: "¿Qué Pokémon tiene el número 000 en la Pokédex de Teselia?", options: ["Victini", "Genesect", "Meloetta", "Snivy"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/494.png", options: ["Victini", "Celebi", "Jirachi", "Mew"], correct: 0 },
+
+    // MOVIMIENTOS CARACTERÍSTICOS
+    { cat: "MOVIMIENTOS", q: "¿Cuál es el movimiento característico de Zeraora?", options: ["Puños Plasma", "Impactrueno", "Voltio Cruel", "Rayo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento permite a Smeargle copiar casi cualquier ataque?", options: ["Esquema", "Copión", "Mimético", "Metrónomo"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Qué movimiento de tipo Siniestro siempre golpea primero?", options: ["Golpe Bajo", "Persecución", "Mofetazo", "Desarme"], correct: 0 },
+    { cat: "MOVIMIENTOS", q: "¿Cuál es el movimiento de tipo Planta que causa daño y cura al usuario?", options: ["Gigadrenado", "Hoja Afilada", "Látigo Cepa", "Rayo Solar"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon usa 'Esquema'?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/235.png", options: ["Smeargle", "Ditto", "Spinda", "Aipom"], correct: 0 },
+
+    // GENERAL Y CURIOSIDADES 2
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene el peso más bajo registrado (0.1 kg)?", options: ["Gastly / Haunter / Flabébé", "Pikachu", "Jigglypuff", "Diglett"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es conocido por comerse los sueños?", options: ["Hypno / Drowzee", "Snorlax", "Darkrai", "Ambos Hypno y Darkrai"], correct: 3 },
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Silvally?", options: ["Cambia según el disco que lleve", "Normal", "Multitipo", "Psíquico"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene tres cabezas?", options: ["Dugtrio / Dodrio / Hydreigon", "Exeggutor", "Magneton", "Todos estos"], correct: 3 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png", options: ["Exeggutor", "Dodrio", "Dugtrio", "Hydreigon"], correct: 0 },
+
+    // ALOLA Y SUS FORMAS
+    { cat: "ALOLA", q: "¿De qué tipo es el Meowth de Alola?", options: ["Siniestro", "Normal", "Acero", "Fantasma"], correct: 0 },
+    { cat: "ALOLA", q: "¿Cuál es el tipo de Marowak de Alola?", options: ["Fuego/Fantasma", "Fuego/Tierra", "Tierra/Fantasma", "Fuego/Siniestro"], correct: 0 },
+    { cat: "ALOLA", q: "¿Qué Pokémon es el guardián de la isla Melemele?", options: ["Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini"], correct: 0 },
+    { cat: "ALOLA", q: "¿De qué tipo es el Vulpix de Alola?", options: ["Hielo", "Fuego", "Hielo/Hada", "Agua"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este guardián?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/785.png", options: ["Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini"], correct: 0 },
+
+    // KALOS (Gen 6)
+    { cat: "KALOS", q: "¿Cómo se llama la ciudad principal de Kalos con una gran torre?", options: ["Ciudad Luminalia", "Ciudad Yantra", "Ciudad Fractal", "Ciudad Relieve"], correct: 0 },
+    { cat: "KALOS", q: "¿Qué Pokémon es el líder del trío del equilibrio?", options: ["Zygarde", "Xerneas", "Yveltal", "Rayquaza"], correct: 0 },
+    { cat: "KALOS", q: "¿Cuál es el tipo de Yveltal?", options: ["Siniestro/Volador", "Siniestro/Dragón", "Fantasma/Volador", "Dragón/Volador"], correct: 0 },
+    { cat: "KALOS", q: "¿En qué evoluciona Fennekin?", options: ["Braixen", "Delphox", "Ninetales", "Pyroar"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/716.png", options: ["Xerneas", "Yveltal", "Zygarde", "Deerling"], correct: 0 },
+
+    // COMBATE: ESTADOS ALTERADOS
+    { cat: "COMBATE", q: "¿Qué hace el estado 'Quemado' aparte de quitar PS?", options: ["Reduce el Ataque a la mitad", "Reduce la Velocidad", "Reduce el Ataque Especial", "Impide atacar"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué estado reduce la velocidad del Pokémon a la mitad?", options: ["Parálisis", "Quemadura", "Envenenamiento", "Sueño"], correct: 0 },
+    { cat: "COMBATE", q: "¿Qué tipo de Pokémon no puede ser envenenado?", options: ["Acero y Veneno", "Fuego", "Tierra", "Normal"], correct: 0 },
+    { cat: "COMBATE", q: "¿Cuántos turnos suele durar el estado 'Sueño'?", options: ["De 1 a 3 turnos", "Siempre 5", "Hasta que lo cambies", "Solo 1"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué movimiento causa sueño al 100%?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/231.png", options: ["Espora", "Somnífero", "Bostezo", "Hipnosis"], correct: 0 },
+
+    // EVOLUCIONES DE SINNOH
+    { cat: "SINNOH", q: "¿Qué objeto evoluciona a Rhydon en Rhyperior?", options: ["Protector", "Revestimiento Metálico", "Piedra Dura", "Roca del Rey"], correct: 0 },
+    { cat: "SINNOH", q: "¿Cómo evoluciona Togetic en Togekiss?", options: ["Piedra Alba", "Piedra Día", "Piedra Piedra Solar", "Amistad"], correct: 1 },
+    { cat: "SINNOH", q: "¿Qué Pokémon evoluciona en Yanmega al conocer 'Poder Pasado'?", options: ["Yanma", "Scyther", "Pinsir", "Venonat"], correct: 0 },
+    { cat: "SINNOH", q: "¿Cómo evoluciona Misdreavus en Mismagius?", options: ["Piedra Noche", "Piedra Alba", "Subir Nivel", "Intercambio"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/429.png", options: ["Mismagius", "Misdreavus", "Gengar", "Banette"], correct: 0 },
+
+    // HABILDADES Y ESTRATEGIA 2
+    { cat: "HABILIDADES", q: "¿Qué habilidad permite al Pokémon recuperar PS si hay sol?", options: ["Piel Seca (no, esta quita)", "Clorofila", "Defensa Hoja", "Cura Lluvia"], correct: 2 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad tiene Ditto que le permite transformarse nada más entrar?", options: ["Impostor", "Rastro", "Copia", "Flexibilidad"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad hace que los ataques de tipo Normal se vuelvan de tipo Hielo?", options: ["Piel Helada", "Piel Feérica", "Piel Celeste", "Piel Eléctrica"], correct: 0 },
+    { cat: "HABILIDADES", q: "¿Qué habilidad duplica el ataque del Pokémon si tiene un estado alterado?", options: ["Agallas", "Foco Interno", "Potencia", "Ímpetu Ardiente"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién tiene la habilidad 'Agallas'?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png", options: ["Machamp", "Alakazam", "Gengar", "Snorlax"], correct: 0 },
+
+    // TIPOS SECUNDARIOS 3
+    { cat: "TIPOS", q: "¿De qué tipo es Lugia?", options: ["Psíquico/Volador", "Agua/Volador", "Psíquico/Agua", "Dragón/Volador"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es Celebi?", options: ["Psíquico/Planta", "Hada/Planta", "Planta", "Psíquico/Hada"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Garchomp?", options: ["Dragón/Tierra", "Dragón/Volador", "Tierra/Roca", "Dragón"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo es Bibarel?", options: ["Normal/Agua", "Normal", "Agua", "Normal/Tierra"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/400.png", options: ["Bibarel", "Bidoof", "Raticate", "Linoone"], correct: 0 },
+
+    // GENERAL FINAL BLOQUE 8
+    { cat: "GENERAL", q: "¿Qué Pokémon tiene forma de pokéball?", options: ["Voltorb / Electrode / Foongus", "Pikachu", "Jigglypuff", "Ditto"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuántos tipos diferentes existen actualmente?", options: ["18", "17", "19", "15"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál fue el primer Pokémon diseñado?", options: ["Rhydon", "Bulbasaur", "Mew", "Pikachu"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es el número 100 de la Pokédex?", options: ["Voltorb", "Electrode", "Magneton", "Gastly"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/112.png", options: ["Rhydon", "Rhyhorn", "Rhyperior", "Aggron"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Cuál es el inicial de planta de Alola?", options: ["Rowlet", "Chikorita", "Treecko", "Snivy"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es una nube que se convierte en dragón?", options: ["Altaria (evoluciona de Swablu)", "Dragonite", "Salamence", "Noivern"], correct: 0 },
+    { cat: "GENERAL", q: "¿De qué tipo es Mew?", options: ["Psíquico", "Hada", "Normal", "Psíquico/Hada"], correct: 0 },
+    { cat: "GENERAL", q: "¿En qué evoluciona Magnemite?", options: ["Magneton", "Magnezone", "Magnetric", "No evoluciona"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png", options: ["Magnemite", "Magneton", "Magnetric", "Klink"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Cuál es la debilidad del tipo Acero?", options: ["Fuego, Lucha y Tierra", "Agua", "Eléctrico", "Hielo"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es un imán?", options: ["Magnemite", "Geodude", "Nosepass", "Magneton"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama la evolución de Scyther de tipo Acero?", options: ["Scizor", "Kleavor", "Pinsir", "Heracross"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es conocido por llevar un huevo en su bolsa?", options: ["Chansey", "Kangaskhan", "Blissey", "Happiny"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/113.png", options: ["Chansey", "Happiny", "Blissey", "Kangaskhan"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Cuál es el tipo de Darkrai?", options: ["Siniestro", "Fantasma", "Siniestro/Fantasma", "Psíquico"], correct: 0 },
+    { cat: "GENERAL", q: "¿En qué evoluciona Squirtle?", options: ["Wartortle", "Blastoise", "Totodile", "Marshtomp"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon es un fantasma dentro de una lámpara?", options: ["Lampent", "Chandelure", "Litwick", "Rotom"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es la evolución final de Gible?", options: ["Garchomp", "Gabite", "Flygon", "Salamence"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/443.png", options: ["Gible", "Gabite", "Garchomp", "Trapinch"], correct: 0 },
+    // --- BLOQUE 9: PREGUNTAS 801 - 900 (ESPECIAL KANTO) ---
+    // LÍDERES DE GIMNASIO Y CIUDADES
+    { cat: "KANTO", q: "¿Quién es el líder del gimnasio de Ciudad Celeste?", options: ["Misty", "Brock", "Erika", "Sabrina"], correct: 0 },
+    { cat: "KANTO", q: "¿Cuál es el tipo de la medalla que entrega Lt. Surge?", options: ["Trueno", "Roca", "Cascada", "Alma"], correct: 0 },
+    { cat: "KANTO", q: "¿Qué líder de gimnasio usa Pokémon de tipo Veneno?", options: ["Koga", "Blaine", "Sabrina", "Giovanni"], correct: 0 },
+    { cat: "KANTO", q: "¿En qué ciudad se encuentra el laboratorio del Profesor Oak?", options: ["Pueblo Paleta", "Ciudad Verde", "Ciudad Plateada", "Ciudad Fucsia"], correct: 0 },
+    { cat: "VISUAL", q: "¿A qué líder de gimnasio pertenece este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png", options: ["Brock", "Koga", "Giovanni", "Blaine"], correct: 0 },
+
+    // EVOLUCIONES CLÁSICAS
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Ninetales con una Piedra Fuego?", options: ["Vulpix", "Growlithe", "Ponyta", "Eevee"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Poliwag al nivel 25?", options: ["Poliwhirl", "Poliwrath", "Politoed", "Golduck"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿Qué Pokémon evoluciona en Alakazam por intercambio?", options: ["Kadabra", "Abra", "Hypno", "Mr. Mime"], correct: 0 },
+    { cat: "EVOLUCIÓN", q: "¿En qué evoluciona Shellder con una Piedra Agua?", options: ["Cloyster", "Slowbro", "Dewgong", "Lapras"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es la evolución de este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/60.png", options: ["Poliwhirl", "Poliwrath", "Poliwag", "Politoed"], correct: 0 },
+
+    // POKÉDEX: DATOS Y CURIOSIDADES
+    { cat: "POKÉDEX", q: "¿Cuál es el Pokémon número 10 de la Pokédex?", options: ["Caterpie", "Metapod", "Butterfree", "Weedle"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon se dice que es un experimento fallido de clonación de Mew?", options: ["Ditto", "Mewtwo", "Porygon", "Muk"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el peso aproximado de Snorlax?", options: ["460 kg", "200 kg", "1000 kg", "350 kg"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon tiene un hueso como arma y máscara?", options: ["Cubone", "Marowak", "Kangaskhan", "Hitmonlee"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png", options: ["Lickitung", "Chansey", "Wigglytuff", "Slowpoke"], correct: 0 },
+
+    // GEOGRAFÍA DE KANTO
+    { cat: "LUGARES", q: "¿Cómo se llama la cueva donde se encuentran los fósiles por primera vez?", options: ["Mt. Moon", "Cueva Diglett", "Túnel Roca", "Islas Espuma"], correct: 0 },
+    { cat: "LUGARES", q: "¿Dónde puedes encontrar a Articuno?", options: ["Islas Espuma", "Central Energía", "Calle Victoria", "Cueva Celeste"], correct: 0 },
+    { cat: "LUGARES", q: "¿Qué edificio de Ciudad Azafrán es tomado por el Team Rocket?", options: ["Silph Co.", "Torre Pokémon", "Centro Comercial", "Gimnasio"], correct: 0 },
+    { cat: "LUGARES", q: "¿Cómo se llama la ruta que conecta Ciudad Carmín con Ciudad Azafrán?", options: ["Ruta 6", "Ruta 1", "Ruta 12", "Ruta 22"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon se encuentra exclusivamente en esta zona (Central Energía)?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png", options: ["Zapdos", "Articuno", "Moltres", "Mewtwo"], correct: 0 },
+
+    // TIPOS Y COMBATE KANTO
+    { cat: "TIPOS", q: "¿De qué tipo es Pinsir?", options: ["Bicho", "Bicho/Lucha", "Bicho/Tierra", "Lucha"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el tipo de Gyarados?", options: ["Agua/Volador", "Agua/Dragón", "Agua", "Dragón/Volador"], correct: 0 },
+    { cat: "TIPOS", q: "¿Qué tipo de ataques son supereficaces contra los tipo Bicho?", options: ["Fuego, Volador y Roca", "Fuego y Agua", "Lucha", "Veneno"], correct: 0 },
+    { cat: "TIPOS", q: "¿Cuál es el único tipo de Gastly, Haunter y Gengar?", options: ["Fantasma/Veneno", "Fantasma", "Fantasma/Psíquico", "Siniestro/Fantasma"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué tipo es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png", options: ["Agua / Psíquico", "Agua", "Psíquico", "Agua / Hielo"], correct: 0 },
+
+    // OBJETOS CLÁSICOS
+    { cat: "OBJETOS", q: "¿Qué objeto necesitas para despertar a Snorlax?", options: ["Poké Flauta", "Caramelo Raro", "Agua Fresca", "Poké Ball"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué objeto te permite ver a los fantasmas en la Torre Pokémon?", options: ["Scope Silph", "Detector", "Mapa", "Gafas de Sol"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Cómo se llama el objeto que revive fósiles en Isla Canela?", options: ["Máquina de Resurrección", "PC", "Fósil Domo", "Ámbar Viejo"], correct: 0 },
+    { cat: "OBJETOS", q: "¿Qué bicicleta es más cara en la tienda de Ciudad Celeste?", options: ["Cuesta 1.000.000 (necesitas bono)", "10.000", "500", "Gratis"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon evoluciona con la Piedra Lunar?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png", options: ["Clefairy", "Jigglypuff", "Nidorina", "Todos estos"], correct: 3 },
+
+    // TRÍO INICIAL Y EVOLUCIONES
+    { cat: "INICIALES", q: "¿A qué nivel evoluciona Ivysaur en Venusaur?", options: ["32", "36", "30", "40"], correct: 0 },
+    { cat: "INICIALES", q: "¿Qué movimiento aprende Charizard nada más evolucionar en la Gen 1?", options: ["Cuchillada / Vuelo (depende versión)", "Lanzallamas", "Giro Fuego", "Furia Dragon"], correct: 0 },
+    { cat: "INICIALES", q: "¿De qué tipo es Blastoise?", options: ["Agua", "Agua/Acero", "Agua/Hielo", "Agua/Tierra"], correct: 0 },
+    { cat: "INICIALES", q: "¿Cuál es el Pokémon inicial en la versión Amarilla?", options: ["Pikachu", "Eevee", "Bulbasaur", "Mew"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png", options: ["Charmeleon", "Charizard", "Charmander", "Magmar"], correct: 0 },
+
+    // ALTO MANDO
+    { cat: "LORE", q: "¿Quién es la primera persona del Alto Mando a la que te enfrentas?", options: ["Lorelei", "Bruno", "Agatha", "Lance"], correct: 0 },
+    { cat: "LORE", q: "¿Qué tipo de Pokémon usa Bruno?", options: ["Lucha y Roca", "Lucha", "Roca", "Tierra"], correct: 0 },
+    { cat: "LORE", q: "¿Qué relación tiene Agatha con el Profesor Oak?", options: ["Eran rivales en su juventud", "Es su esposa", "Es su hermana", "No se conocen"], correct: 0 },
+    { cat: "LORE", q: "¿Cuál es el Pokémon más fuerte de Lance en Kanto?", options: ["Dragonite", "Aerodactyl", "Gyarados", "Dragonair"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué tipo de Pokémon usa esta entrenadora (Lorelei)?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png", options: ["Hielo / Agua", "Hielo", "Agua", "Psíquico"], correct: 0 },
+
+    // GENERAL KANTO
+    { cat: "GENERAL", q: "¿Cuántas MO (Máquinas Ocultas) existen en los juegos originales?", options: ["5", "7", "8", "6"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon se encuentra en el camión cerca del S.S. Anne (según el mito)?", options: ["Ninguno (es un mito)", "Mew", "Mewtwo", "Pikachu"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cómo se llama el rival?", options: ["Azul / Gary", "Rojo", "Oak", "Ash"], correct: 0 },
+    { cat: "GENERAL", q: "¿Qué Pokémon entrega el Director de Silph Co. tras derrotar a Giovanni?", options: ["Lapras", "Eevee", "Porygon", "Hitmonlee"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es el número 133?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png", options: ["Eevee", "Ditto", "Vaporeon", "Flareon"], correct: 0 },
+
+    // REPASO POKÉDEX 1-151
+    { cat: "POKÉDEX", q: "¿Cuál es el Pokémon 'Gas'?", options: ["Gastly / Haunter", "Koffing", "Weezing", "Todos ellos"], correct: 3 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon tiene una forma de imán?", options: ["Magnemite", "Magneton", "Magnetric", "Magnezone"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿De qué color es la lengua de Shellder?", options: ["Roja", "Rosa", "Azul", "Blanca"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es el número 52?", options: ["Meowth", "Persian", "Mankey", "Psyduck"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png", options: ["Psyduck", "Golduck", "Slowpoke", "Poliwag"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Venonat?", options: ["Venomoth", "Butterfree", "Beedrill", "Dustox"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Jynx?", options: ["Hielo/Psíquico", "Hielo", "Psíquico", "Hielo/Hada"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es una evolución de Slowpoke?", options: ["Slowbro", "Slowking", "Ambos", "Golduck"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el Pokémon 'Hongo'?", options: ["Paras / Parasect", "Oddish", "Glooom", "Bellsprout"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/47.png", options: ["Parasect", "Paras", "Venomoth", "Pinsir"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿De qué tipo es Onix?", options: ["Roca/Tierra", "Roca", "Tierra", "Roca/Acero"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon evoluciona en Primeape?", options: ["Mankey", "Meowth", "Machop", "Hitmonlee"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Electabuzz?", options: ["Eléctrico", "Eléctrico/Lucha", "Eléctrico/Acero", "Eléctrico/Fuego"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Grimer?", options: ["Muk", "Weezing", "Ditto", "Arbok"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png", options: ["Muk", "Grimer", "Weezing", "Ditto"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es el número 122?", options: ["Mr. Mime", "Jynx", "Electabuzz", "Magmar"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Omastar?", options: ["Roca/Agua", "Roca", "Agua", "Agua/Tierra"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Kabuto?", options: ["Kabutops", "Omanyte", "Aerodactyl", "Rhydon"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es una medusa?", options: ["Tentacool / Tentacruel", "Staryu", "Shellder", "Horsea"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png", options: ["Tentacruel", "Tentacool", "Cloyster", "Omastar"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Hitmonlee?", options: ["Lucha", "Lucha/Tierra", "Normal", "Lucha/Acero"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Ponyta?", options: ["Rapidash", "Arcanine", "Ninetales", "Magmar"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon tiene el número 101?", options: ["Electrode", "Voltorb", "Magneton", "Gastly"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Sandslash?", options: ["Tierra", "Roca", "Tierra/Roca", "Normal"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png", options: ["Sandslash", "Sandshrew", "Diglett", "Rhydon"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Koffing?", options: ["Weezing", "Muk", "Gastly", "Magmar"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Tangela?", options: ["Planta", "Planta/Veneno", "Bicho", "Agua"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es el número 115?", options: ["Kangaskhan", "Chansey", "Snorlax", "Lapras"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Horsea?", options: ["Seadra", "Kingdra", "Gyarados", "Dewgong"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/117.png", options: ["Seadra", "Horsea", "Kingdra", "Dratini"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Kingler?", options: ["Agua", "Agua/Lucha", "Agua/Roca", "Roca"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Nidoran♂?", options: ["Nidorino", "Nidoking", "Nidorina", "Rhydon"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Arbok?", options: ["Veneno", "Veneno/Siniestro", "Tierra", "Veneno/Tierra"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es el número 1?", options: ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png", options: ["Arbok", "Ekans", "Seviper", "Onix"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Golbat?", options: ["Veneno/Volador", "Veneno", "Volador", "Siniestro/Volador"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Meowth?", options: ["Persian", "Perrserker", "Meowstic", "Liepard"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Dugtrio?", options: ["Tierra", "Tierra/Roca", "Roca", "Tierra/Acero"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es el número 150?", options: ["Mewtwo", "Mew", "Dragonite", "Moltres"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/51.png", options: ["Dugtrio", "Diglett", "Sandshrew", "Geodude"], correct: 0 },
+
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Farfetch'd?", options: ["Normal/Volador", "Volador", "Planta/Volador", "Lucha/Volador"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿En qué evoluciona Gastly?", options: ["Haunter", "Gengar", "Spiritomb", "Misdreavus"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Cuál es el tipo de Moltres?", options: ["Fuego/Volador", "Fuego", "Fuego/Dragón", "Volador"], correct: 0 },
+    { cat: "POKÉDEX", q: "¿Qué Pokémon es el número 25?", options: ["Pikachu", "Raichu", "Pichu", "Eevee"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png", options: ["Moltres", "Ho-Oh", "Zapdos", "Charizard"], correct: 0 },
+    // --- BLOQUE 10: PREGUNTAS 901 - 1000 (ESPECIAL JOHTO Y HOENN) ---
+    
+    // --- JOHTO (901 - 950) ---
+    { cat: "JOHTO", q: "¿Quién es el líder de gimnasio de Ciudad Malva?", options: ["Pegaso", "Antón", "Blanca", "Morti"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon es el número 152 de la Pokédex?", options: ["Chikorita", "Meganium", "Cyndaquil", "Totodile"], correct: 0 },
+    { cat: "JOHTO", q: "¿Cuál es el tipo de la medalla que entrega la líder Blanca?", options: ["Planicie", "Colmena", "Niebla", "Mineral"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon legendario vive en la Torre Campana?", options: ["Ho-Oh", "Lugia", "Suicune", "Entei"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué inicial de Johto es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/158.png", options: ["Totodile", "Croconaw", "Feraligatr", "Squirtle"], correct: 0 },
+
+    { cat: "JOHTO", q: "¿De qué tipo es Sudowoodo?", options: ["Roca", "Planta", "Roca/Planta", "Tierra"], correct: 0 },
+    { cat: "JOHTO", q: "¿En qué evoluciona Wooper?", options: ["Quagsire", "Clodsire", "Swampert", "Whiscash"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué objeto necesitas para evolucionar a Scyther en Scizor?", options: ["Revestimiento Metálico", "Roca del Rey", "Escama Dragón", "Piedra Alba"], correct: 0 },
+    { cat: "JOHTO", q: "¿Cuál es el tipo de Tyranitar?", options: ["Roca/Siniestro", "Roca/Tierra", "Siniestro/Tierra", "Roca/Acero"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon bebé?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/175.png", options: ["Togepi", "Togetic", "Cleffa", "Igglybuff"], correct: 0 },
+
+    { cat: "JOHTO", q: "¿Cómo se llama el líder de tipo Fantasma de Ciudad Iris?", options: ["Morti", "Pegaso", "Yasmina", "Fredo"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon es conocido como el Pokémon Simbólico?", options: ["Unown", "Dunsparce", "Girafarig", "Xatu"], correct: 0 },
+    { cat: "JOHTO", q: "¿De qué tipo es Celebi?", options: ["Psíquico/Planta", "Hada/Planta", "Psíquico/Hada", "Planta"], correct: 0 },
+    { cat: "JOHTO", q: "¿En qué evoluciona Togepi por amistad?", options: ["Togetic", "Togekiss", "Chansey", "Blissey"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este legendario?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png", options: ["Lugia", "Ho-Oh", "Articuno", "Kyogre"], correct: 0 },
+
+    { cat: "JOHTO", q: "¿Cuál es el tipo de Steelix?", options: ["Acero/Tierra", "Acero/Roca", "Acero", "Tierra/Roca"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon evoluciona en Espeon o Umbreon?", options: ["Eevee", "Pikachu", "Ralts", "Tyrogue"], correct: 0 },
+    { cat: "JOHTO", q: "¿Cómo se llama el trío de perros/bestias legendarias?", options: ["Raikou, Entei y Suicune", "Articuno, Zapdos y Moltres", "Regis", "Tapus"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué líder de gimnasio usa a Kingdra como su Pokémon más fuerte?", options: ["Débora", "Yasmina", "Misty", "Fredo"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/214.png", options: ["Heracross", "Pinsir", "Scizor", "Scyther"], correct: 0 },
+
+    { cat: "JOHTO", q: "¿De qué tipo es Houndoom?", options: ["Siniestro/Fuego", "Siniestro", "Fuego/Siniestro", "Siniestro/Veneno"], correct: 0 },
+    { cat: "JOHTO", q: "¿En qué evoluciona Chinchou?", options: ["Lanturn", "Starmie", "Quagsire", "Gorebyss"], correct: 0 },
+    { cat: "JOHTO", q: "¿Qué Pokémon tiene el número 212?", options: ["Scizor", "Scyther", "Skarmory", "Steelix"], correct: 0 },
+    { cat: "JOHTO", q: "¿Cuál es el tipo de Skarmory?", options: ["Acero/Volador", "Acero", "Volador", "Acero/Tierra"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/183.png", options: ["Marill", "Azumarill", "Azurill", "Pikachu Azul"], correct: 0 },
+
+    // --- HOENN (951 - 1000) ---
+    { cat: "HOENN", q: "¿Quién es el primer líder de gimnasio de Hoenn?", options: ["Petra", "Marcial", "Erico", "Candela"], correct: 0 },
+    { cat: "HOENN", q: "¿Cuál es el tipo del inicial Mudkip?", options: ["Agua", "Agua/Tierra", "Agua/Hielo", "Agua/Roca"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon legendario representa la tierra y los continentes?", options: ["Groudon", "Kyogre", "Rayquaza", "Regirock"], correct: 0 },
+    { cat: "HOENN", q: "¿En qué ciudad se encuentra el líder de tipo Normal, Norman?", options: ["Ciudad Petalia", "Ciudad Férrica", "Ciudad Malvalona", "Pueblo Lavacalda"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué inicial es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/252.png", options: ["Treecko", "Grovyle", "Sceptile", "Snivy"], correct: 0 },
+
+    { cat: "HOENN", q: "¿De qué tipo es Gardevoir (desde Gen 6)?", options: ["Psíquico/Hada", "Psíquico", "Psíquico/Planta", "Hada"], correct: 0 },
+    { cat: "HOENN", q: "¿En qué evoluciona Torchic al nivel 16?", options: ["Combusken", "Blaziken", "Monferno", "Charmeleon"], correct: 0 },
+    { cat: "HOENN", q: "¿Cómo se llama el equipo villano que quiere expandir el mar?", options: ["Team Aqua", "Team Magma", "Team Rocket", "Team Galactic"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon tiene el número 282?", options: ["Gardevoir", "Kirlia", "Gallade", "Ralts"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/302.png", options: ["Sableye", "Mawile", "Spiritomb", "Banette"], correct: 0 },
+
+    { cat: "HOENN", q: "¿Cuál es el tipo de Metagross?", options: ["Acero/Psíquico", "Acero/Roca", "Acero/Siniestro", "Acero"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon legendario vive en el Pilar Celeste?", options: ["Rayquaza", "Kyogre", "Groudon", "Deoxys"], correct: 0 },
+    { cat: "HOENN", q: "¿De qué tipo es Flygon?", options: ["Tierra/Dragón", "Bicho/Dragón", "Tierra/Volador", "Dragón"], correct: 0 },
+    { cat: "HOENN", q: "¿En qué evoluciona Slakoth?", options: ["Vigoroth", "Slaking", "Snorlax", "Ursaring"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png", options: ["Absol", "Sableye", "Mawile", "Zoroark"], correct: 0 },
+
+    { cat: "HOENN", q: "¿Cuál es el tipo de la medalla que entrega el líder Alana?", options: ["Pluma", "Calor", "Dinamo", "Mente"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon se transforma según el clima?", options: ["Castform", "Kyogre", "Altaria", "Lotad"], correct: 0 },
+    { cat: "HOENN", q: "¿De qué tipo es Ludicolo?", options: ["Agua/Planta", "Agua", "Planta", "Agua/Tierra"], correct: 0 },
+    { cat: "HOENN", q: "¿Cómo se llama el campeón de la Liga en Rubí y Zafiro?", options: ["Máximo Peñas", "Plubio", "Lance", "Azul"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué Pokémon es este?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png", options: ["Rayquaza", "Dragonair", "Gyarados", "Zygarde"], correct: 0 },
+
+    { cat: "HOENN", q: "¿Cuál es el tipo de Aggron?", options: ["Acero/Roca", "Acero/Tierra", "Acero", "Roca/Tierra"], correct: 0 },
+    { cat: "HOENN", q: "¿En qué evoluciona Wailmer?", options: ["Wailord", "Kyogre", "Sharpedo", "Relicanth"], correct: 0 },
+    { cat: "HOENN", q: "¿Qué Pokémon legendario es de tipo Psíquico y puede viajar por el espacio?", options: ["Deoxys", "Jirachi", "Latios", "Latias"], correct: 0 },
+    { cat: "HOENN", q: "¿Cuál es el tipo de Mawile (desde Gen 6)?", options: ["Acero/Hada", "Acero", "Hada", "Acero/Siniestro"], correct: 0 },
+    { cat: "VISUAL", q: "¿Quién es?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/385.png", options: ["Jirachi", "Celebi", "Mew", "Manaphy"], correct: 0 },
+
+    { cat: "GENERAL", q: "¿Qué Pokémon es el número 1000 de la Pokédex Nacional?", options: ["Gholdengo", "Meowscarada", "Miraidon", "Terapagos"], correct: 0 },
+    { cat: "GENERAL", q: "¿De qué tipo es el movimiento 'Esquema' de Smeargle?", options: ["Normal", "Psíquico", "Variable", "Siniestro"], correct: 0 },
+    { cat: "GENERAL", q: "¿Cuál es la última letra de los Unown?", options: ["Z", "?", "!", "A"], correct: 2 },
+    { cat: "GENERAL", q: "¿Qué Pokémon de Hoenn es un fósil basado en un lirio de mar?", options: ["Lileep", "Anorith", "Relicanth", "Feebas"], correct: 0 },
+    { cat: "VISUAL", q: "¿Qué número de Pokédex tiene Gholdengo?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1000.png", options: ["1000", "999", "1001", "151"], correct: 0 },
+    // --- BLOQUE 11: 100 PREGUNTAS DE SILUETAS (1001 - 1100) ---
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png", options: ["Pikachu", "Raichu", "Plusle", "Minun"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png", options: ["Charizard", "Dragonite", "Salamence", "Moltres"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", options: ["Bulbasaur", "Ivysaur", "Oddish", "Turtwig"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png", options: ["Mewtwo", "Mew", "Lucario", "Frizard"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png", options: ["Jigglypuff", "Kirby", "Clefairy", "Igglybuff"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png", options: ["Gengar", "Haunter", "Banette", "Sableye"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png", options: ["Snorlax", "Slaking", "Hariyama", "Tangrowth"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png", options: ["Lapras", "Dewgong", "Vaporeon", "Kyogre"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png", options: ["Meowth", "Persian", "Skitty", "Purrloin"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/257.png", options: ["Blaziken", "Infernape", "Combusken", "Lucario"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/384.png", options: ["Rayquaza", "Gyarados", "Onix", "Milotic"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png", options: ["Lucario", "Zoroark", "Riolu", "Mewtwo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png", options: ["Eevee", "Vulpix", "Zorua", "Flareon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png", options: ["Lugia", "Ho-Oh", "Articuno", "Yveltal"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png", options: ["Magikarp", "Goldeen", "Feebas", "Finneon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png", options: ["Alakazam", "Kadabra", "Hypno", "Mewtwo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png", options: ["Geodude", "Graveler", "Roggenrola", "Slugma"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png", options: ["Onix", "Steelix", "Rayquaza", "Milotic"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png", options: ["Umbreon", "Espeon", "Absol", "Luxray"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/302.png", options: ["Sableye", "Mawile", "Misdreavus", "Gengar"], correct: 0 },
+    // [Continúa añadiendo IDs icónicos como 382(Kyogre), 383(Groudon), 445(Garchomp), 282(Gardevoir), etc.]
+    // Para no saturar el chat, puedes seguir el patrón usando IDs de PokeAPI:
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/382.png", options: ["Kyogre", "Wailord", "Lapras", "Sharpedo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/383.png", options: ["Groudon", "Rhyperior", "Nidoking", "Aggron"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/445.png", options: ["Garchomp", "Sharpedo", "Flygon", "Salamence"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/282.png", options: ["Gardevoir", "Kirlia", "Gothitelle", "Tsareena"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png", options: ["Dragonite", "Charizard", "Goodra", "Dragonair"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png", options: ["Magnemite", "Klink", "Magneton", "Belmet"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png", options: ["Mr. Mime", "Jynx", "Mime Jr.", "Hypno"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png", options: ["Wobbuffet", "Wynaut", "Ditto", "Muk"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/306.png", options: ["Aggron", "Lairon", "Bastiodon", "Steelix"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/483.png", options: ["Dialga", "Palkia", "Giratina", "Arceus"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/484.png", options: ["Palkia", "Dialga", "Giratina", "Kyogre"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/487.png", options: ["Giratina", "Palkia", "Dialga", "Rayquaza"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/493.png", options: ["Arceus", "Silvally", "Mewtwo", "Dialga"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png", options: ["Tyranitar", "Aggron", "Feraligatr", "Rhydon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png", options: ["Gyarados", "Milotic", "Onix", "Rayquaza"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/212.png", options: ["Scizor", "Scyther", "Pinsir", "Heracross"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/214.png", options: ["Heracross", "Pinsir", "Buzzwole", "Scizor"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/115.png", options: ["Kangaskhan", "Marowak", "Rhydon", "Nidoking"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png", options: ["Scyther", "Scizor", "Kleavor", "Pinsir"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/127.png", options: ["Pinsir", "Heracross", "Scyther", "Vikavolt"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png", options: ["Ditto", "Muk", "Grimer", "Zoroark"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png", options: ["Vaporeon", "Espeon", "Glaceon", "Sylveon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png", options: ["Jolteon", "Flareon", "Umbreon", "Eevee"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png", options: ["Flareon", "Jolteon", "Entei", "Arcanine"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/142.png", options: ["Aerodactyl", "Archeops", "Crobat", "Noivern"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png", options: ["Articuno", "Zapdos", "Moltres", "Lugia"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png", options: ["Zapdos", "Articuno", "Moltres", "Ho-Oh"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png", options: ["Moltres", "Ho-Oh", "Zapdos", "Talonflame"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png", options: ["Mew", "Mewtwo", "Celebi", "Jirachi"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png", options: ["Ho-Oh", "Lugia", "Moltres", "Fearow"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/254.png", options: ["Sceptile", "Grovyle", "Serperior", "Leafeon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/260.png", options: ["Swampert", "Marshtomp", "Quagsire", "Seismitoad"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/289.png", options: ["Slaking", "Snorlax", "Hariyama", "Ursaluna"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/303.png", options: ["Mawile", "Sableye", "Tinkaton", "Absol"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/330.png", options: ["Flygon", "Garchomp", "Salamence", "Dragonite"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/373.png", options: ["Salamence", "Dragonite", "Garchomp", "Hydreigon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/376.png", options: ["Metagross", "Metang", "Aggron", "Bronzong"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/380.png", options: ["Latias", "Latios", "Lugia", "Cresselia"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/381.png", options: ["Latios", "Latias", "Rayquaza", "Kyogre"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/386.png", options: ["Deoxys", "Mewtwo", "Lucario", "Genesect"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/442.png", options: ["Spiritomb", "Sableye", "Gastly", "Misdreavus"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/462.png", options: ["Magnezone", "Magneton", "Probopass", "Metagross"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/475.png", options: ["Gallade", "Gardevoir", "Lucario", "Bisharp"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/491.png", options: ["Darkrai", "Cresselia", "Gengar", "Grimmsnarl"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png", options: ["Zoroark", "Lucario", "Absol", "Lycanroc"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/635.png", options: ["Hydreigon", "Dragonite", "Garchomp", "Tyranitar"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/643.png", options: ["Reshiram", "Zekrom", "Kyurem", "Ho-Oh"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/644.png", options: ["Zekrom", "Reshiram", "Kyurem", "Groudon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/658.png", options: ["Greninja", "Frogadier", "Lucario", "Inteleon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/716.png", options: ["Xerneas", "Sawsbuck", "Stantler", "Yveltal"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/717.png", options: ["Yveltal", "Xerneas", "Noivern", "Lugia"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/718.png", options: ["Zygarde", "Rayquaza", "Giratina", "Guzzlord"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/727.png", options: ["Incineroar", "Pangoro", "Emboar", "Cinderace"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/745.png", options: ["Lycanroc", "Arcanine", "Lucario", "Zoroark"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/778.png", options: ["Mimikyu", "Pikachu", "Shuppet", "Banette"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/785.png", options: ["Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/794.png", options: ["Buzzwole", "Heracross", "Machamp", "Pheromosa"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/800.png", options: ["Necrozma", "Kyurem", "Deoxys", "Mewtwo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/815.png", options: ["Cinderace", "Incineroar", "Lucario", "Blaziken"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/849.png", options: ["Toxtricity", "Lucario", "Zoroark", "Electivire"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/888.png", options: ["Zacian", "Zamazenta", "Arcanine", "Lycanroc"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/889.png", options: ["Zamazenta", "Zacian", "Stoutland", "Bastiodon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/892.png", options: ["Urshifu", "Pangoro", "Machamp", "Lucario"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/898.png", options: ["Calyrex", "Deerling", "Stantler", "Xerneas"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/906.png", options: ["Sprigatito", "Litten", "Meowth", "Fennekin"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/909.png", options: ["Fuecoco", "Totodile", "Charmander", "Gible"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/912.png", options: ["Quaxly", "Ducklett", "Psyduck", "Piplup"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1000.png", options: ["Gholdengo", "C-3PO", "Beldum", "Gimmighoul"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1007.png", options: ["Koraidon", "Miraidon", "Cyclizar", "Groudon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1008.png", options: ["Miraidon", "Koraidon", "Dialga", "Zekrom"], correct: 0 },
+    // --- BLOQUE 12: 100 PREGUNTAS DE SILUETAS EXCLUSIVAS DE KANTO (1101 - 1200) ---
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png", options: ["Raichu", "Pikachu", "Voltorb", "Electrode"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png", options: ["Venusaur", "Ivysaur", "Meganium", "Bulbasaur"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png", options: ["Blastoise", "Wartortle", "Feraligatr", "Squirtle"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png", options: ["Butterfree", "Beedrill", "Venomoth", "Vivillon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png", options: ["Beedrill", "Butterfree", "Scizor", "Scyther"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/18.png", options: ["Pidgeot", "Pidgeotto", "Fearow", "Noivern"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/20.png", options: ["Raticate", "Rattata", "Nidoran♂", "Sentret"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/22.png", options: ["Fearow", "Spearow", "Moltres", "Zapdos"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png", options: ["Arbok", "Ekans", "Seviper", "Onix"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png", options: ["Sandslash", "Sandshrew", "Nidoking", "Rhydon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png", options: ["Nidoqueen", "Nidorina", "Nidoking", "Kangaskhan"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/34.png", options: ["Nidoking", "Nidorino", "Nidoqueen", "Rhyhorn"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png", options: ["Clefable", "Clefairy", "Wigglytuff", "Chansey"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png", options: ["Ninetales", "Vulpix", "Flareon", "Zoroark"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/40.png", options: ["Wigglytuff", "Jigglypuff", "Clefable", "Blissey"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/42.png", options: ["Golbat", "Zubat", "Crobat", "Noivern"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png", options: ["Vileplume", "Gloom", "Bellossom", "Venusaur"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/49.png", options: ["Venomoth", "Venonat", "Butterfree", "Beedrill"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/51.png", options: ["Dugtrio", "Diglett", "Trapinch", "Nidoking"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/53.png", options: ["Persian", "Meowth", "Liepard", "Luxray"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png", options: ["Golduck", "Psyduck", "Poliwrath", "Quagsire"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png", options: ["Primeape", "Mankey", "Machamp", "Passimian"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png", options: ["Arcanine", "Growlithe", "Entei", "Flareon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png", options: ["Poliwrath", "Poliwhirl", "Machamp", "Quagsire"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/64.png", options: ["Kadabra", "Alakazam", "Abra", "Mr. Mime"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png", options: ["Machamp", "Machoke", "Hariyama", "Conkeldurr"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png", options: ["Victreebel", "Weepinbell", "Carnivine", "Gloom"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png", options: ["Tentacruel", "Tentacool", "Cloyster", "Omastar"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/76.png", options: ["Golem", "Graveler", "Rhydon", "Golem Alola"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/78.png", options: ["Rapidash", "Ponyta", "Zebstrika", "Mudsdale"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png", options: ["Slowbro", "Slowpoke", "Slowking", "Quagsire"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png", options: ["Magneton", "Magnemite", "Magnezone", "Metagross"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/83.png", options: ["Farfetch'd", "Farfetch'd Galar", "Sirfetch'd", "Ducklett"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/85.png", options: ["Dodrio", "Doduo", "Zapdos", "Murkrow"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png", options: ["Dewgong", "Seel", "Walrein", "Lapras"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png", options: ["Muk", "Grimer", "Ditto", "Muk Galar"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/91.png", options: ["Cloyster", "Shellder", "Omastar", "Gastrodon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/93.png", options: ["Haunter", "Gengar", "Gastly", "Misdreavus"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/97.png", options: ["Hypno", "Drowzee", "Mr. Mime", "Kadabra"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/99.png", options: ["Kingler", "Krabby", "Corphish", "Crawdaunt"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/101.png", options: ["Electrode", "Voltorb", "Amoonguss", "Foongus"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png", options: ["Exeggutor", "Exeggcute", "Tropius", "Shiftry"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/105.png", options: ["Marowak", "Cubone", "Nidoking", "Rhydon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/106.png", options: ["Hitmonlee", "Hitmonchan", "Blaziken", "Saw"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/107.png", options: ["Hitmonchan", "Hitmonlee", "Machoke", "Ledian"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/110.png", options: ["Weezing", "Koffing", "Muk", "Garbadore"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/112.png", options: ["Rhydon", "Rhyhorn", "Rhyperior", "Aggron"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/114.png", options: ["Tangela", "Tangrowth", "Carnivine", "Venusaur"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/117.png", options: ["Seadra", "Horsea", "Kingdra", "Dratini"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/119.png", options: ["Seaking", "Goldeen", "Magikarp", "Feebas"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png", options: ["Starmie", "Staryu", "Shellder", "Cloyster"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/124.png", options: ["Jynx", "Mr. Mime", "Gardevoir", "Tsareena"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/125.png", options: ["Electabuzz", "Elekid", "Electivire", "Jolteon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/126.png", options: ["Magmar", "Magby", "Magmortar", "Flareon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png", options: ["Tauros", "Bouffalant", "Miltank", "Rampardos"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/137.png", options: ["Porygon", "Porygon2", "Porygon-Z", "Metang"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/139.png", options: ["Omastar", "Omanyte", "Cloyster", "Kabutops"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/141.png", options: ["Kabutops", "Kabuto", "Omastar", "Aerodactyl"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png", options: ["Dratini", "Dragonair", "Dragonite", "Ekans"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/148.png", options: ["Dragonair", "Dratini", "Dragonite", "Gyarados"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png", options: ["Ivysaur", "Bulbasaur", "Venusaur", "Turtwig"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png", options: ["Charmander", "Charmeleon", "Cyndaquil", "Torchic"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png", options: ["Charmeleon", "Charizard", "Charmander", "Magmar"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png", options: ["Squirtle", "Wartortle", "Blastoise", "Totodile"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png", options: ["Wartortle", "Squirtle", "Blastoise", "Croconaw"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png", options: ["Caterpie", "Metapod", "Weedle", "Dustox"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png", options: ["Metapod", "Kakuna", "Silcoon", "Buterfree"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png", options: ["Weedle", "Caterpie", "Kakuna", "Sewaddle"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png", options: ["Kakuna", "Metapod", "Cascoon", "Buterfree"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png", options: ["Pidgey", "Hoothoot", "Staraptor", "Pidgeotto"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png", options: ["Pidgeotto", "Pidgeot", "Hoothoot", "Noctowl"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/19.png", options: ["Rattata", "Raticate", "Sentret", "Pikachu"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/21.png", options: ["Spearow", "Fearow", "Taillow", "Wingull"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/23.png", options: ["Ekans", "Arbok", "Seviper", "Ekans Alola"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png", options: ["Sandshrew", "Sandslash", "Diglett", "Cubone"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png", options: ["Nidoran♀", "Nidoran♂", "Nidorina", "Nidorino"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png", options: ["Nidorina", "Nidoran♀", "Nidorino", "Nidoqueen"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png", options: ["Nidoran♂", "Nidoran♀", "Nidorino", "Nidoking"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png", options: ["Nidorino", "Nidoran♂", "Nidorina", "Nidoking"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png", options: ["Vulpix", "Vulpix Alola", "Growlithe", "Ponyta"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/41.png", options: ["Zubat", "Golbat", "Crobat", "Woobat"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/43.png", options: ["Oddish", "Bulbasaur", "Bellsprout", "Hoppip"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png", options: ["Gloom", "Oddish", "Vileplume", "Bellossom"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png", options: ["Paras", "Parasect", "Crustle", "Karrablast"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/48.png", options: ["Venonat", "Venomoth", "Sewaddle", "Scatterbug"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/50.png", options: ["Diglett", "Dugtrio", " Trapinch", "Drilbur"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png", options: ["Psyduck", "Golduck", "Slowpoke", "Poliwag"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/56.png", options: ["Mankey", "Primeape", "Passimian", "Meowth"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png", options: ["Growlithe", "Growlithe Hisui", "Arcanine", "Vulpix"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/61.png", options: ["Poliwhirl", "Poliwag", "Poliwrath", "Politoed"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/63.png", options: ["Abra", "Kadabra", "Mewtwo", "Elgyem"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png", options: ["Machop", "Machoke", "Machamp", "Timburr"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/67.png", options: ["Machoke", "Machop", "Machamp", "Hariyama"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/69.png", options: ["Bellsprout", "Oddish", "Budew", "Tsareena"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/70.png", options: ["Weepinbell", "Bellsprout", "Victreebel", "Carnivine"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/72.png", options: ["Tentacool", "Tentacruel", "Gastrodon", "Nihilego"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/75.png", options: ["Graveler", "Golem", "Geodude", "Rhyhorn"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png", options: ["Ponyta", "Rapidash", "Zebstrika", "Mudbray"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png", options: ["Slowpoke", "Slowbro", "Quagsire", "Shellder"], correct: 0 },
+    // --- BLOQUE 13: 100 PREGUNTAS DE SILUETAS EXCLUSIVAS DE JOHTO Y HOENN (1201 - 1300) ---
+    // --- JOHTO (Gen 2) ---
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/152.png", options: ["Chikorita", "Bulbasaur", "Treecko", "Meganium"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/155.png", options: ["Cyndaquil", "Quilava", "Charmander", "Torchic"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/158.png", options: ["Totodile", "Croconaw", "Squirtle", "Mudkip"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/161.png", options: ["Sentret", "Furret", "Rattata", "Zigzagoon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/163.png", options: ["Hoothoot", "Noctowl", "Pidgey", "Rowlet"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/165.png", options: ["Ledyba", "Ledian", "Spinarak", "Combee"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/167.png", options: ["Spinarak", "Ariados", "Joltik", "Tarountula"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/170.png", options: ["Chinchou", "Lanturn", "Tynamo", "Finneon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/172.png", options: ["Pichu", "Pikachu", "Plusle", "Togedemaru"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/173.png", options: ["Cleffa", "Clefairy", "Igglybuff", "Azurill"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/174.png", options: ["Igglybuff", "Jigglypuff", "Cleffa", "Happiny"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/177.png", options: ["Natu", "Xatu", "Pidgey", "Rowlet"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/179.png", options: ["Mareep", "Flaaffy", "Ampharos", "Wooloo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/182.png", options: ["Bellossom", "Vileplume", "Sunflora", "Lilligant"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/183.png", options: ["Marill", "Azumarill", "Azurill", "Pikachu Azul"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/185.png", options: ["Sudowoodo", "Bonsly", "Trevenant", "Cacturne"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/187.png", options: ["Hoppip", "Skiploom", "Jumpluff", "Oddish"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/190.png", options: ["Aipom", "Ambipom", "Mankey", "Panpour"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/191.png", options: ["Sunkern", "Sunflora", "Seedot", "Petilil"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/193.png", options: ["Yanma", "Yanmega", "Scyther", "Flygon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/194.png", options: ["Wooper", "Quagsire", "Mudkip", "Palpitoad"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/198.png", options: ["Murkrow", "Honchkrow", "Pidgey", "Corvisquire"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/200.png", options: ["Misdreavus", "Mismagius", "Gastly", "Shuppet"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/201.png", options: ["Unown", "Ditto", "Sigilyph", "Klefki"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/203.png", options: ["Girafarig", "Farigiraf", "Tauros", "Stantler"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/204.png", options: ["Pineco", "Forretress", "Seedot", "Burmy"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/206.png", options: ["Dunsparce", "Dudunsparce", "Ekans", "Silicobra"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/207.png", options: ["Gligar", "Gliscor", "Zubat", "Noibat"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/209.png", options: ["Snubbull", "Granbull", "Growlithe", "Yamper"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/211.png", options: ["Qwilfish", "Overqwil", "Koffing", "Puffersten"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/213.png", options: ["Shuckle", "Dwebble", "Torkoal", "Slugma"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/215.png", options: ["Sneasel", "Weavile", "Zoroark", "Sneasler"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/216.png", options: ["Teddiursa", "Ursaring", "Ursaluna", "Cubchoo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/218.png", options: ["Slugma", "Magcargo", "Grimer", "Gulpin"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/220.png", options: ["Swinub", "Piloswine", "Mamoswine", "Phanpy"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/222.png", options: ["Corsola", "Cursola", "Luvdisc", "Mareanie"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/223.png", options: ["Remoraid", "Octillery", "Magikarp", "Finneon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/225.png", options: ["Delibird", "Iron Bundle", "Piplup", "Empoleon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/227.png", options: ["Skarmory", "Corviknight", "Aerodactyl", "Fearow"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/228.png", options: ["Houndour", "Houndoom", "Growlithe", "Poochyena"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/231.png", options: ["Phanpy", "Donphan", "Swinub", "Teddiursa"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/234.png", options: ["Stantler", "Wyrdeer", "Tauros", "Girafarig"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/235.png", options: ["Smeargle", "Ditto", "Spinda", "Aipom"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/236.png", options: ["Tyrogue", "Hitmonlee", "Hitmonchan", "Mankey"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/238.png", options: ["Smoochum", "Jynx", "Mime Jr.", "Happiny"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/239.png", options: ["Elekid", "Electabuzz", "Elecstrike", "Pichu"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/240.png", options: ["Magby", "Magmar", "Charmander", "Cyndaquil"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/241.png", options: ["Miltank", "Tauros", "Bouffalant", "Cowmon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/246.png", options: ["Larvitar", "Pupitar", "Tyranitar", "Aron"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/251.png", options: ["Celebi", "Mew", "Jirachi", "Manaphy"], correct: 0 },
+
+    // --- HOENN (Gen 3) ---
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/255.png", options: ["Torchic", "Combusken", "Charmander", "Chimchar"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png", options: ["Mudkip", "Marshtomp", "Totodile", "Piplup"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/261.png", options: ["Poochyena", "Mightyena", "Houndour", "Growlithe"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/263.png", options: ["Zigzagoon", "Linoone", "Sentret", "Rattata"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/265.png", options: ["Wurmple", "Caterpie", "Weedle", "Scatterbug"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/270.png", options: ["Lotad", "Lombre", "Ludicolo", "Oddish"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/273.png", options: ["Seedot", "Nuzleaf", "Shiftry", "Pineco"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/276.png", options: ["Taillow", "Swellow", "Pidgey", "Wingull"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/278.png", options: ["Wingull", "Pelipper", "Ducklett", "Taillow"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/280.png", options: ["Ralts", "Kirlia", "Gardevoir", "Abra"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/283.png", options: ["Surskit", "Masquerain", "Dewpider", "Wimpod"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/285.png", options: ["Shroomish", "Breloom", "Paras", "Foongus"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/287.png", options: ["Slakoth", "Vigoroth", "Slaking", "Abra"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/290.png", options: ["Nincada", "Ninjask", "Shedinja", "Trapinch"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/293.png", options: ["Whismur", "Loudred", "Exploud", "Jigglypuff"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/296.png", options: ["Makuhita", "Hariyama", "Machop", "Tyrogue"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/298.png", options: ["Azurill", "Marill", "Azumarill", "Cleffa"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png", options: ["Nosepass", "Probopass", "Roggenrola", "Geodude"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/300.png", options: ["Skitty", "Delcatty", "Meowth", "Purrloin"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/304.png", options: ["Aron", "Lairon", "Aggron", "Shieldon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/307.png", options: ["Meditite", "Medicham", "Machop", "Ralts"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/309.png", options: ["Electrike", "Manectric", "Jolteon", "Poochyena"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/311.png", options: ["Plusle", "Minun", "Pikachu", "Pichu"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/312.png", options: ["Minun", "Plusle", "Pikachu", "Pichu"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/313.png", options: ["Volbeat", "Illumise", "Pinsir", "Heracross"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/314.png", options: ["Illumise", "Volbeat", "Butterfree", "Beedrill"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/315.png", options: ["Roselia", "Roserade", "Budew", "Bellsprout"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/316.png", options: ["Gulpin", "Swalot", "Grimer", "Koffing"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/318.png", options: ["Carvanha", "Sharpedo", "Magikarp", "Basculin"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/320.png", options: ["Wailmer", "Wailord", "Lapras", "Kyogre"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/322.png", options: ["Numel", "Camerupt", "Slugma", "Torkoal"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/324.png", options: ["Torkoal", "Slugma", "Camerupt", "Turtonator"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/325.png", options: ["Spoink", "Grumpig", "Tepig", "Mankey"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/327.png", options: ["Spinda", "Smeargle", "Teddiursa", "Buneary"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/328.png", options: ["Trapinch", "Vibrava", "Flygon", "Gible"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/331.png", options: ["Cacnea", "Cacturne", "Maractus", "Sudowoodo"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/333.png", options: ["Swablu", "Altaria", "Pidgey", "Wingull"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/335.png", options: ["Zangoose", "Seviper", "Absol", "Linoone"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/336.png", options: ["Seviper", "Zangoose", "Ekans", "Arbok"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/337.png", options: ["Lunatone", "Solrock", "Minior", "Clefairy"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/338.png", options: ["Solrock", "Lunatone", "Minior", "Staryu"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/339.png", options: ["Barboach", "Whiscash", "Wooper", "Mudkip"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/341.png", options: ["Corphish", "Crawdaunt", "Krabby", "Clauncher"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/343.png", options: ["Baltoy", "Claydol", "Nosepass", "Bronzor"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png", options: ["Lileep", "Cradily", "Oddish", "Tentacool"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/347.png", options: ["Anorith", "Armaldo", "Kabuto", "Binacle"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/349.png", options: ["Feebas", "Milotic", "Magikarp", "Finneon"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/351.png", options: ["Castform", "Ditto", "Rotom", "Shuppet"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/352.png", options: ["Kecleon", "Lizardon", "Treecko", "Sobble"], correct: 0 },
+    { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/353.png", options: ["Shuppet", "Banette", "Gastly", "Misdreavus"], correct: 0 }
+];

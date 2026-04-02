@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PokeTrivial</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f0f0; display: flex; justify-content: center; padding: 20px; }
+        #game-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); width: 100%; max-width: 600px; text-align: center; }
+        .img-pokemon { width: 200px; height: 200px; object-fit: contain; margin-bottom: 15px; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        button { padding: 15px; border: none; border-radius: 8px; background: #3b4cca; color: white; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        button:hover { background: #ffde00; color: #3b4cca; font-weight: bold; }
+        #score { margin-top: 20px; font-weight: bold; color: #555; }
+        .cat-tag { display: inline-block; padding: 5px 10px; background: #ff0000; color: white; border-radius: 5px; font-size: 12px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="cat" class="cat-tag">CATEGORÍA</div>
+    <div id="question-text"><h3>Cargando pregunta...</h3></div>
+    <div id="image-container"></div>
+    <div class="options-grid" id="options"></div>
+    <div id="score">Puntuación: 0 | Pregunta: 0/1000</div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
