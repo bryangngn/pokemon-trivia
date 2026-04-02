@@ -22,38 +22,56 @@ function initGame() {
     loadQuestion();
 }
 
-// --- CARGAR PREGUNTA ---
 function loadQuestion() {
     const q = shuffledDb[currentQuestionIndex];
     
-    // Reset visual
+    // Resetear contenedores
     optionsContainer.innerHTML = '';
-    imageContainer.innerHTML = '';
     feedbackMsg.innerHTML = '';
-    
+    imageContainer.innerHTML = '';
+
     catTag.innerText = q.cat || "GENERAL";
     questionText.innerHTML = `<h3>${q.q}</h3>`;
 
-    // Gestión inteligente del contenedor de imagen
+    // --- GESTIÓN DE IMAGEN CON ESTADO DE CARGA ---
     if (q.img && q.img.trim() !== "") {
         imageContainer.classList.remove('hidden');
         
+        // 1. Crear el placeholder de carga
+        const skeleton = document.createElement('div');
+        skeleton.className = 'loading-skeleton';
+        skeleton.innerText = 'Cargando Pokémon...';
+        imageContainer.appendChild(skeleton);
+
+        // 2. Crear la imagen en memoria
         const imgElement = document.createElement('img');
         imgElement.src = q.img;
-        imgElement.className = 'img-pokemon';
+        imgElement.className = 'img-pokemon img-hidden'; // Empezamos invisible
         
-        // Efecto silueta si aplica
         if (q.cat === "SILUETA") {
             imgElement.style.filter = "brightness(0)";
         }
-        
+
+        // 3. Cuando la imagen termine de descargar de internet:
+        imgElement.onload = () => {
+            skeleton.remove(); // Quitamos el efecto de carga
+            imgElement.classList.remove('img-hidden');
+            imgElement.classList.add('img-visible');
+        };
+
+        // 4. Manejo de errores (por si falla la URL)
+        imgElement.onerror = () => {
+            skeleton.innerHTML = "❌ Imagen no disponible";
+            skeleton.style.animation = "none";
+            skeleton.style.background = "#fee";
+        };
+
         imageContainer.appendChild(imgElement);
     } else {
-        // Colapsa el espacio si no hay imagen
         imageContainer.classList.add('hidden');
     }
 
-    // Renderizar opciones
+    // Crear botones de opciones
     q.options.forEach((option, index) => {
         const btn = document.createElement('button');
         btn.innerText = option;
