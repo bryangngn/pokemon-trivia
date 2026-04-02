@@ -1461,3 +1461,5 @@ const db = [
     { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/352.png", options: ["Kecleon", "Lizardon", "Treecko", "Sobble"], correct: 0 },
     { cat: "SILUETA", q: "¿Quién es este Pokémon?", img: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/353.png", options: ["Shuppet", "Banette", "Gastly", "Misdreavus"], correct: 0 }
 ];
+
+export default db;
