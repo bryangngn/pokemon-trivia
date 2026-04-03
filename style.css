@@ -108,6 +108,10 @@ h1 {
     filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.1));
 }
 
+#pokemon-img:not([src]) {
+    visibility: hidden;
+}
+
 #enunciado {
     font-size: 1.1rem;
     color: #1a1a1a;
