@@ -1,11 +1,11 @@
-/* style.css - Pokédex Edition Pro (Fixed Layout) */
+/* style.css - Pokédex Edition FINAL */
 :root {
     --poke-red: #ff1f1f;
     --poke-dark-red: #cc0000;
     --poke-blue: #3b4cca;
     --poke-yellow: #ffde00;
     --poke-bg: #2a2a2a;
-    --screen-bg: #91aeae; 
+    --screen-bg: #91aeae; /* Verde LCD retro */
 }
 
 body {
@@ -54,6 +54,7 @@ h1 {
     text-align: center;
 }
 
+/* Pantalla principal de la Pokédex */
 #game-card {
     background: var(--screen-bg);
     padding: 20px;
@@ -66,15 +67,14 @@ h1 {
     text-align: center;
 }
 
-/* CONTENEDOR DINÁMICO */
+/* Contenedor de imagen centrado y colapsable */
 #pokemon-img-container {
     background: white;
     border-radius: 8px;
     border: 3px solid #333;
     margin: 0 auto 20px auto;
     
-    /* Estado inicial: Totalmente oculto y sin dimensiones */
-    display: none; 
+    display: none; /* Oculto por defecto, JS lo activa con 'grid' */
     width: 250px;
     height: auto; 
     padding: 10px;
@@ -82,7 +82,7 @@ h1 {
     place-items: center;
 }
 
-/* Refuerzo para asegurar que NO ocupe espacio cuando se oculta por JS */
+/* Fuerza el colapso total si está oculto */
 #pokemon-img-container[style*="display: none"] {
     display: none !important;
     margin: 0 !important;
@@ -106,27 +106,51 @@ h1 {
     font-size: 1.1rem;
     color: #1a1a1a;
     margin: 10px 0 20px 0;
+    font-weight: bold;
     line-height: 1.3;
 }
 
-.boton-opcion {
-    display: block;
+/* CONTENEDOR DE BOTONES - Distribución uniforme */
+#opciones-container {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espaciado idéntico entre botones */
+    margin-top: 5px;
+}
+
+/* BOTONES DE RESPUESTA - Tamaño idéntico */
+.boton-opcion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* Dimensiones fijas para simetría */
+    width: 100%;          /* Ocupa el ancho del contenedor padre */
+    max-width: 320px;     /* Límite para que no se vea gigante en PC */
+    min-height: 50px;     /* Todos los botones tendrán al menos esta altura */
+    
+    padding: 10px 15px;
     border: 3px solid #333;
     border-radius: 8px;
     background: #eee;
-    font-size: 1rem;
+    
+    font-size: 0.95rem;
     font-weight: bold;
+    color: #333;
     cursor: pointer;
     box-shadow: 3px 3px 0 #333;
     text-transform: uppercase;
-    transition: transform 0.1s;
+    transition: all 0.1s;
+    word-wrap: break-word;
 }
 
 .boton-opcion:hover:not(:disabled) {
     background: var(--poke-yellow);
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 #333;
 }
 
 .boton-opcion:active {
@@ -134,13 +158,37 @@ h1 {
     box-shadow: 0px 0px 0 #333;
 }
 
-.correct-anim { background-color: #4cd137 !important; color: white !important; }
-.wrong-anim { background-color: #e84118 !important; color: white !important; }
-.reveal-correct { border: 4px solid #4cd137 !important; background: #dff9fb; }
+.boton-opcion:disabled {
+    cursor: default;
+}
+
+/* Estados de acierto y error */
+.correct-anim { 
+    background-color: #4cd137 !important; 
+    color: white !important; 
+    border-color: #2ecc71 !important;
+}
+
+.wrong-anim { 
+    background-color: #e84118 !important; 
+    color: white !important; 
+    border-color: #c0392b !important;
+}
+
+.reveal-correct { 
+    border: 4px solid #4cd137 !important; 
+    background: #dff9fb; 
+}
 
 #resultado-mensaje {
     margin-top: 15px;
     font-weight: bold;
     text-transform: uppercase;
+    font-size: 1rem;
     min-height: 24px;
 }
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #333; }
+::-webkit-scrollbar-thumb { background: var(--poke-red); border: 1px solid #333; }
