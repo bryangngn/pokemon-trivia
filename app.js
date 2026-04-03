@@ -29,7 +29,6 @@ function iniciarNuevaPartida() {
 }
 
 function mostrarPregunta() {
-    // Ahora usamos 'preguntasPartida' en lugar del array original
     const p = preguntasPartida[preguntaActual];
     const mensajeDiv = document.getElementById("resultado-mensaje");
     const contenedorBotones = document.getElementById("opciones-container");
@@ -37,21 +36,27 @@ function mostrarPregunta() {
     const imgElement = document.getElementById("pokemon-img");
     const enunciado = document.getElementById("enunciado");
 
+    // 1. Limpiar interfaz
     mensajeDiv.textContent = "";
     contenedorBotones.innerHTML = "";
 
-    // Gestión de imagen
+    // 2. GESTIÓN DE IMAGEN (SOLUCIÓN AL ERROR 404)
+    // Primero, quitamos el atributo src para que el navegador no busque nada
+    imgElement.removeAttribute('src'); 
+
     if (p.img && p.cat !== "ANIME") {
-        imgContainer.style.display = "block";
+        // Solo si existe p.img y no es ANIME, mostramos y asignamos
+        imgContainer.style.display = "grid"; // Usamos grid para el centrado
         imgElement.src = p.img;
     } else {
+        // Si no hay imagen, ocultamos el contenedor
         imgContainer.style.display = "none";
-        imgElement.src = ""; 
     }
 
+    // 3. Escribir enunciado
     enunciado.textContent = p.q;
 
-    // Barajar las OPCIONES de la pregunta actual
+    // 4. Barajar y mostrar opciones
     let opcionesMezcladas = p.options.map((texto, index) => {
         return { texto: texto, esCorrecta: index === p.correct };
     });
