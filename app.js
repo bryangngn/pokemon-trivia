@@ -1,14 +1,14 @@
 let preguntaActual = 0;
 let puntos = 0;
 
-// Esta función se ejecuta solo cuando TODO el HTML y los scripts se han cargado
+// Iniciar el juego cuando la ventana y los scripts (preguntas.js) estén listos
 window.onload = () => {
-    if (typeof preguntas !== 'undefined') {
-        console.log("Preguntas cargadas correctamente:", preguntas.length);
+    if (typeof preguntas !== 'undefined' && preguntas.length > 0) {
+        console.log("Trivia lista. Total de preguntas:", preguntas.length);
         mostrarPregunta();
     } else {
-        console.error("Error: La variable 'preguntas' no está definida. Revisa el orden en index.html");
-        document.getElementById("enunciado").textContent = "Error al cargar las preguntas.";
+        console.error("Error: No se detectó el array 'preguntas' en preguntas.js");
+        document.getElementById("enunciado").textContent = "Error al cargar la base de datos de preguntas.";
     }
 };
 
@@ -16,25 +16,32 @@ function mostrarPregunta() {
     const p = preguntas[preguntaActual];
     const mensajeDiv = document.getElementById("resultado-mensaje");
     const contenedorBotones = document.getElementById("opciones-container");
-    const enunciado = document.getElementById("enunciado");
     const imgContainer = document.getElementById("pokemon-img-container");
+    const imgElement = document.getElementById("pokemon-img");
+    const enunciado = document.getElementById("enunciado");
 
-    // Limpiar estados anteriores
+    // 1. Limpiar interfaz de la pregunta anterior
     mensajeDiv.textContent = "";
-    mensajeDiv.className = "";
+    mensajeDiv.style.color = "";
     contenedorBotones.innerHTML = "";
 
-    // 1. Gestionar visibilidad de imagen según categoría
-    if (p.cat === "ANIME") {
-        imgContainer.style.display = "none";
-    } else {
+    // 2. Gestión dinámica de la imagen
+    // Solo mostramos el contenedor si existe la propiedad 'img' y NO es categoría ANIME
+    if (p.img && p.cat !== "ANIME") {
         imgContainer.style.display = "block";
-        document.getElementById("pokemon-img").src = p.img || "default.png";
+        imgElement.src = p.img;
+        imgElement.alt = "Silueta de Pokémon";
+    } else {
+        // Ocultamos el cuadro por completo para preguntas de texto puro
+        imgContainer.style.display = "none";
+        imgElement.src = ""; 
     }
 
+    // 3. Escribir el enunciado
     enunciado.textContent = p.q;
 
-    // 2. Crear y barajar opciones (Algoritmo Fisher-Yates)
+    // 4. Preparar y barajar opciones (Algoritmo Fisher-Yates)
+    // Mapeamos para saber cuál es la correcta después de mezclar
     let opcionesParaMezclar = p.options.map((texto, index) => {
         return { texto: texto, esCorrecta: index === p.correct };
     });
@@ -44,12 +51,13 @@ function mostrarPregunta() {
         [opcionesParaMezclar[i], opcionesParaMezclar[j]] = [opcionesParaMezclar[j], opcionesParaMezclar[i]];
     }
 
-    // 3. Renderizar botones
+    // 5. Crear botones en el HTML
     opcionesParaMezclar.forEach(opcion => {
         const boton = document.createElement("button");
         boton.textContent = opcion.texto;
         boton.className = "boton-opcion";
         
+        // Evento de clic
         boton.onclick = () => verificarRespuesta(opcion.esCorrecta, boton);
         
         contenedorBotones.appendChild(boton);
@@ -60,13 +68,14 @@ function verificarRespuesta(esCorrecta, botonSeleccionado) {
     const mensajeDiv = document.getElementById("resultado-mensaje");
     const contenedorBotones = document.getElementById("opciones-container");
     const botones = contenedorBotones.getElementsByTagName("button");
+    const pSiguiente = preguntas[preguntaActual];
 
-    // Desactivar todos los botones para evitar doble clic
+    // Desactivar todos los botones para evitar clics múltiples
     for (let b of botones) {
         b.disabled = true;
-        // Opcional: Mostrar cuál era la correcta si fallaste
-        if (b.textContent === preguntas[preguntaActual].options[preguntas[preguntaActual].correct]) {
-            b.classList.add("reveal-correct"); 
+        // Revelar cuál era la correcta de forma sutil si el usuario falló
+        if (!esCorrecta && b.textContent === pSiguiente.options[pSiguiente.correct]) {
+            b.classList.add("reveal-correct");
         }
     }
 
@@ -82,7 +91,7 @@ function verificarRespuesta(esCorrecta, botonSeleccionado) {
         mensajeDiv.style.color = "#e74c3c";
     }
 
-    // Esperar un momento y pasar a la siguiente
+    // Esperar 1.5 segundos para que el usuario vea el resultado y pasar a la siguiente
     setTimeout(() => {
         preguntaActual++;
         if (preguntaActual < preguntas.length) {
@@ -97,9 +106,9 @@ function finalizarJuego() {
     const gameCard = document.getElementById("game-card");
     gameCard.innerHTML = `
         <div style="text-align:center; padding: 40px;">
-            <h2>¡Fin del juego!</h2>
-            <p style="font-size: 1.5rem;">Tu puntuación final es: <strong>${puntos}</strong></p>
-            <button onclick="location.reload()" class="boton-opcion">Jugar de nuevo</button>
+            <h2>¡Trivia Completada!</h2>
+            <p style="font-size: 1.5rem; margin: 20px 0;">Tu puntuación final: <strong>${puntos}</strong></p>
+            <button onclick="location.reload()" class="boton-opcion" style="background:#333; color:white;">Volver a Intentar</button>
         </div>
     `;
 }
