@@ -36,27 +36,28 @@ function mostrarPregunta() {
     const imgElement = document.getElementById("pokemon-img");
     const enunciado = document.getElementById("enunciado");
 
-    // 1. Limpiar interfaz
+    // 1. Limpieza inicial de la interfaz
     mensajeDiv.textContent = "";
     contenedorBotones.innerHTML = "";
+    
+    // OCULTAMOS el contenedor y BORRAMOS el src inmediatamente
+    // Esto evita que el navegador muestre el icono de imagen rota o el texto ALT
+    imgContainer.style.display = "none";
+    imgElement.removeAttribute("src");
+    imgElement.alt = ""; // Vaciamos el texto alternativo temporalmente
 
-    // 2. GESTIÓN DE IMAGEN (SOLUCIÓN AL ERROR 404)
-    // Primero, quitamos el atributo src para que el navegador no busque nada
-    imgElement.removeAttribute('src'); 
-
+    // 2. GESTIÓN DE IMAGEN
+    // Solo si la pregunta tiene una ruta de imagen Y no es de la categoría ANIME
     if (p.img && p.cat !== "ANIME") {
-        // Solo si existe p.img y no es ANIME, mostramos y asignamos
-        imgContainer.style.display = "grid"; // Usamos grid para el centrado
         imgElement.src = p.img;
-    } else {
-        // Si no hay imagen, ocultamos el contenedor
-        imgContainer.style.display = "none";
+        imgElement.alt = "Pokemon Silhouette"; // Restauramos el alt solo si hay imagen
+        imgContainer.style.display = "grid";    // Mostramos el contenedor con Grid para centrar
     }
 
     // 3. Escribir enunciado
     enunciado.textContent = p.q;
 
-    // 4. Barajar y mostrar opciones
+    // 4. Barajar y mostrar opciones (Mismo código de antes)
     let opcionesMezcladas = p.options.map((texto, index) => {
         return { texto: texto, esCorrecta: index === p.correct };
     });
