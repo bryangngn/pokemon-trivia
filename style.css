@@ -1,0 +1,19 @@
+body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; }
+.game-container { max-width: 500px; width: 100%; margin-top: 20px; }
+#game-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+
+.boton-opcion {
+    display: block; width: 100%; padding: 15px; margin: 10px 0;
+    border: 2px solid #ddd; border-radius: 10px; background: white;
+    font-size: 1rem; cursor: pointer; transition: 0.3s;
+}
+
+/* Colores de feedback */
+.correct-anim { background-color: #2ecc71 !important; color: white; border-color: #27ae60; }
+.wrong-anim { background-color: #e74c3c !important; color: white; border-color: #c0392b; }
+.reveal-correct { border-color: #2ecc71; border-width: 3px; }
+
+#resultado-mensaje { 
+    height: 30px; margin-top: 15px; text-align: center; font-weight: bold; font-size: 1.2rem; 
+}
+#scoreboard { text-align: right; font-weight: bold; color: #34495e; margin-bottom: 10px; }
