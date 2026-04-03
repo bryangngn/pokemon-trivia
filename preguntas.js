@@ -1,4 +1,4 @@
-const db = [
+const preguntas = [
     // --- KANTO (Gen 1) ---
     { cat: "KANTO", q: "¿Cuál es el único Pokémon de tipo Veneno/Planta que evoluciona con Piedra Hoja?", options: ["Weepinbell", "Gloom", "Ivysaur", "Victreebel"], correct: 1 },
     { cat: "KANTO", q: "¿Qué Pokémon entrega el Dr. Fuji en Pueblo Lavanda tras rescatarlo?", options: ["Poké Flauta", "Pueblo Lavanda no da Pokémon", "Snorlax", "Gastly"], correct: 1 },
@@ -2041,4 +2041,4 @@ const db = [
     { cat: "ANIME", q: "¿Qué Pokémon de Ash en Johto fue un regalo de un criador de Pokémon?", options: ["Chikorita", "Phanpy", "Cyndaquil", "Totodile"], correct: 1 }
 ];
 
-export default db;
+export default preguntas;
