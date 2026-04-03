@@ -1,14 +1,16 @@
 let preguntaActual = 0;
 let puntos = 0;
 
-// Al iniciar el documento, cargamos la primera pregunta
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof preguntas !== 'undefined' && preguntas.length > 0) {
+// Esta función se ejecuta solo cuando TODO el HTML y los scripts se han cargado
+window.onload = () => {
+    if (typeof preguntas !== 'undefined') {
+        console.log("Preguntas cargadas correctamente:", preguntas.length);
         mostrarPregunta();
     } else {
-        console.error("No se encontró el array de preguntas en preguntas.js");
+        console.error("Error: La variable 'preguntas' no está definida. Revisa el orden en index.html");
+        document.getElementById("enunciado").textContent = "Error al cargar las preguntas.";
     }
-});
+};
 
 function mostrarPregunta() {
     const p = preguntas[preguntaActual];
