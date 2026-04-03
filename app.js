@@ -2,18 +2,15 @@ let preguntasPartida = [];
 let preguntaActual = 0;
 let puntos = 0;
 
-// Al cargar la ventana, verificamos datos e iniciamos
 window.onload = () => {
     if (typeof preguntas !== 'undefined' && preguntas.length > 0) {
         iniciarNuevaPartida();
     } else {
-        console.error("Error: No se encontró el array 'preguntas'.");
-        document.getElementById("enunciado").textContent = "Error al cargar datos.";
+        document.getElementById("enunciado").textContent = "Error: Datos no encontrados.";
     }
 };
 
 function iniciarNuevaPartida() {
-    // Copiamos y barajamos el mazo de preguntas completo
     preguntasPartida = [...preguntas];
     for (let i = preguntasPartida.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -33,26 +30,27 @@ function mostrarPregunta() {
     const imgElement = document.getElementById("pokemon-img");
     const enunciado = document.getElementById("enunciado");
 
-    // --- LIMPIEZA TOTAL ---
+    // 1. LIMPIEZA INICIAL
     mensajeDiv.textContent = "";
     contenedorBotones.innerHTML = "";
     
-    // Ocultar contenedor y resetear imagen para evitar cuadros blancos o errores 404
+    // Reset preventivo del contenedor de imagen
     imgContainer.style.display = "none";
+    imgElement.src = "";
     imgElement.removeAttribute("src");
     imgElement.alt = "";
 
-    // --- GESTIÓN DE IMAGEN ---
-    // Solo mostramos el cuadro blanco si hay imagen y NO es categoría ANIME
+    // 2. GESTIÓN DE VISIBILIDAD DE IMAGEN
+    // Solo activamos si tiene URL de imagen Y no es categoría ANIME
     if (p.img && p.img.trim() !== "" && p.cat !== "ANIME") {
         imgElement.src = p.img;
         imgElement.alt = "Pokemon Silhouette";
-        imgContainer.style.display = "grid"; // Grid activa el centrado del CSS
+        imgContainer.style.display = "grid"; // Grid permite el centrado total
     }
 
     enunciado.textContent = p.q;
 
-    // --- BARAJADO DE OPCIONES ---
+    // 3. BARAJADO DE OPCIONES
     let opcionesMezcladas = p.options.map((texto, index) => {
         return { texto: texto, esCorrecta: index === p.correct };
     });
@@ -62,7 +60,7 @@ function mostrarPregunta() {
         [opcionesMezcladas[i], opcionesMezcladas[j]] = [opcionesMezcladas[j], opcionesMezcladas[i]];
     }
 
-    // --- CREACIÓN DE BOTONES ---
+    // 4. CREACIÓN DE BOTONES
     opcionesMezcladas.forEach(opcion => {
         const boton = document.createElement("button");
         boton.textContent = opcion.texto;
@@ -77,7 +75,6 @@ function verificarRespuesta(esCorrecta, botonSeleccionado) {
     const mensajeDiv = document.getElementById("resultado-mensaje");
     const pData = preguntasPartida[preguntaActual];
 
-    // Bloquear botones
     botones.forEach(b => b.disabled = true);
 
     if (esCorrecta) {
@@ -91,7 +88,6 @@ function verificarRespuesta(esCorrecta, botonSeleccionado) {
         mensajeDiv.textContent = "¡Incorrecto! 💀";
         mensajeDiv.style.color = "#e74c3c";
         
-        // Revelar cuál era la correcta
         Array.from(botones).forEach(b => {
             if (b.textContent === pData.options[pData.correct]) {
                 b.classList.add("reveal-correct");
@@ -99,7 +95,6 @@ function verificarRespuesta(esCorrecta, botonSeleccionado) {
         });
     }
 
-    // Esperar y pasar a la siguiente
     setTimeout(() => {
         preguntaActual++;
         if (preguntaActual < preguntasPartida.length) {
