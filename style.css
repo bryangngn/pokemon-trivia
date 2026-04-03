@@ -43,11 +43,14 @@ h1 { font-size: 1.4rem; color: #333; margin: 0; }
     background: white;
     border-radius: 15px;
     padding: 10px;
+    display: none; /* Por defecto oculto hasta que JS diga lo contrario */
 }
 
 #pokemon-img {
     max-width: 200px;
     height: auto;
+    max-height: 200px; /* Evita que imágenes gigantes rompan el diseño */
+    object-fit: contain;
 }
 
 #enunciado {
