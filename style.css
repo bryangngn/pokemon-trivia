@@ -108,8 +108,18 @@ h1 {
     filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.1));
 }
 
+/* Oculta el icono de imagen rota y el texto ALT si el src está vacío */
+#pokemon-img[src=""], 
 #pokemon-img:not([src]) {
+    opacity: 0;
     visibility: hidden;
+}
+
+/* Aseguramos que el contenedor no ocupe espacio si está oculto */
+#pokemon-img-container[style*="display: none"] {
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 #enunciado {
