@@ -2040,5 +2040,3 @@ const preguntas = [
     { cat: "ANIME", q: "¿Cuál es el nombre del Pokémon de Jessie que evolucionó de Pumpkaboo?", options: ["Seviper", "Gourgeist", "Yanmega", "Arbok"], correct: 1 },
     { cat: "ANIME", q: "¿Qué Pokémon de Ash en Johto fue un regalo de un criador de Pokémon?", options: ["Chikorita", "Phanpy", "Cyndaquil", "Totodile"], correct: 1 }
 ];
-
-export default preguntas;
