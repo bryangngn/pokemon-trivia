@@ -1,132 +1,103 @@
-import db from './preguntas.js';
+let preguntaActual = 0;
+let puntos = 0;
 
-// --- ESTADO GLOBAL ---
-let shuffledDb = [];
-let currentQuestionIndex = 0;
-let score = 0;
-
-// Referencias DOM
-const catTag = document.getElementById('cat');
-const imageContainer = document.getElementById('image-container');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options');
-const feedbackMsg = document.getElementById('feedback-message');
-const scoreDisplay = document.getElementById('score-info');
-
-// --- INICIAR JUEGO ---
-function initGame() {
-    // Barajamos el mazo completo de 1.300 preguntas
-    shuffledDb = [...db].sort(() => Math.random() - 0.5);
-    currentQuestionIndex = 0;
-    score = 0;
-    loadQuestion();
-}
-
-function loadQuestion() {
-    const q = shuffledDb[currentQuestionIndex];
-    
-    // Resetear contenedores
-    optionsContainer.innerHTML = '';
-    feedbackMsg.innerHTML = '';
-    imageContainer.innerHTML = '';
-
-    catTag.innerText = q.cat || "GENERAL";
-    questionText.innerHTML = `<h3>${q.q}</h3>`;
-
-    // --- GESTIÓN DE IMAGEN CON ESTADO DE CARGA ---
-    if (q.img && q.img.trim() !== "") {
-        imageContainer.classList.remove('hidden');
-        
-        // 1. Crear el placeholder de carga
-        const skeleton = document.createElement('div');
-        skeleton.className = 'loading-skeleton';
-        skeleton.innerText = 'Cargando Pokémon...';
-        imageContainer.appendChild(skeleton);
-
-        // 2. Crear la imagen en memoria
-        const imgElement = document.createElement('img');
-        imgElement.src = q.img;
-        imgElement.className = 'img-pokemon img-hidden'; // Empezamos invisible
-        
-        if (q.cat === "SILUETA") {
-            imgElement.style.filter = "brightness(0)";
-        }
-
-        // 3. Cuando la imagen termine de descargar de internet:
-        imgElement.onload = () => {
-            skeleton.remove(); // Quitamos el efecto de carga
-            imgElement.classList.remove('img-hidden');
-            imgElement.classList.add('img-visible');
-        };
-
-        // 4. Manejo de errores (por si falla la URL)
-        imgElement.onerror = () => {
-            skeleton.innerHTML = "❌ Imagen no disponible";
-            skeleton.style.animation = "none";
-            skeleton.style.background = "#fee";
-        };
-
-        imageContainer.appendChild(imgElement);
+// Al iniciar el documento, cargamos la primera pregunta
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof preguntas !== 'undefined' && preguntas.length > 0) {
+        mostrarPregunta();
     } else {
-        imageContainer.classList.add('hidden');
+        console.error("No se encontró el array de preguntas en preguntas.js");
+    }
+});
+
+function mostrarPregunta() {
+    const p = preguntas[preguntaActual];
+    const mensajeDiv = document.getElementById("resultado-mensaje");
+    const contenedorBotones = document.getElementById("opciones-container");
+    const enunciado = document.getElementById("enunciado");
+    const imgContainer = document.getElementById("pokemon-img-container");
+
+    // Limpiar estados anteriores
+    mensajeDiv.textContent = "";
+    mensajeDiv.className = "";
+    contenedorBotones.innerHTML = "";
+
+    // 1. Gestionar visibilidad de imagen según categoría
+    if (p.cat === "ANIME") {
+        imgContainer.style.display = "none";
+    } else {
+        imgContainer.style.display = "block";
+        document.getElementById("pokemon-img").src = p.img || "default.png";
     }
 
-    // Crear botones de opciones
-    q.options.forEach((option, index) => {
-        const btn = document.createElement('button');
-        btn.innerText = option;
-        btn.onclick = () => checkAnswer(index);
-        optionsContainer.appendChild(btn);
+    enunciado.textContent = p.q;
+
+    // 2. Crear y barajar opciones (Algoritmo Fisher-Yates)
+    let opcionesParaMezclar = p.options.map((texto, index) => {
+        return { texto: texto, esCorrecta: index === p.correct };
     });
 
-    updateScoreboard();
-}
-
-// --- LOGICA DE RESPUESTA ---
-function checkAnswer(selectedIndex) {
-    const q = shuffledDb[currentQuestionIndex];
-    const buttons = optionsContainer.querySelectorAll('button');
-    
-    buttons.forEach(btn => btn.classList.add('disabled'));
-
-    // Revelar imagen si era silueta
-    const img = imageContainer.querySelector('img');
-    if (img) img.style.filter = "none";
-
-    if (selectedIndex === q.correct) {
-        score++;
-        buttons[selectedIndex].classList.add('correct');
-        feedbackMsg.innerHTML = "<span style='color: var(--correct)'>¡Correcto! ✨</span>";
-    } else {
-        buttons[selectedIndex].classList.add('incorrect');
-        buttons[q.correct].classList.add('correct'); // Mostrar la buena
-        feedbackMsg.innerHTML = "<span style='color: var(--incorrect)'>¡Era " + q.options[q.correct] + "!</span>";
+    for (let i = opcionesParaMezclar.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opcionesParaMezclar[i], opcionesParaMezclar[j]] = [opcionesParaMezclar[j], opcionesParaMezclar[i]];
     }
 
-    // Pausa dramática antes de la siguiente
-    setTimeout(() => {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < shuffledDb.length) {
-            loadQuestion();
-        } else {
-            showFinalResults();
+    // 3. Renderizar botones
+    opcionesParaMezclar.forEach(opcion => {
+        const boton = document.createElement("button");
+        boton.textContent = opcion.texto;
+        boton.className = "boton-opcion";
+        
+        boton.onclick = () => verificarRespuesta(opcion.esCorrecta, boton);
+        
+        contenedorBotones.appendChild(boton);
+    });
+}
+
+function verificarRespuesta(esCorrecta, botonSeleccionado) {
+    const mensajeDiv = document.getElementById("resultado-mensaje");
+    const contenedorBotones = document.getElementById("opciones-container");
+    const botones = contenedorBotones.getElementsByTagName("button");
+
+    // Desactivar todos los botones para evitar doble clic
+    for (let b of botones) {
+        b.disabled = true;
+        // Opcional: Mostrar cuál era la correcta si fallaste
+        if (b.textContent === preguntas[preguntaActual].options[preguntas[preguntaActual].correct]) {
+            b.classList.add("reveal-correct"); 
         }
-    }, 1600);
+    }
+
+    if (esCorrecta) {
+        puntos += 10;
+        document.getElementById("puntos").textContent = puntos;
+        botonSeleccionado.classList.add("correct-anim");
+        mensajeDiv.textContent = "¡Correcto! 🌟";
+        mensajeDiv.style.color = "#2ecc71";
+    } else {
+        botonSeleccionado.classList.add("wrong-anim");
+        mensajeDiv.textContent = "¡Incorrecto! 💀";
+        mensajeDiv.style.color = "#e74c3c";
+    }
+
+    // Esperar un momento y pasar a la siguiente
+    setTimeout(() => {
+        preguntaActual++;
+        if (preguntaActual < preguntas.length) {
+            mostrarPregunta();
+        } else {
+            finalizarJuego();
+        }
+    }, 1500);
 }
 
-// --- FINAL ---
-function showFinalResults() {
-    imageContainer.classList.remove('hidden');
-    imageContainer.innerHTML = "🏆";
-    imageContainer.style.fontSize = "4rem";
-    questionText.innerHTML = `<h3>¡Reto Finalizado!</h3><p>Has acertado ${score} de ${shuffledDb.length}</p>`;
-    optionsContainer.innerHTML = `<button onclick="location.reload()" style="grid-column: 1/-1; background: var(--primary); color:white;">VOLVER A EMPEZAR</button>`;
-    feedbackMsg.innerHTML = "";
+function finalizarJuego() {
+    const gameCard = document.getElementById("game-card");
+    gameCard.innerHTML = `
+        <div style="text-align:center; padding: 40px;">
+            <h2>¡Fin del juego!</h2>
+            <p style="font-size: 1.5rem;">Tu puntuación final es: <strong>${puntos}</strong></p>
+            <button onclick="location.reload()" class="boton-opcion">Jugar de nuevo</button>
+        </div>
+    `;
 }
-
-function updateScoreboard() {
-    scoreDisplay.innerText = `Puntuación: ${score} | Pregunta: ${currentQuestionIndex + 1}/${shuffledDb.length}`;
-}
-
-// Arrancar
-initGame();
